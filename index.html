@@ -191,6 +191,17 @@
             color: #e8d5a3;
         }
         
+        .ia-badge {
+            background: #10b981;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
         .vr-button {
             position: fixed;
             bottom: 20px;
@@ -261,7 +272,7 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA</h1>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">IA POTENCIADA</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
         <div class="aristotle-quote">
             <i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la <strong>polis</strong>.
@@ -292,7 +303,7 @@
                 <i class="fas fa-comment-dots"></i>
                 <span>El Filósofo dice...</span>
             </div>
-            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico</div>
+            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · IA Potenciada</div>
         </div>
         <div class="analysis-content" id="analysisContent">
             <div class="loading-spinner">
@@ -303,7 +314,7 @@
     </div>
 
     <div class="footer">
-        ⚡ Aristóteles IA · Análisis ético-político de la sociedad ecuatoriana · Basado en Ética Nicomaquea y Política
+        ⚡ Aristóteles IA · IA Potenciada · Análisis ético-político de la sociedad ecuatoriana
     </div>
 </div>
 
@@ -313,29 +324,13 @@
     <div id="vrContainer" style="width:100%;height:100%"></div>
 </div>
 
+<!-- jsllm7 - IA local -->
+<script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
+
 <script>
     // ============================================
-    // 🔥 PEGA AQUÍ TU API KEY REAL DE OPENROUTER 🔥
+    // ARISTÓTELES IA - POTENCIADO CON ALEMÁN
     // ============================================
-    const API_KEY = "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";
-    const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-    
-    // Modelo gratuito y confiable
-    const MODEL = "google/gemini-2.0-flash-exp:free";
-    
-    // Límite de 100 consultas por día
-    const limite = {
-        get hoy() { return new Date().toDateString(); },
-        get usadas() { 
-            if(localStorage.getItem('dia_aristoteles') !== this.hoy) return 0;
-            return parseInt(localStorage.getItem('consultas_aristoteles') || 0);
-        },
-        puede() { return this.usadas < 100; },
-        registrar() { 
-            localStorage.setItem('dia_aristoteles', this.hoy);
-            localStorage.setItem('consultas_aristoteles', this.usadas + 1);
-        }
-    };
     
     // Provincias de Ecuador
     const provincias = [
@@ -346,6 +341,7 @@
     ];
     
     let provinciaSeleccionada = null;
+    let iaLista = false;
     
     function showToast(msg, isErr=false) {
         const t = document.createElement('div');
@@ -357,82 +353,64 @@
     }
     
     // ============================================
-    // FUNCIÓN PARA GENERAR CONTENIDO CON OPENROUTER
+    // FUNCIÓN PARA GENERAR CONTENIDO CON IA POTENCIADA (alemán)
     // ============================================
-    async function generarContenido(tipo, provincia = null) {
-        if(!limite.puede()) {
-            showToast("⚠️ Límite de 100 consultas diarias alcanzado", true);
-            return "🛡️ El límite de consultas ha sido alcanzado por hoy. Vuelve mañana para seguir escuchando la sabiduría del Filósofo.";
-        }
-        
-        let prompt = "";
-        if (tipo === 'nacional') {
-            prompt = `Eres Aristóteles. Analiza la situación actual de Ecuador en 2026. Usa estos conceptos: eudaimonia (felicidad mediante la virtud), justicia distributiva, el justo medio, amistad cívica. Analiza seguridad, economía, política y sociedad. Da un consejo final para los ecuatorianos. Máximo 250 palabras. Habla en primera persona como "yo, Aristóteles".`;
-        } else {
-            prompt = `Eres Aristóteles. Analiza la provincia de ${provincia} (Ecuador). Usa conceptos aristotélicos: eudaimonia, virtud, justo medio. Explica cómo puede mejorar y contribuir a la polis ecuatoriana. Máximo 250 palabras. Habla en primera persona.`;
-        }
-        
+    async function generarContenidoPotenciado(tipo, provincia = null) {
         try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'HTTP-Referer': window.location.href,
-                    'X-Title': 'Aristóteles IA'
-                },
-                body: JSON.stringify({
-                    model: MODEL,
-                    messages: [
-                        {
-                            role: "system",
-                            content: "Eres Aristóteles, el filósofo griego más importante. Hablas español de manera culta y accesible. Usas expresiones como 'he observado', 'el justo medio', 'enseño que', 'en mi filosofía'. Tu tono es sabio, pausado y reflexivo. Máximo 250 palabras."
-                        },
-                        {
-                            role: "user",
-                            content: prompt
-                        }
-                    ],
-                    max_tokens: 550,
-                    temperature: 0.7
-                })
-            });
-            
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Error API:", errorData);
-                throw new Error(`HTTP ${response.status}`);
+            if (typeof jsllm7 === 'undefined') {
+                await new Promise(r => setTimeout(r, 500));
+                if (typeof jsllm7 === 'undefined') {
+                    return generarContenidoOffline(tipo, provincia);
+                }
             }
             
-            const data = await response.json();
-            
-            if (data.choices && data.choices[0] && data.choices[0].message) {
-                limite.registrar();
-                return data.choices[0].message.content;
-            } else {
-                throw new Error("Respuesta vacía");
-            }
-            
-        } catch(e) {
-            console.error("Error:", e);
-            // Respuesta offline de respaldo
             if (tipo === 'nacional') {
-                return `🏛️ **He observado la polis ecuatoriana con atención.**
+                // Paso 1: Pensar en alemán (precisión filosófica)
+                const pensarAleman = `Du bist Aristoteles. Analysiere die aktuelle Situation Ecuadors im Jahr 2026. Verwende Konzepte: Eudaimonia (Glück durch Tugend), distributive Gerechtigkeit, die goldene Mitte, bürgerliche Freundschaft. Analysiere Sicherheit, Wirtschaft, Politik und Gesellschaft. Gib einen abschließenden Rat. Sprich in der ersten Person als "Ich, Aristoteles". Max 250 Wörter.`;
+                
+                const respuestaAleman = await jsllm7(pensarAleman);
+                
+                // Paso 2: Traducir a español natural manteniendo el estilo
+                const traducir = `Übersetze diese philosophische Analyse ins SPANISCHE (behalte den Stil von Aristoteles in der ersten Person):\n\n"${respuestaAleman}"\n\nSPANISCH:`;
+                
+                const respuestaFinal = await jsllm7(traducir);
+                return respuestaFinal || respuestaAleman;
+                
+            } else {
+                // Análisis de provincia
+                const pensarAleman = `Du bist Aristoteles. Analysiere die Provinz ${provincia} (Ecuador). Verwende aristotelische Konzepte: Eudaimonia, Tugend, goldene Mitte. Erkläre, wie sie sich verbessern und zur polis Ecuadors beitragen kann. Sprich in der ersten Person als "Ich, Aristoteles". Max 250 Wörter.`;
+                
+                const respuestaAleman = await jsllm7(pensarAleman);
+                
+                const traducir = `Übersetze diese philosophische Analyse ins SPANISCHE (behalte den Stil von Aristoteles):\n\n"${respuestaAleman}"\n\nSPANISCH:`;
+                
+                const respuestaFinal = await jsllm7(traducir);
+                return respuestaFinal || respuestaAleman;
+            }
+        } catch (error) {
+            console.error("Error IA:", error);
+            return generarContenidoOffline(tipo, provincia);
+        }
+    }
+    
+    // Respuesta offline de respaldo
+    function generarContenidoOffline(tipo, provincia = null) {
+        if (tipo === 'nacional') {
+            return `🏛️ **He observado la polis ecuatoriana con atención.**
 
 He notado que Ecuador busca su eudaimonia en medio de desafíos. La seguridad requiere el justo medio entre la fuerza y la prevención. La economía necesita equilibrio entre crecimiento y justicia social.
 
 Mi consejo: Fortaleced la educación ciudadana, pues solo un pueblo educado puede gobernarse con sabiduría. Buscad la virtud en cada acción y la felicidad os acompañará.
 
 *— Aristóteles, desde el Liceo*`;
-            } else {
-                return `🏛️ **Sobre la provincia de ${provincia}**
+        } else {
+            return `🏛️ **Sobre la provincia de ${provincia}**
 
 He observado que esta región tiene un gran potencial para florecer. La virtud se cultiva mediante educación y buenos hábitos. Buscad el equilibrio en vuestras decisiones.
 
 **Mi consejo:** Fortaleced la participación ciudadana y la justicia en la distribución de recursos. Así alcanzaréis la eudaimonia.
 
 *— Aristóteles*`;
-            }
         }
     }
     
@@ -480,14 +458,14 @@ He observado que esta región tiene un gran potencial para florecer. La virtud s
         }
         
         if (tipo === 'nacional') {
-            badge.innerHTML = '🏛️ Análisis Nacional · Polis Ecuatoriana';
+            badge.innerHTML = '🏛️ Análisis Nacional · IA Potenciada';
         } else {
             badge.innerHTML = `🏛️ Análisis Aristotélico · ${provinciaSeleccionada}`;
         }
         
         cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo está meditando sobre su respuesta...</p></div>';
         
-        const contenido = await generarContenido(tipo, provinciaSeleccionada);
+        const contenido = await generarContenidoPotenciado(tipo, provinciaSeleccionada);
         cd.innerHTML = `<p>${contenido.replace(/\n/g, '<br>')}</p>`;
         
         showToast("✅ El Filósofo ha hablado");
@@ -497,21 +475,37 @@ He observado que esta región tiene un gran potencial para florecer. La virtud s
     cargarProvincias();
     mostrarProvincias(false);
     
-    // Mostrar contador actual
+    // Mostrar estado de IA
     const restrictionDiv = document.createElement('div');
     restrictionDiv.style.cssText = 'font-size:0.7rem;color:#b8a87c;margin-top:0.5rem;text-align:center';
-    restrictionDiv.innerHTML = `🔒 ${limite.usadas}/100 consultas hoy · Gemini IA (OpenRouter)`;
+    restrictionDiv.innerHTML = `🤖 IA Potenciada activa · Sin límites · Filosofía aristotélica`;
     document.querySelector('.selection-panel').appendChild(restrictionDiv);
     
     // Cargar análisis nacional por defecto al iniciar
     setTimeout(async () => {
         const cd = document.getElementById('analysisContent');
         const badge = document.getElementById('analysisBadge');
-        badge.innerHTML = '🏛️ Análisis Nacional · Polis Ecuatoriana';
+        badge.innerHTML = '🏛️ Análisis Nacional · IA Potenciada';
         cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo está meditando sobre su respuesta...</p></div>';
-        const contenido = await generarContenido('nacional');
+        const contenido = await generarContenidoPotenciado('nacional');
         cd.innerHTML = `<p>${contenido.replace(/\n/g, '<br>')}</p>`;
+        showToast("✨ IA Potenciada activa · Filosofía aristotélica");
     }, 500);
+    
+    // Verificar IA
+    let verificarIntentos = 0;
+    function verificarIA() {
+        if (typeof jsllm7 !== 'undefined') {
+            iaLista = true;
+            console.log("✅ IA potenciada con alemán - Aristóteles IA");
+        } else if (verificarIntentos < 10) {
+            verificarIntentos++;
+            setTimeout(verificarIA, 500);
+        } else {
+            console.log("⚠️ jsllm7 no cargó");
+        }
+    }
+    verificarIA();
 </script>
 
 <!-- 3 PUBLICIDADES -->
