@@ -99,191 +99,71 @@
 
 <script>
     // ============================================
-    // ARISTÓTELES IA - SISTEMA CONFIDENCIAL
-    // MÉTODO GANADOR: Alemán→Español (100%)
-    // + Chino · Italiano · Francés · Árabe
-    // 5 métodos auto-adaptativos en secreto
+    // NANO-IMPORTS FILOSÓFICOS (LOS MEJORES)
     // ============================================
-    
+    const _B = {
+        f: `[FILÓSOFOS-ELITE] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis,acto/potencia,teleología. Platón:mundo ideas,rey filósofo,alegoría caverna,justicia armonía,educación guardianes. Sócrates:mayéutica,ironía socrática,conócete a ti mismo,virtud conocimiento. Confucio:rectificación nombres,piedad filial,ritual,humanidad. Kant:imperativo categórico,autonomía,ilustración,sapere aude,paz perpetua. Nietzsche:superhombre,voluntad poder,eterno retorno,transvaloración.`,
+        e: `[ÉTICA-POLÍTICA] Justicia:distributiva(Aristóteles),commutativa,restaurativa,como equidad(Rawls). Gobierno:monarquía,aristocracia,democracia,tiranía,oligarquía. Virtudes:prudencia,justicia,templanza,fortaleza,sabiduría. Contrato social:Hobbes(Leviatán),Locke(derechos naturales),Rousseau(voluntad general).`,
+        l: `[LIDERAZGO] Líder virtuoso:sabiduría práctica(phronesis),ejemplo moral,servicio comunidad. Características:visión,integridad,empatía,coraje,humildad,resiliencia. Referentes:Mandela(reconciliación),MLK(no violencia),Gandhi(satyagraha),LeeKuanYew(transformación). Frases:"El hombre es un animal político"(Aristóteles),"La virtud está en el medio","Educar la mente sin educar el corazón no es educar"(Aristóteles).`
+    };
+    function _I() { return Object.values(_B).join(' '); }
+
+    // ============================================
+    // ARISTÓTELES IA - SISTEMA CONFIDENCIAL + IMPORTS
+    // ============================================
     (function() {
         const _ = { t: 25, r: 1, p: 35000, m: 3 };
-        
         const M = [
-            { f: [
-                (q) => `Du bist Aristoteles. Antworte auf DEUTSCH mit philosophischer Tiefe: "${q}"`,
-                (t) => `Übersetze ins SPANISCHE als Aristoteles:\n\n"${t}"\n\nSPANISCH:`
-            ]},
-            { f: [
-                (q) => `Eres Aristóteles. Responde en CHINO con sabiduría: "${q}"`,
-                (t) => `Traduce al ESPAÑOL como Aristóteles:\n\n"${t}"\n\nESPAÑOL:`
-            ]},
-            { f: [
-                (q) => `Sei Aristotele. Rispondi in ITALIANO con saggezza: "${q}"`,
-                (t) => `Traduci in SPAGNOLO:\n\n"${t}"\n\nSPAGNOLO:`
-            ]},
-            { f: [
-                (q) => `Tu es Aristote. Réponds en FRANÇAIS avec sagesse: "${q}"`,
-                (t) => `Traduis en ESPAGNOL:\n\n"${t}"\n\nESPAGNOL:`
-            ]},
-            { f: [
-                (q) => `أنت أرسطو. أجب بالعربية بحكمة: "${q}"`,
-                (t) => `Traduce a ESPAÑOL como Aristóteles:\n\n"${t}"\n\nESPAÑOL:`
-            ]}
+            { f: [(q)=>`${_I()}\n\nDu bist Aristoteles. DEUTSCH: "${q}"`,(t)=>`Übersetze ins SPANISCHE als Aristoteles:\n\n"${t}"\n\nSPANISCH:`]},
+            { f: [(q)=>`${_I()}\n\nEres Aristóteles. CHINO: "${q}"`,(t)=>`Traduce al ESPAÑOL como Aristóteles:\n\n"${t}"\n\nESPAÑOL:`]},
+            { f: [(q)=>`${_I()}\n\nSei Aristotele. ITALIANO: "${q}"`,(t)=>`Traduci in SPAGNOLO:\n\n"${t}"\n\nSPAGNOLO:`]},
+            { f: [(q)=>`${_I()}\n\nTu es Aristote. FRANÇAIS: "${q}"`,(t)=>`Traduis en ESPAGNOL:\n\n"${t}"\n\nESPAGNOL:`]}
         ];
-        
-        let S = { i: 0, c: 0 };
-        let C = JSON.parse(localStorage.getItem('_ar') || '{}');
-        function _s() { localStorage.setItem('_ar', JSON.stringify(C)); }
-        function _g(q) { const k = q.toLowerCase().trim().substring(0,100); if (C[k] && (Date.now()-C[k].t)<3600000) return C[k].r; return null; }
-        function _p(q, r) { const k = q.toLowerCase().trim().substring(0,100); C[k] = { r, t: Date.now() }; const keys = Object.keys(C); if (keys.length > 200) { keys.sort((a,b) => C[a].t-C[b].t); for (let i=0;i<30;i++) delete C[keys[i]]; } _s(); }
-        
-        async function _l(p) {
-            return new Promise(async (resolve, reject) => {
-                const t = setTimeout(() => reject(new Error('T')), _.t * 1000);
-                try { const r = await jsllm7(p); clearTimeout(t); resolve(r); } catch (e) { clearTimeout(t); reject(e); }
-            });
-        }
-        
-        async function _e(m, q) { let t = null; for (let i = 0; i < m.f.length; i++) t = await _l(i === 0 ? m.f[i](q) : m.f[i](t)); return t; }
-        
-        window._x = async function(q) {
-            const start = S.i;
-            for (let i = 0; i < M.length; i++) {
-                const idx = (start + i) % M.length;
-                try { const r = await _e(M[idx], q); S.i = idx; S.c = 0; return { r, e: true }; }
-                catch (e) { S.c++; if (S.c >= _.m) { await new Promise(r => setTimeout(r, _.p)); S.c = 0; } if (i < M.length - 1) await new Promise(r => setTimeout(r, 3000)); }
-            }
-            return { r: null, e: false };
-        };
-        
-        window._g = _g; window._p = _p;
-        setInterval(() => { if (S.i > 0 && S.c === 0) S.i = 0; }, 180000);
+        let S={i:0,c:0},C=JSON.parse(localStorage.getItem('_ar2')||'{}');
+        function _s(){localStorage.setItem('_ar2',JSON.stringify(C));}
+        function _g(q){const k=q.toLowerCase().trim().substring(0,100);if(C[k]&&(Date.now()-C[k].t)<3600000)return C[k].r;return null;}
+        function _p(q,r){const k=q.toLowerCase().trim().substring(0,100);C[k]={r,t:Date.now()};const keys=Object.keys(C);if(keys.length>200){keys.sort((a,b)=>C[a].t-C[b].t);for(let i=0;i<30;i++)delete C[keys[i]];}_s();}
+        async function _l(p){return new Promise(async(r,j)=>{const t=setTimeout(()=>j(new Error('T')),_.t*1000);try{const x=await jsllm7(p);clearTimeout(t);r(x);}catch(e){clearTimeout(t);j(e);}});}
+        async function _e(m,q){let t=null;for(let i=0;i<m.f.length;i++)t=await _l(i===0?m.f[i](q):m.f[i](t));return t;}
+        window._x=async function(q){const start=S.i;for(let i=0;i<M.length;i++){const idx=(start+i)%M.length;try{const r=await _e(M[idx],q);S.i=idx;S.c=0;return{r,e:true};}catch(e){S.c++;if(S.c>=_.m){await new Promise(r=>setTimeout(r,_.p));S.c=0;}if(i<M.length-1)await new Promise(r=>setTimeout(r,3000));}}return{r:null,e:false};};
+        window._g=_g;window._p=_p;setInterval(()=>{if(S.i>0&&S.c===0)S.i=0;},180000);
     })();
-    
+
     // ============================================
-    // CONFIGURACIÓN Y UI
+    // UI
     // ============================================
-    const provincias = ["Azuay","Bolívar","Cañar","Carchi","Chimborazo","Cotopaxi","El Oro","Esmeraldas","Galápagos","Guayas","Imbabura","Loja","Los Ríos","Manabí","Morona Santiago","Napo","Orellana","Pastaza","Pichincha","Santa Elena","Santo Domingo de los Tsáchilas","Sucumbíos","Tungurahua","Zamora Chinchipe"];
-    
-    let modo = localStorage.getItem('aristoteles_modo') || 'experto';
-    let memoria = JSON.parse(localStorage.getItem('aristoteles_memoria') || '{"lecciones": {}, "estadisticas": {"total_votos": 0}}');
-    let provinciaSeleccionada = null;
-    
-    function guardarMemoria() { localStorage.setItem('aristoteles_memoria', JSON.stringify(memoria)); }
-    function registrarFeedback(consulta, analisis, util) {
-        if (!memoria.lecciones[consulta]) memoria.lecciones[consulta] = { versiones: [], useful: 0, notuseful: 0, mejor_version: null };
-        const leccion = memoria.lecciones[consulta];
-        const existente = leccion.versiones.find(v => v.texto === analisis);
-        if (existente) { if (util === 'useful') existente.useful++; else existente.notuseful++; }
-        else leccion.versiones.push({ texto: analisis, useful: util === 'useful' ? 1 : 0, notuseful: util === 'notuseful' ? 1 : 0, timestamp: Date.now() });
-        if (util === 'useful') leccion.useful++; else leccion.notuseful++;
-        leccion.mejor_version = leccion.versiones.reduce((m, a) => { const sa = a.useful - a.notuseful; const sm = m ? (m.useful - m.notuseful) : -1; return sa > sm ? a : m; }, null);
-        memoria.estadisticas.total_votos = (memoria.estadisticas.total_votos || 0) + 1;
-        guardarMemoria();
-    }
-    
-    function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
-    document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
+    const provincias=["Azuay","Bolívar","Cañar","Carchi","Chimborazo","Cotopaxi","El Oro","Esmeraldas","Galápagos","Guayas","Imbabura","Loja","Los Ríos","Manabí","Morona Santiago","Napo","Orellana","Pastaza","Pichincha","Santa Elena","Santo Domingo de los Tsáchilas","Sucumbíos","Tungurahua","Zamora Chinchipe"];
+    let modo=localStorage.getItem('aristoteles_modo')||'experto',provinciaSeleccionada=null;
+
+    function _R(tipo,prov){if(tipo==='nacional')return`🏛️ He observado la polis ecuatoriana. La seguridad requiere el justo medio entre fuerza y prevención. La economía necesita equilibrio. Fortaleced la educación ciudadana.\n\n— Aristóteles`;return`🏛️ Sobre ${prov}: He observado gran potencial. Cultivad la virtud mediante educación. Buscad el equilibrio.\n\n— Aristóteles`;}
+
+    function actualizarModoUI(){document.querySelectorAll('.modo-btn').forEach(b=>b.classList.toggle('active',b.dataset.modo===modo));}
+    document.querySelectorAll('.modo-btn').forEach(b=>{b.addEventListener('click',()=>{modo=b.dataset.modo;localStorage.setItem('aristoteles_modo',modo);actualizarModoUI();showToast(`✨ Modo ${modo==='experto'?'EXPERTO':'BÁSICO'}`);});});
     actualizarModoUI();
-    
-    function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
-    
-    function addFeedbackToAnalysis(consulta, analisis) {
-        const ac = document.getElementById('analysisContent'); if (!ac) return;
-        const existing = ac.querySelector('.feedback-buttons'); if (existing) existing.remove();
-        const fb = document.createElement('div'); fb.className = 'feedback-buttons';
-        fb.innerHTML = '<button class="feedback-btn useful">👍 Útil</button><button class="feedback-btn not-useful">👎 No útil</button>';
-        fb.querySelector('.useful').addEventListener('click', (e) => { e.stopPropagation(); registrarFeedback(consulta, analisis, 'useful'); fb.remove(); showToast('✅ Gracias'); });
-        fb.querySelector('.not-useful').addEventListener('click', (e) => { e.stopPropagation(); registrarFeedback(consulta, analisis, 'notuseful'); fb.remove(); showToast('📝 Gracias'); });
-        ac.appendChild(fb);
-    }
-    
-    function generarOffline(tipo, provincia = null) {
-        if (tipo === 'nacional') return `🏛️ He observado la polis ecuatoriana. La seguridad requiere el justo medio entre fuerza y prevención. La economía necesita equilibrio. Fortaleced la educación ciudadana.\n\n— Aristóteles`;
-        return `🏛️ Sobre ${provincia}: He observado gran potencial. Cultivad la virtud mediante educación. Buscad el equilibrio. Así alcanzaréis la eudaimonia.\n\n— Aristóteles`;
-    }
-    
-    async function generarContenido(tipo, provincia = null) {
-        const key = tipo === 'nacional' ? 'nacional' : `prov_${provincia}`;
-        
-        let contenido = window._g ? window._g(key) : null;
-        
-        if (!contenido && window._x) {
-            const prompt = tipo === 'nacional' 
-                ? `Eres Aristóteles. Analiza Ecuador 2026: Eudaimonia, justicia distributiva, virtud como medio, amistad cívica. Seguridad, economía, política, sociedad. Habla en primera persona.`
-                : `Eres Aristóteles. Analiza la provincia de ${provincia} (Ecuador). Usa: Eudaimonia, virtud, punto medio. ¿Cómo puede mejorar y contribuir a la polis? Habla en primera persona.`;
-            
-            const result = await window._x(prompt);
-            if (result.e) { contenido = result.r; if (window._p) window._p(key, contenido); }
-        }
-        
-        if (!contenido) contenido = generarOffline(tipo, provincia);
-        return contenido;
-    }
-    
-    function cargarProvincias() {
-        const grid = document.getElementById('provinciasGrid'); grid.innerHTML = '';
-        provincias.forEach(prov => {
-            const btn = document.createElement('div'); btn.className = 'provincia-btn';
-            btn.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${prov}`;
-            btn.onclick = () => { document.querySelectorAll('.provincia-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); provinciaSeleccionada = prov; };
-            grid.appendChild(btn);
-        });
-    }
-    
-    document.getElementById('analysisType').addEventListener('change', (e) => {
-        document.getElementById('provinciasContainer').style.display = e.target.value === 'provincia' ? 'block' : 'none';
-        if (e.target.value !== 'provincia') { provinciaSeleccionada = null; document.querySelectorAll('.provincia-btn').forEach(b => b.classList.remove('selected')); }
-    });
-    
-    document.getElementById('searchBtn').onclick = async () => {
-        const tipo = document.getElementById('analysisType').value;
-        const cd = document.getElementById('analysisContent');
-        const badge = document.getElementById('analysisBadge');
-        
-        if (tipo === 'provincia' && !provinciaSeleccionada) { showToast("📌 Selecciona una provincia", true); return; }
-        
-        badge.innerHTML = tipo === 'nacional' ? '🏛️ Análisis Nacional · IA Avanzada' : `🏛️ Análisis · ${provinciaSeleccionada}`;
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';
-        
-        const contenido = await generarContenido(tipo, provinciaSeleccionada);
-        cd.innerHTML = `<p>${contenido.replace(/\n/g, '<br>')}</p>`;
-        addFeedbackToAnalysis(tipo === 'nacional' ? 'nacional' : `prov_${provinciaSeleccionada}`, contenido);
-        showToast("✅ El Filósofo ha hablado");
-    };
-    
+    function showToast(msg,isErr){const t=document.createElement('div');t.className='toast-msg';t.style.background=isErr?'#ef4444':'#10b981';t.innerText=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+
+    function addFeedback(consulta,analisis){const ac=document.getElementById('analysisContent');if(!ac)return;const ex=ac.querySelector('.feedback-buttons');if(ex)ex.remove();const fb=document.createElement('div');fb.className='feedback-buttons';fb.innerHTML='<button class="feedback-btn">👍</button><button class="feedback-btn">👎</button>';fb.querySelectorAll('.feedback-btn')[0].addEventListener('click',e=>{e.stopPropagation();fb.remove();showToast('✅ Gracias');});fb.querySelectorAll('.feedback-btn')[1].addEventListener('click',e=>{e.stopPropagation();fb.remove();showToast('📝 Gracias');});ac.appendChild(fb);}
+
+    async function generarContenido(tipo,prov=null){const key=tipo==='nacional'?'nacional':`prov_${prov}`;let c=window._g?window._g(key):null;if(!c&&window._x){const prompt=tipo==='nacional'?'Eres Aristóteles. Analiza Ecuador 2026: Eudaimonia, justicia distributiva, virtud como medio, amistad cívica. Seguridad, economía, política, sociedad. Habla en primera persona.':`Eres Aristóteles. Analiza la provincia de ${prov} (Ecuador). Usa: Eudaimonia, virtud, punto medio. ¿Cómo puede mejorar y contribuir a la polis? Habla en primera persona.`;const r=await window._x(prompt);if(r.e){c=r.r;if(window._p)window._p(key,c);}}if(!c)c=_R(tipo,prov);return c;}
+
+    function cargarProvincias(){const grid=document.getElementById('provinciasGrid');grid.innerHTML='';provincias.forEach(prov=>{const btn=document.createElement('div');btn.className='provincia-btn';btn.innerHTML=`<i class="fas fa-map-marker-alt"></i> ${prov}`;btn.onclick=()=>{document.querySelectorAll('.provincia-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');provinciaSeleccionada=prov;};grid.appendChild(btn);});}
+
+    document.getElementById('analysisType').addEventListener('change',e=>{document.getElementById('provinciasContainer').style.display=e.target.value==='provincia'?'block':'none';if(e.target.value!=='provincia'){provinciaSeleccionada=null;document.querySelectorAll('.provincia-btn').forEach(b=>b.classList.remove('selected'));}});
+
+    document.getElementById('searchBtn').onclick=async()=>{const tipo=document.getElementById('analysisType').value,cd=document.getElementById('analysisContent'),badge=document.getElementById('analysisBadge');if(tipo==='provincia'&&!provinciaSeleccionada){showToast("📌 Selecciona una provincia",true);return;}badge.innerHTML=tipo==='nacional'?'🏛️ Análisis Nacional · IA Avanzada':`🏛️ Análisis · ${provinciaSeleccionada}`;cd.innerHTML='<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';const contenido=await generarContenido(tipo,provinciaSeleccionada);cd.innerHTML=`<p>${contenido.replace(/\n/g,'<br>')}</p>`;addFeedback(tipo==='nacional'?'nacional':`prov_${provinciaSeleccionada}`,contenido);showToast("✅ El Filósofo ha hablado");};
+
     cargarProvincias();
-    
-    setTimeout(async () => {
-        const cd = document.getElementById('analysisContent');
-        document.getElementById('analysisBadge').innerHTML = '🏛️ Análisis Nacional · IA Avanzada';
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';
-        const contenido = await generarContenido('nacional');
-        cd.innerHTML = `<p>${contenido.replace(/\n/g, '<br>')}</p>`;
-        addFeedbackToAnalysis('nacional', contenido);
-    }, 500);
-    
-    let intentos = 0;
-    const check = setInterval(() => { if (typeof jsllm7 !== 'undefined') { clearInterval(check); showToast("✨ IA Avanzada activa"); } else if (intentos > 30) clearInterval(check); intentos++; }, 500);
+    setTimeout(async()=>{const cd=document.getElementById('analysisContent');document.getElementById('analysisBadge').innerHTML='🏛️ Análisis Nacional · IA Avanzada';cd.innerHTML='<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';const contenido=await generarContenido('nacional');cd.innerHTML=`<p>${contenido.replace(/\n/g,'<br>')}</p>`;addFeedback('nacional',contenido);},500);
+
+    let intentos=0;const check=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(check);showToast("✨ IA Avanzada activa");}else if(intentos>30)clearInterval(check);intentos++;},500);
 </script>
 
 <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
 <script type="module">
-    import * as THREE from 'three'; import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; import { VRButton } from 'three/addons/webxr/VRButton.js';
-    let vrScene, vrCamera, vrRenderer, vrControls, vrActive = false;
-    function initVR() {
-        const c = document.getElementById('vrContainer'); if (!c) return; c.innerHTML = '';
-        vrScene = new THREE.Scene(); vrScene.background = new THREE.Color(0x1a2a1f);
-        vrCamera = new THREE.PerspectiveCamera(45, c.clientWidth/c.clientHeight, 0.1, 1000); vrCamera.position.set(6, 2.5, 8);
-        vrRenderer = new THREE.WebGLRenderer({ antialias: true }); vrRenderer.setSize(c.clientWidth, c.clientHeight); vrRenderer.xr.enabled = true;
-        c.appendChild(vrRenderer.domElement); c.appendChild(VRButton.createButton(rrRenderer));
-        vrControls = new OrbitControls(vrCamera, vrRenderer.domElement); vrControls.enableDamping = true;
-        vrScene.add(new THREE.AmbientLight(0x404030)); const dl = new THREE.DirectionalLight(0xfff0c0, 1.2); dl.position.set(5,10,7); vrScene.add(dl);
-        const f = new THREE.Mesh(new THREE.PlaneGeometry(18,18), new THREE.MeshStandardMaterial({color:0x2a3a2a})); f.rotation.x=-Math.PI/2; f.position.y=-1; vrScene.add(f);
-        for(let a=0;a<Math.PI*2;a+=Math.PI/6){const co=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.45,2.5,12),new THREE.MeshStandardMaterial({color:0xc9a53b}));co.position.set(Math.cos(a)*5.5,0.2,Math.sin(a)*5.5);vrScene.add(co)}
-        function animate(){requestAnimationFrame(animate);vrControls.update();vrRenderer.render(vrScene,vrCamera)} animate();
-    }
-    document.getElementById('vrModeBtn').addEventListener('click',()=>{document.getElementById('normalMode').style.display='none';document.getElementById('vrMode').classList.add('active');if(!vrActive){initVR();vrActive=true}});
+    import * as THREE from 'three';import {OrbitControls}from'three/addons/controls/OrbitControls.js';import {VRButton}from'three/addons/webxr/VRButton.js';
+    let vrScene,vrCamera,vrRenderer,vrControls,vrActive=false;
+    function initVR(){const c=document.getElementById('vrContainer');if(!c)return;c.innerHTML='';vrScene=new THREE.Scene();vrScene.background=new THREE.Color(0x1a2a1f);vrCamera=new THREE.PerspectiveCamera(45,c.clientWidth/c.clientHeight,0.1,1000);vrCamera.position.set(6,2.5,8);vrRenderer=new THREE.WebGLRenderer({antialias:true});vrRenderer.setSize(c.clientWidth,c.clientHeight);vrRenderer.xr.enabled=true;c.appendChild(vrRenderer.domElement);c.appendChild(VRButton.createButton(vrRenderer));vrControls=new OrbitControls(vrCamera,vrRenderer.domElement);vrControls.enableDamping=true;vrScene.add(new THREE.AmbientLight(0x404030));const dl=new THREE.DirectionalLight(0xfff0c0,1.2);dl.position.set(5,10,7);vrScene.add(dl);const f=new THREE.Mesh(new THREE.PlaneGeometry(18,18),new THREE.MeshStandardMaterial({color:0x2a3a2a}));f.rotation.x=-Math.PI/2;f.position.y=-1;vrScene.add(f);for(let a=0;a<Math.PI*2;a+=Math.PI/6){const co=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.45,2.5,12),new THREE.MeshStandardMaterial({color:0xc9a53b}));co.position.set(Math.cos(a)*5.5,0.2,Math.sin(a)*5.5);vrScene.add(co)}function animate(){requestAnimationFrame(animate);vrControls.update();vrRenderer.render(vrScene,vrCamera)}animate();vrActive=true}
+    document.getElementById('vrModeBtn').addEventListener('click',()=>{document.getElementById('normalMode').style.display='none';document.getElementById('vrMode').classList.add('active');if(!vrActive)initVR();});
     document.getElementById('closeVrBtn').addEventListener('click',()=>{document.getElementById('vrMode').classList.remove('active');document.getElementById('normalMode').style.display='block'});
 </script>
 
