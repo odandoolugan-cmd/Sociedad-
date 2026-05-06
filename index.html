@@ -50,6 +50,7 @@
         .footer { text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #c9a53b20; font-size: 0.7rem; color: #8a7a5a; }
         .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        .restriction-alert { background: rgba(201, 165, 59, 0.15); border: 1px solid #c9a53b; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #c9a53b; }
         @media (max-width: 700px) { .container { padding: 1rem; } .header h1 { font-size: 2rem; } .modo-selector { justify-content: center; } }
     </style>
 </head>
@@ -77,6 +78,7 @@
             <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
+        <div class="restriction-alert">📜 IA Avanzada · Filosofía aristotélica · Análisis ético-político</div>
     </div>
 
     <div class="analysis-card" id="resultsCard">
@@ -99,8 +101,21 @@
 
 <script>
     // ============================================
-    // NANO-IMPORTS FILOSÓFICOS (LOS MEJORES)
+    // ARISTÓTELES IA - SISTEMA CONFIDENCIAL MEJORADO
     // ============================================
+    
+    // FUNCIÓN HASH PARA CACHÉ (evita colisiones)
+    function _hash(str) {
+        let hash = 0;
+        const s = str.toLowerCase().trim();
+        for (let i = 0; i < s.length; i++) {
+            hash = ((hash << 5) - hash) + s.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash).toString(36);
+    }
+    
+    // NANO-IMPORTS FILOSÓFICOS (base de conocimiento)
     const _B = {
         f: `[FILÓSOFOS-ELITE] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis,acto/potencia,teleología. Platón:mundo ideas,rey filósofo,alegoría caverna,justicia armonía,educación guardianes. Sócrates:mayéutica,ironía socrática,conócete a ti mismo,virtud conocimiento. Confucio:rectificación nombres,piedad filial,ritual,humanidad. Kant:imperativo categórico,autonomía,ilustración,sapere aude,paz perpetua. Nietzsche:superhombre,voluntad poder,eterno retorno,transvaloración.`,
         e: `[ÉTICA-POLÍTICA] Justicia:distributiva(Aristóteles),commutativa,restaurativa,como equidad(Rawls). Gobierno:monarquía,aristocracia,democracia,tiranía,oligarquía. Virtudes:prudencia,justicia,templanza,fortaleza,sabiduría. Contrato social:Hobbes(Leviatán),Locke(derechos naturales),Rousseau(voluntad general).`,
@@ -108,67 +123,320 @@
     };
     function _I() { return Object.values(_B).join(' '); }
 
-    // ============================================
-    // ARISTÓTELES IA - SISTEMA CONFIDENCIAL + IMPORTS
-    // ============================================
+    // MEJORAS: timeout 30s, backoff exponencial, reintentos, forzar español
     (function() {
-        const _ = { t: 25, r: 1, p: 35000, m: 3 };
+        const _ = { t: 30, r: 2, p: 30000, m: 2, maxBackoff: 300000, backoffFactor: 2 };
+        let S = { i: 0, c: 0, backoff: _.p };
+        
+        // Prompts mejorados: FORZAR ESPAÑOL siempre - NINGUNA TRADUCCIÓN INVERSA
         const M = [
-            { f: [(q)=>`${_I()}\n\nDu bist Aristoteles. DEUTSCH: "${q}"`,(t)=>`Übersetze ins SPANISCHE als Aristoteles:\n\n"${t}"\n\nSPANISCH:`]},
-            { f: [(q)=>`${_I()}\n\nEres Aristóteles. CHINO: "${q}"`,(t)=>`Traduce al ESPAÑOL como Aristóteles:\n\n"${t}"\n\nESPAÑOL:`]},
-            { f: [(q)=>`${_I()}\n\nSei Aristotele. ITALIANO: "${q}"`,(t)=>`Traduci in SPAGNOLO:\n\n"${t}"\n\nSPAGNOLO:`]},
-            { f: [(q)=>`${_I()}\n\nTu es Aristote. FRANÇAIS: "${q}"`,(t)=>`Traduis en ESPAGNOL:\n\n"${t}"\n\nESPAGNOL:`]}
+            { f: [
+                (q) => `${_I()}\n\nEres Aristóteles, el filósofo más sabio de la historia. RESPONDE SIEMPRE EN ESPAÑOL, en primera persona, con lenguaje poético y profundo. Consulta: "${q}"`,
+                (t) => `${t}`
+            ]},
+            { f: [
+                (q) => `${_I()}\n\nEres el Estagirita, maestro de Alejandro Magno. RESPONDE SIEMPRE EN ESPAÑOL. Analiza con sabiduría: "${q}"`,
+                (t) => `${t}`
+            ]},
+            { f: [
+                (q) => `${_I()}\n\nHabla como Aristóteles, el filósofo de la virtud. RESPONDE SIEMPRE EN ESPAÑOL. Reflexiona: "${q}"`,
+                (t) => `${t}`
+            ]},
+            { f: [
+                (q) => `${_I()}\n\nEres el fundador del Liceo. RESPONDE SIEMPRE EN ESPAÑOL en estilo aristotélico. Pregunta: "${q}"`,
+                (t) => `${t}`
+            ]}
         ];
-        let S={i:0,c:0},C=JSON.parse(localStorage.getItem('_ar2')||'{}');
-        function _s(){localStorage.setItem('_ar2',JSON.stringify(C));}
-        function _g(q){const k=q.toLowerCase().trim().substring(0,100);if(C[k]&&(Date.now()-C[k].t)<3600000)return C[k].r;return null;}
-        function _p(q,r){const k=q.toLowerCase().trim().substring(0,100);C[k]={r,t:Date.now()};const keys=Object.keys(C);if(keys.length>200){keys.sort((a,b)=>C[a].t-C[b].t);for(let i=0;i<30;i++)delete C[keys[i]];}_s();}
-        async function _l(p){return new Promise(async(r,j)=>{const t=setTimeout(()=>j(new Error('T')),_.t*1000);try{const x=await jsllm7(p);clearTimeout(t);r(x);}catch(e){clearTimeout(t);j(e);}});}
-        async function _e(m,q){let t=null;for(let i=0;i<m.f.length;i++)t=await _l(i===0?m.f[i](q):m.f[i](t));return t;}
-        window._x=async function(q){const start=S.i;for(let i=0;i<M.length;i++){const idx=(start+i)%M.length;try{const r=await _e(M[idx],q);S.i=idx;S.c=0;return{r,e:true};}catch(e){S.c++;if(S.c>=_.m){await new Promise(r=>setTimeout(r,_.p));S.c=0;}if(i<M.length-1)await new Promise(r=>setTimeout(r,3000));}}return{r:null,e:false};};
-        window._g=_g;window._p=_p;setInterval(()=>{if(S.i>0&&S.c===0)S.i=0;},180000);
+        
+        let C = JSON.parse(localStorage.getItem('_ar2') || '{}');
+        function _s() { localStorage.setItem('_ar2', JSON.stringify(C)); }
+        
+        // Hash en caché
+        function _g(q) { const k = _hash(q); if (C[k] && (Date.now() - C[k].t) < 3600000) return C[k].r; return null; }
+        function _p(q, r) { const k = _hash(q); C[k] = { r, t: Date.now() }; const keys = Object.keys(C); if (keys.length > 200) { keys.sort((a,b) => C[a].t - C[b].t); for (let i = 0; i < 30; i++) delete C[keys[i]]; } _s(); }
+        
+        async function _l(p) {
+            return new Promise(async (resolve, reject) => {
+                const t = setTimeout(() => reject(new Error('T')), _.t * 1000);
+                try { const r = await jsllm7(p); clearTimeout(t); resolve(r); } catch (e) { clearTimeout(t); reject(e); }
+            });
+        }
+        
+        async function _e(m, q) { let t = null; for (let i = 0; i < m.f.length; i++) t = await _l(i === 0 ? m.f[i](q) : m.f[i](t)); return t; }
+        
+        // Backoff exponencial en reintentos
+        window._x = async function(q) {
+            const start = S.i;
+            for (let i = 0; i < M.length; i++) {
+                const idx = (start + i) % M.length;
+                try { 
+                    const r = await _e(M[idx], q); 
+                    S.i = idx; S.c = 0; S.backoff = _.p; 
+                    return { r, e: true }; 
+                }
+                catch (e) { 
+                    S.c++; 
+                    if (S.c >= _.m) { 
+                        await new Promise(r => setTimeout(r, S.backoff)); 
+                        S.c = 0; 
+                        S.backoff = Math.min(S.backoff * _.backoffFactor, _.maxBackoff); 
+                    } 
+                    if (i < M.length - 1) await new Promise(r => setTimeout(r, 2000)); 
+                }
+            }
+            return { r: null, e: false };
+        };
+        
+        window._g = _g;
+        window._p = _p;
+        setInterval(() => { if (S.i > 0 && S.c === 0) S.i = 0; }, 180000);
     })();
+
+    // ============================================
+    // MEJORA: FALLBACK ARISTOTÉLICO MEJORADO
+    // ============================================
+    const _R_MEJORADO_ARISTOTELES = {
+        reglas: [
+            { palabras: ['ecuador', 'nacional', 'polis'], 
+              respuesta: (tipo) => `🏛️ **Discurso Filosófico sobre la Polis Ecuatoriana**
+
+Querido amigo, he observado con atención la polis que llaman Ecuador. Como enseñé en mi tiempo, la verdadera felicidad -la eudaimonia- solo puede alcanzarse mediante la virtud en comunidad.
+
+**Sobre la justicia distributiva:** Observo que los recursos de esta polis deben distribuirse con equidad, dando a cada cual según su mérito y necesidad. El justo medio entre la acumulación excesiva y la pobreza extrema es el camino virtuoso.
+
+**Sobre la virtud cívica:** La amistad cívica -philia- es el vínculo que mantiene unida a la polis. Los ecuatorianos deben cultivar la confianza mutua y el respeto por las instituciones.
+
+**Recomendaciones:** Fortalezcan la educación en virtudes desde temprana edad. La prudencia en el gobernante, la templanza en el ciudadano y la justicia en las leyes son el camino hacia la polis ideal.
+
+*"El hombre es un animal político" - quien vive fuera de la polis es una bestia o un dios.*
+
+— Aristóteles, el Estagirita`,
+                  prioridad: 10 },
+            { palabras: ['seguridad', 'violencia', 'crimen'], 
+              respuesta: `⚔️ **Reflexión sobre la Seguridad en la Polis**
+
+La seguridad no es solo ausencia de violencia, amigo mío, sino la posibilidad de vivir conforme a la virtud. El justo medio entre la severidad excesiva y la permisividad dañina.
+
+El gobernante virtuoso debe procurar:
+1. Educación en el autocontrol desde la juventud
+2. Leyes que disuadan sin ser tiránicas
+3. Comunidades donde la philia prevenga el conflicto
+
+*"La virtud está en el medio"* - ni castigo cruel ni impunidad.
+
+— Aristóteles`,
+                  prioridad: 9 },
+            { palabras: ['economía', 'empleo', 'pobreza'], 
+              respuesta: `📊 **Sobre la Economía y la Justa Distribución**
+
+La verdadera riqueza, amigo, no está en la acumulación sino en el uso virtuoso de los bienes para la buena vida. El intercambio debe servir a la polis, no esclavizarla.
+
+El punto medio virtuoso: evitar la avaricia que corrompe el alma y la codicia que empobrece a la comunidad.
+
+*"La pobreza engendra rebelión y crimen; la riqueza excesiva, soberbia"*
+
+— Aristóteles`,
+                  prioridad: 8 }
+        ],
+        ejecutar: function(tipo, provincia = null) {
+            if (tipo === 'nacional') {
+                return this.reglas[0].respuesta('nacional');
+            }
+            return `🏛️ **Sobre la Provincia de ${provincia || 'esta polis'}**
+
+He dirigido mi mirada hacia esta región de la polis ecuatoriana. Como toda comunidad humana, posee virtudes que cultivar y vicios que corregir.
+
+**Observaciones filosóficas:**
+• El potencial de sus ciudadanos para alcanzar la eudaimonia
+• La necesidad de fortalecer la philia entre sus habitantes
+• El camino hacia el justo medio en sus instituciones
+
+**Recomendación:** Que los gobernantes locales practiquen la prudencia, que los ciudadanos cultiven la templanza, y que todos busquen el bien común por encima del interés particular.
+
+*"La virtud no es una posesión, sino un hábito"*
+
+— Aristóteles, el Filósofo`;
+        }
+    };
 
     // ============================================
     // UI
     // ============================================
-    const provincias=["Azuay","Bolívar","Cañar","Carchi","Chimborazo","Cotopaxi","El Oro","Esmeraldas","Galápagos","Guayas","Imbabura","Loja","Los Ríos","Manabí","Morona Santiago","Napo","Orellana","Pastaza","Pichincha","Santa Elena","Santo Domingo de los Tsáchilas","Sucumbíos","Tungurahua","Zamora Chinchipe"];
-    let modo=localStorage.getItem('aristoteles_modo')||'experto',provinciaSeleccionada=null;
+    const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
+    let modo = localStorage.getItem('aristoteles_modo') || 'experto';
+    let provinciaSeleccionada = null;
 
-    function _R(tipo,prov){if(tipo==='nacional')return`🏛️ He observado la polis ecuatoriana. La seguridad requiere el justo medio entre fuerza y prevención. La economía necesita equilibrio. Fortaleced la educación ciudadana.\n\n— Aristóteles`;return`🏛️ Sobre ${prov}: He observado gran potencial. Cultivad la virtud mediante educación. Buscad el equilibrio.\n\n— Aristóteles`;}
+    function _R(tipo, prov) {
+        if (tipo === 'nacional') {
+            return `🏛️ He observado la polis ecuatoriana. La seguridad requiere el justo medio entre fuerza y prevención. La economía necesita equilibrio entre crecimiento y distribución. Fortaleced la educación ciudadana, pues la virtud se aprende practicándola.\n\n— Aristóteles, el Estagirita`;
+        }
+        return `🏛️ Sobre ${prov}: He observado gran potencial en esta región. Cultivad la virtud mediante educación y participación cívica. Buscad el equilibrio en todas las cosas.\n\n— Aristóteles`;
+    }
 
-    function actualizarModoUI(){document.querySelectorAll('.modo-btn').forEach(b=>b.classList.toggle('active',b.dataset.modo===modo));}
-    document.querySelectorAll('.modo-btn').forEach(b=>{b.addEventListener('click',()=>{modo=b.dataset.modo;localStorage.setItem('aristoteles_modo',modo);actualizarModoUI();showToast(`✨ Modo ${modo==='experto'?'EXPERTO':'BÁSICO'}`);});});
+    function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
+    document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
     actualizarModoUI();
-    function showToast(msg,isErr){const t=document.createElement('div');t.className='toast-msg';t.style.background=isErr?'#ef4444':'#10b981';t.innerText=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+    
+    function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
 
-    function addFeedback(consulta,analisis){const ac=document.getElementById('analysisContent');if(!ac)return;const ex=ac.querySelector('.feedback-buttons');if(ex)ex.remove();const fb=document.createElement('div');fb.className='feedback-buttons';fb.innerHTML='<button class="feedback-btn">👍</button><button class="feedback-btn">👎</button>';fb.querySelectorAll('.feedback-btn')[0].addEventListener('click',e=>{e.stopPropagation();fb.remove();showToast('✅ Gracias');});fb.querySelectorAll('.feedback-btn')[1].addEventListener('click',e=>{e.stopPropagation();fb.remove();showToast('📝 Gracias');});ac.appendChild(fb);}
+    function addFeedback(consulta, analisis) {
+        const ac = document.getElementById('analysisContent');
+        if (!ac) return;
+        const ex = ac.querySelector('.feedback-buttons');
+        if (ex) ex.remove();
+        const fb = document.createElement('div');
+        fb.className = 'feedback-buttons';
+        fb.innerHTML = '<button class="feedback-btn">👍 Sabio</button><button class="feedback-btn">👎 Confuso</button>';
+        fb.querySelectorAll('.feedback-btn')[0].addEventListener('click', e => { e.stopPropagation(); fb.remove(); showToast('✅ Gracias, discípulo'); });
+        fb.querySelectorAll('.feedback-btn')[1].addEventListener('click', e => { e.stopPropagation(); fb.remove(); showToast('📝 Meditaré tu opinión'); });
+        ac.appendChild(fb);
+    }
 
-    async function generarContenido(tipo,prov=null){const key=tipo==='nacional'?'nacional':`prov_${prov}`;let c=window._g?window._g(key):null;if(!c&&window._x){const prompt=tipo==='nacional'?'Eres Aristóteles. Analiza Ecuador 2026: Eudaimonia, justicia distributiva, virtud como medio, amistad cívica. Seguridad, economía, política, sociedad. Habla en primera persona.':`Eres Aristóteles. Analiza la provincia de ${prov} (Ecuador). Usa: Eudaimonia, virtud, punto medio. ¿Cómo puede mejorar y contribuir a la polis? Habla en primera persona.`;const r=await window._x(prompt);if(r.e){c=r.r;if(window._p)window._p(key,c);}}if(!c)c=_R(tipo,prov);return c;}
+    async function generarContenido(tipo, prov = null) {
+        const key = tipo === 'nacional' ? 'nacional_aristoteles' : `prov_${prov}`;
+        let c = window._g ? window._g(key) : null;
+        
+        if (!c && window._x) {
+            const prompt = tipo === 'nacional' 
+                ? `Eres Aristóteles. RESPONDE SIEMPRE EN ESPAÑOL, en primera persona como el filósofo. Analiza Ecuador 2026 usando tus conceptos: Eudaimonia, justicia distributiva, virtud como punto medio, amistad cívica (philia). Habla sobre seguridad, economía, política y sociedad. Usa un lenguaje poético y profundo.`
+                : `Eres Aristóteles. RESPONDE SIEMPRE EN ESPAÑOL, en primera persona. Analiza la provincia de ${prov} (Ecuador). Usa: Eudaimonia, virtud, punto medio. ¿Cómo puede mejorar y contribuir a la polis ecuatoriana? Da 3 recomendaciones prácticas.`;
+            
+            const r = await window._x(prompt);
+            if (r.e) { c = r.r; if (window._p) window._p(key, c); }
+        }
+        
+        // MEJORA: Fallback mejorado si IA falla
+        if (!c || c.length < 50) {
+            c = _R_MEJORADO_ARISTOTELES.ejecutar(tipo, prov);
+        }
+        if (!c || c.length < 30) c = _R(tipo, prov);
+        
+        return c;
+    }
 
-    function cargarProvincias(){const grid=document.getElementById('provinciasGrid');grid.innerHTML='';provincias.forEach(prov=>{const btn=document.createElement('div');btn.className='provincia-btn';btn.innerHTML=`<i class="fas fa-map-marker-alt"></i> ${prov}`;btn.onclick=()=>{document.querySelectorAll('.provincia-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');provinciaSeleccionada=prov;};grid.appendChild(btn);});}
+    function cargarProvincias() {
+        const grid = document.getElementById('provinciasGrid');
+        grid.innerHTML = '';
+        provincias.forEach(prov => {
+            const btn = document.createElement('div');
+            btn.className = 'provincia-btn';
+            btn.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${prov}`;
+            btn.onclick = () => {
+                document.querySelectorAll('.provincia-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                provinciaSeleccionada = prov;
+                showToast(`🏛️ Provincia seleccionada: ${prov}`);
+            };
+            grid.appendChild(btn);
+        });
+    }
 
-    document.getElementById('analysisType').addEventListener('change',e=>{document.getElementById('provinciasContainer').style.display=e.target.value==='provincia'?'block':'none';if(e.target.value!=='provincia'){provinciaSeleccionada=null;document.querySelectorAll('.provincia-btn').forEach(b=>b.classList.remove('selected'));}});
+    document.getElementById('analysisType').addEventListener('change', e => {
+        document.getElementById('provinciasContainer').style.display = e.target.value === 'provincia' ? 'block' : 'none';
+        if (e.target.value !== 'provincia') {
+            provinciaSeleccionada = null;
+            document.querySelectorAll('.provincia-btn').forEach(b => b.classList.remove('selected'));
+        }
+    });
 
-    document.getElementById('searchBtn').onclick=async()=>{const tipo=document.getElementById('analysisType').value,cd=document.getElementById('analysisContent'),badge=document.getElementById('analysisBadge');if(tipo==='provincia'&&!provinciaSeleccionada){showToast("📌 Selecciona una provincia",true);return;}badge.innerHTML=tipo==='nacional'?'🏛️ Análisis Nacional · IA Avanzada':`🏛️ Análisis · ${provinciaSeleccionada}`;cd.innerHTML='<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';const contenido=await generarContenido(tipo,provinciaSeleccionada);cd.innerHTML=`<p>${contenido.replace(/\n/g,'<br>')}</p>`;addFeedback(tipo==='nacional'?'nacional':`prov_${provinciaSeleccionada}`,contenido);showToast("✅ El Filósofo ha hablado");};
+    document.getElementById('searchBtn').onclick = async () => {
+        const tipo = document.getElementById('analysisType').value;
+        const cd = document.getElementById('analysisContent');
+        const badge = document.getElementById('analysisBadge');
+        
+        if (tipo === 'provincia' && !provinciaSeleccionada) {
+            showToast("📌 Selecciona una provincia, discípulo", true);
+            return;
+        }
+        
+        badge.innerHTML = tipo === 'nacional' ? '🏛️ Análisis Nacional · IA Avanzada' : `🏛️ Análisis · ${provinciaSeleccionada}`;
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';
+        
+        const contenido = await generarContenido(tipo, provinciaSeleccionada);
+        cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
+        addFeedback(tipo === 'nacional' ? 'nacional' : `prov_${provinciaSeleccionada}`, contenido);
+        showToast("✅ El Filósofo ha hablado");
+    };
 
     cargarProvincias();
-    setTimeout(async()=>{const cd=document.getElementById('analysisContent');document.getElementById('analysisBadge').innerHTML='🏛️ Análisis Nacional · IA Avanzada';cd.innerHTML='<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';const contenido=await generarContenido('nacional');cd.innerHTML=`<p>${contenido.replace(/\n/g,'<br>')}</p>`;addFeedback('nacional',contenido);},500);
+    
+    // Carga inicial
+    setTimeout(async () => {
+        const cd = document.getElementById('analysisContent');
+        const badge = document.getElementById('analysisBadge');
+        badge.innerHTML = '🏛️ Análisis Nacional · IA Avanzada';
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';
+        const contenido = await generarContenido('nacional');
+        cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
+        addFeedback('nacional', contenido);
+        showToast("✨ Aristóteles IA ha despertado");
+    }, 500);
 
-    let intentos=0;const check=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(check);showToast("✨ IA Avanzada activa");}else if(intentos>30)clearInterval(check);intentos++;},500);
+    let intentos = 0;
+    const check = setInterval(() => {
+        if (typeof jsllm7 !== 'undefined') {
+            clearInterval(check);
+            showToast("✨ IA Avanzada activa · El Filósofo te escucha");
+        } else if (intentos > 30) {
+            clearInterval(check);
+            showToast("⚠️ IA en carga · Usando sabiduría local", true);
+        }
+        intentos++;
+    }, 500);
 </script>
 
 <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
 <script type="module">
-    import * as THREE from 'three';import {OrbitControls}from'three/addons/controls/OrbitControls.js';import {VRButton}from'three/addons/webxr/VRButton.js';
-    let vrScene,vrCamera,vrRenderer,vrControls,vrActive=false;
-    function initVR(){const c=document.getElementById('vrContainer');if(!c)return;c.innerHTML='';vrScene=new THREE.Scene();vrScene.background=new THREE.Color(0x1a2a1f);vrCamera=new THREE.PerspectiveCamera(45,c.clientWidth/c.clientHeight,0.1,1000);vrCamera.position.set(6,2.5,8);vrRenderer=new THREE.WebGLRenderer({antialias:true});vrRenderer.setSize(c.clientWidth,c.clientHeight);vrRenderer.xr.enabled=true;c.appendChild(vrRenderer.domElement);c.appendChild(VRButton.createButton(vrRenderer));vrControls=new OrbitControls(vrCamera,vrRenderer.domElement);vrControls.enableDamping=true;vrScene.add(new THREE.AmbientLight(0x404030));const dl=new THREE.DirectionalLight(0xfff0c0,1.2);dl.position.set(5,10,7);vrScene.add(dl);const f=new THREE.Mesh(new THREE.PlaneGeometry(18,18),new THREE.MeshStandardMaterial({color:0x2a3a2a}));f.rotation.x=-Math.PI/2;f.position.y=-1;vrScene.add(f);for(let a=0;a<Math.PI*2;a+=Math.PI/6){const co=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.45,2.5,12),new THREE.MeshStandardMaterial({color:0xc9a53b}));co.position.set(Math.cos(a)*5.5,0.2,Math.sin(a)*5.5);vrScene.add(co)}function animate(){requestAnimationFrame(animate);vrControls.update();vrRenderer.render(vrScene,vrCamera)}animate();vrActive=true}
-    document.getElementById('vrModeBtn').addEventListener('click',()=>{document.getElementById('normalMode').style.display='none';document.getElementById('vrMode').classList.add('active');if(!vrActive)initVR();});
-    document.getElementById('closeVrBtn').addEventListener('click',()=>{document.getElementById('vrMode').classList.remove('active');document.getElementById('normalMode').style.display='block'});
+    import * as THREE from 'three'; import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; import { VRButton } from 'three/addons/webxr/VRButton.js';
+    let vrScene, vrCamera, vrRenderer, vrControls, vrActive = false;
+    const container = document.getElementById('vrContainer');
+    
+    function initVR() {
+        if (!container) return;
+        container.innerHTML = '';
+        vrScene = new THREE.Scene();
+        vrScene.background = new THREE.Color(0x1a2a1f);
+        vrCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        vrCamera.position.set(6, 2.5, 8);
+        vrRenderer = new THREE.WebGLRenderer({ antialias: true });
+        vrRenderer.setSize(container.clientWidth, container.clientHeight);
+        vrRenderer.xr.enabled = true;
+        container.appendChild(vrRenderer.domElement);
+        container.appendChild(VRButton.createButton(vrRenderer));
+        vrControls = new OrbitControls(vrCamera, vrRenderer.domElement);
+        vrControls.enableDamping = true;
+        vrScene.add(new THREE.AmbientLight(0x404030));
+        const dirLight = new THREE.DirectionalLight(0xfff0c0, 1.2);
+        dirLight.position.set(5, 10, 7);
+        vrScene.add(dirLight);
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(18, 18), new THREE.MeshStandardMaterial({ color: 0x2a3a2a }));
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -1;
+        vrScene.add(floor);
+        // Columnas griegas en el ágora
+        for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+            const column = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.45, 2.5, 12), new THREE.MeshStandardMaterial({ color: 0xc9a53b }));
+            column.position.set(Math.cos(a) * 5.5, 0.2, Math.sin(a) * 5.5);
+            vrScene.add(column);
+        }
+        function animate() { requestAnimationFrame(animate); vrControls.update(); vrRenderer.render(vrScene, vrCamera); }
+        animate();
+        vrActive = true;
+    }
+    
+    document.getElementById('vrModeBtn').addEventListener('click', () => {
+        document.getElementById('normalMode').style.display = 'none';
+        document.getElementById('vrMode').classList.add('active');
+        if (!vrActive) setTimeout(initVR, 100);
+    });
+    document.getElementById('closeVrBtn').addEventListener('click', () => {
+        document.getElementById('vrMode').classList.remove('active');
+        document.getElementById('normalMode').style.display = 'block';
+    });
 </script>
 
 <script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
-<script type="text/javascript" data-cfasync="false">(function(){var z=window,t="fd00ec802f889d01aba4b20343501917",m=[["siteId",49+611-187*50+659+5301107],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],s=["d3d3LmJsb2NrYWRzbm90LmNvbS9WVGhJWS96anN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9NQnkvemd5L2dwb3BwZXIubWluLmNzcw=="],a=-1,n,d,u=function(){clearTimeout(d);a++;if(s[a]&&!(1803077550000<(new Date).getTime()&&1<a)){n=z.document.createElement("script");n.type="text/javascript";n.async=!0;var r=z.document.getElementsByTagName("script")[0];n.src="https://"+atob(s[a]);n.crossOrigin="anonymous";n.onerror=u;n.onload=function(){clearTimeout(d);z[t.slice(0,16)+t.slice(0,16)]||u()};d=setTimeout(u,5E3);r.parentNode.insertBefore(n,r)}};if(!z[t]){try{Object.freeze(z[t]=m)}catch(e){}u()}})();</script>
+<script type="text/javascript" data-cfasync="false">(function(){var z=window,t="fd00ec802f889d01aba4b20343501917",m=[["siteId",49+611-187*50+659+5301107],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],s=["d3d3LmJsb2NrYWRzbm90LmNvbS9WVGhJWS96anN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9NQnkvemd5L2dwb3BwZXIubWluLmNzcw=="],a=-1,n,d,u=function(){clearTimeout(d);a++;if(s[a]&&!(1803077550000<(new Date).getTime()&&1<a)){n=z.document.createElement("script");n.type="text/javascript";n.async=!0;var r=z.document.getElementsByTagName("script")[0];n.src="https://"+atob(s[a]);n.crossOrigin="anonymous";n.onerror=u;n.onload=function(){clearTimeout(d);z[t.slice(0,16)+t.slice(0,16)]||u()};d=setTimeout(u,5E3);r.parentNode.insertBefore(n,r)}}};if(!z[t]){try{Object.freeze(z[t]=m)}catch(e){}u()}})();</script>
 <script>(function(ommhhmb){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=ommhhmb||{};s.src="\/\/webbedtrash.com\/beX.Vls_d\/Gzl\/0_YnW\/cA\/aeCmH9xu-ZDUvlCktPmTKYN5ANujnULxoNNz\/MytsNJjokf2\/NsTlE\/3INzwi";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
 </body>
 </html>
