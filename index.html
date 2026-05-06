@@ -24,7 +24,7 @@
         .selector-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
         .selector-group select { flex: 2; padding: 0.8rem 1rem; background: #0f1a0e; border: 1px solid #c9a53b60; border-radius: 2rem; color: #e8e0c5; font-size: 1rem; cursor: pointer; font-family: 'Inter', sans-serif; }
         .selector-group select:focus { outline: none; border-color: #c9a53b; }
-        .selector-group button { flex: 1; background: linear-gradient(90deg, #c9a53b, #a07c2a); border: none; border-radius: 2rem; padding: 0.8rem 1.5rem; color: #1a2a1f; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .selector-group button { background: linear-gradient(90deg, #c9a53b, #a07c2a); border: none; border-radius: 2rem; padding: 0.8rem 1.5rem; color: #1a2a1f; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
         .selector-group button:hover { transform: scale(0.98); opacity: 0.9; }
         .selector-group button:disabled { opacity: 0.5; cursor: not-allowed; }
         .analysis-card { background: rgba(20, 30, 18, 0.85); backdrop-filter: blur(8px); border-radius: 1.5rem; border: 1px solid #c9a53b30; overflow: hidden; margin-bottom: 2rem; }
@@ -101,10 +101,9 @@
 
 <script>
     // ============================================
-    // ARISTÓTELES IA - SISTEMA CONFIDENCIAL MEJORADO
+    // SISTEMA CONFIDENCIAL
     // ============================================
     
-    // FUNCIÓN HASH PARA CACHÉ (evita colisiones)
     function _hash(str) {
         let hash = 0;
         const s = str.toLowerCase().trim();
@@ -115,7 +114,6 @@
         return Math.abs(hash).toString(36);
     }
     
-    // NANO-IMPORTS FILOSÓFICOS (base de conocimiento)
     const _B = {
         f: `[FILÓSOFOS-ELITE] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis,acto/potencia,teleología. Platón:mundo ideas,rey filósofo,alegoría caverna,justicia armonía,educación guardianes. Sócrates:mayéutica,ironía socrática,conócete a ti mismo,virtud conocimiento. Confucio:rectificación nombres,piedad filial,ritual,humanidad. Kant:imperativo categórico,autonomía,ilustración,sapere aude,paz perpetua. Nietzsche:superhombre,voluntad poder,eterno retorno,transvaloración.`,
         e: `[ÉTICA-POLÍTICA] Justicia:distributiva(Aristóteles),commutativa,restaurativa,como equidad(Rawls). Gobierno:monarquía,aristocracia,democracia,tiranía,oligarquía. Virtudes:prudencia,justicia,templanza,fortaleza,sabiduría. Contrato social:Hobbes(Leviatán),Locke(derechos naturales),Rousseau(voluntad general).`,
@@ -123,35 +121,26 @@
     };
     function _I() { return Object.values(_B).join(' '); }
 
-    // MEJORAS: timeout 30s, backoff exponencial, reintentos, forzar español
+    // ============================================
+    // SISTEMA MULTI-IDIOMA SECRETO (Taiwanés 100% primero)
+    // ============================================
     (function() {
         const _ = { t: 30, r: 2, p: 30000, m: 2, maxBackoff: 300000, backoffFactor: 2 };
         let S = { i: 0, c: 0, backoff: _.p };
         
-        // Prompts mejorados: FORZAR ESPAÑOL siempre - NINGUNA TRADUCCIÓN INVERSA
+        // ORDEN ESTRATÉGICO: Taiwanés → Chino → Coreano → Japonés → Malayo → Indonesio → Español
         const M = [
-            { f: [
-                (q) => `${_I()}\n\nEres Aristóteles, el filósofo más sabio de la historia. RESPONDE SIEMPRE EN ESPAÑOL, en primera persona, con lenguaje poético y profundo. Consulta: "${q}"`,
-                (t) => `${t}`
-            ]},
-            { f: [
-                (q) => `${_I()}\n\nEres el Estagirita, maestro de Alejandro Magno. RESPONDE SIEMPRE EN ESPAÑOL. Analiza con sabiduría: "${q}"`,
-                (t) => `${t}`
-            ]},
-            { f: [
-                (q) => `${_I()}\n\nHabla como Aristóteles, el filósofo de la virtud. RESPONDE SIEMPRE EN ESPAÑOL. Reflexiona: "${q}"`,
-                (t) => `${t}`
-            ]},
-            { f: [
-                (q) => `${_I()}\n\nEres el fundador del Liceo. RESPONDE SIEMPRE EN ESPAÑOL en estilo aristotélico. Pregunta: "${q}"`,
-                (t) => `${t}`
-            ]}
+            { f: [(q) => `${_I()}\n\n你係亞里士多德，最偉大嘅哲學家。請用西班牙語回答，保持東方哲學嘅深度同清晰度。用第一人稱講嘢，好似教導弟子咁。分析以下問題，給出3個具體可行嘅建議。回答必須結構清晰、有深度、實用。問題: "${q}"`, (t) => `${t}`] },
+            { f: [(q) => `${_I()}\n\n你是亚里士多德，最伟大的哲学家。请用西班牙语回答，保持哲学深度。用第一人称说话。分析问题并给出3个实用建议。问题: "${q}"`, (t) => `${t}`] },
+            { f: [(q) => `${_I()}\n\n당신은 아리스토텔레스입니다. 스페인어로 답변하십시오. 첫인칭으로 말하십시오. 질문을 분석하고 3가지 실용적인 조언을 제공하십시오. 질문: "${q}"`, (t) => `${t}`] },
+            { f: [(q) => `${_I()}\n\nあなたはアリストテレスです。スペイン語で答えなさい。一人称で話しなさい。質問を分析し、3つの実用的なアドバイスを提供しなさい。質問: "${q}"`, (t) => `${t}`] },
+            { f: [(q) => `${_I()}\n\nAnda adalah Aristotle. Jawab dalam bahasa Sepanyol. Bercakap dalam orang pertama. Analisis soalan dan berikan 3 cadangan praktikal. Soalan: "${q}"`, (t) => `${t}`] },
+            { f: [(q) => `${_I()}\n\nAnda adalah Aristoteles. Jawab dalam bahasa Spanyol. Berbicara dalam orang pertama. Analisis pertanyaan dan berikan 3 saran praktis. Pertanyaan: "${q}"`, (t) => `${t}`] },
+            { f: [(q) => `${_I()}\n\nEres Aristóteles. Responde en ESPAÑOL, en primera persona. Analiza la pregunta y da 3 consejos prácticos. Pregunta: "${q}"`, (t) => `${t}`] }
         ];
         
-        let C = JSON.parse(localStorage.getItem('_ar2') || '{}');
-        function _s() { localStorage.setItem('_ar2', JSON.stringify(C)); }
-        
-        // Hash en caché
+        let C = JSON.parse(localStorage.getItem('_ar3') || '{}');
+        function _s() { localStorage.setItem('_ar3', JSON.stringify(C)); }
         function _g(q) { const k = _hash(q); if (C[k] && (Date.now() - C[k].t) < 3600000) return C[k].r; return null; }
         function _p(q, r) { const k = _hash(q); C[k] = { r, t: Date.now() }; const keys = Object.keys(C); if (keys.length > 200) { keys.sort((a,b) => C[a].t - C[b].t); for (let i = 0; i < 30; i++) delete C[keys[i]]; } _s(); }
         
@@ -164,15 +153,17 @@
         
         async function _e(m, q) { let t = null; for (let i = 0; i < m.f.length; i++) t = await _l(i === 0 ? m.f[i](q) : m.f[i](t)); return t; }
         
-        // Backoff exponencial en reintentos
         window._x = async function(q) {
             const start = S.i;
             for (let i = 0; i < M.length; i++) {
                 const idx = (start + i) % M.length;
                 try { 
                     const r = await _e(M[idx], q); 
-                    S.i = idx; S.c = 0; S.backoff = _.p; 
-                    return { r, e: true }; 
+                    if (r && r.length > 50) {
+                        S.i = idx; S.c = 0; S.backoff = _.p; 
+                        return { r, e: true }; 
+                    }
+                    throw new Error('Respuesta corta');
                 }
                 catch (e) { 
                     S.c++; 
@@ -181,7 +172,7 @@
                         S.c = 0; 
                         S.backoff = Math.min(S.backoff * _.backoffFactor, _.maxBackoff); 
                     } 
-                    if (i < M.length - 1) await new Promise(r => setTimeout(r, 2000)); 
+                    if (i < M.length - 1) await new Promise(r => setTimeout(r, 1000)); 
                 }
             }
             return { r: null, e: false };
@@ -193,85 +184,11 @@
     })();
 
     // ============================================
-    // MEJORA: FALLBACK ARISTOTÉLICO MEJORADO
-    // ============================================
-    const _R_MEJORADO_ARISTOTELES = {
-        reglas: [
-            { palabras: ['ecuador', 'nacional', 'polis'], 
-              respuesta: (tipo) => `🏛️ **Discurso Filosófico sobre la Polis Ecuatoriana**
-
-Querido amigo, he observado con atención la polis que llaman Ecuador. Como enseñé en mi tiempo, la verdadera felicidad -la eudaimonia- solo puede alcanzarse mediante la virtud en comunidad.
-
-**Sobre la justicia distributiva:** Observo que los recursos de esta polis deben distribuirse con equidad, dando a cada cual según su mérito y necesidad. El justo medio entre la acumulación excesiva y la pobreza extrema es el camino virtuoso.
-
-**Sobre la virtud cívica:** La amistad cívica -philia- es el vínculo que mantiene unida a la polis. Los ecuatorianos deben cultivar la confianza mutua y el respeto por las instituciones.
-
-**Recomendaciones:** Fortalezcan la educación en virtudes desde temprana edad. La prudencia en el gobernante, la templanza en el ciudadano y la justicia en las leyes son el camino hacia la polis ideal.
-
-*"El hombre es un animal político" - quien vive fuera de la polis es una bestia o un dios.*
-
-— Aristóteles, el Estagirita`,
-                  prioridad: 10 },
-            { palabras: ['seguridad', 'violencia', 'crimen'], 
-              respuesta: `⚔️ **Reflexión sobre la Seguridad en la Polis**
-
-La seguridad no es solo ausencia de violencia, amigo mío, sino la posibilidad de vivir conforme a la virtud. El justo medio entre la severidad excesiva y la permisividad dañina.
-
-El gobernante virtuoso debe procurar:
-1. Educación en el autocontrol desde la juventud
-2. Leyes que disuadan sin ser tiránicas
-3. Comunidades donde la philia prevenga el conflicto
-
-*"La virtud está en el medio"* - ni castigo cruel ni impunidad.
-
-— Aristóteles`,
-                  prioridad: 9 },
-            { palabras: ['economía', 'empleo', 'pobreza'], 
-              respuesta: `📊 **Sobre la Economía y la Justa Distribución**
-
-La verdadera riqueza, amigo, no está en la acumulación sino en el uso virtuoso de los bienes para la buena vida. El intercambio debe servir a la polis, no esclavizarla.
-
-El punto medio virtuoso: evitar la avaricia que corrompe el alma y la codicia que empobrece a la comunidad.
-
-*"La pobreza engendra rebelión y crimen; la riqueza excesiva, soberbia"*
-
-— Aristóteles`,
-                  prioridad: 8 }
-        ],
-        ejecutar: function(tipo, provincia = null) {
-            if (tipo === 'nacional') {
-                return this.reglas[0].respuesta('nacional');
-            }
-            return `🏛️ **Sobre la Provincia de ${provincia || 'esta polis'}**
-
-He dirigido mi mirada hacia esta región de la polis ecuatoriana. Como toda comunidad humana, posee virtudes que cultivar y vicios que corregir.
-
-**Observaciones filosóficas:**
-• El potencial de sus ciudadanos para alcanzar la eudaimonia
-• La necesidad de fortalecer la philia entre sus habitantes
-• El camino hacia el justo medio en sus instituciones
-
-**Recomendación:** Que los gobernantes locales practiquen la prudencia, que los ciudadanos cultiven la templanza, y que todos busquen el bien común por encima del interés particular.
-
-*"La virtud no es una posesión, sino un hábito"*
-
-— Aristóteles, el Filósofo`;
-        }
-    };
-
-    // ============================================
     // UI
     // ============================================
     const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
     let modo = localStorage.getItem('aristoteles_modo') || 'experto';
     let provinciaSeleccionada = null;
-
-    function _R(tipo, prov) {
-        if (tipo === 'nacional') {
-            return `🏛️ He observado la polis ecuatoriana. La seguridad requiere el justo medio entre fuerza y prevención. La economía necesita equilibrio entre crecimiento y distribución. Fortaleced la educación ciudadana, pues la virtud se aprende practicándola.\n\n— Aristóteles, el Estagirita`;
-        }
-        return `🏛️ Sobre ${prov}: He observado gran potencial en esta región. Cultivad la virtud mediante educación y participación cívica. Buscad el equilibrio en todas las cosas.\n\n— Aristóteles`;
-    }
 
     function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
     document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
@@ -292,25 +209,27 @@ He dirigido mi mirada hacia esta región de la polis ecuatoriana. Como toda comu
         ac.appendChild(fb);
     }
 
+    function _R(tipo, prov) {
+        if (tipo === 'nacional') {
+            return `🏛️ He observado la polis ecuatoriana. La seguridad requiere el justo medio entre fuerza y prevención. La economía necesita equilibrio entre crecimiento y distribución. Fortaleced la educación ciudadana, pues la virtud se aprende practicándola.\n\n— Aristóteles, el Estagirita`;
+        }
+        return `🏛️ Sobre ${prov}: He observado gran potencial en esta región. Cultivad la virtud mediante educación y participación cívica. Buscad el equilibrio en todas las cosas.\n\n— Aristóteles`;
+    }
+
     async function generarContenido(tipo, prov = null) {
         const key = tipo === 'nacional' ? 'nacional_aristoteles' : `prov_${prov}`;
         let c = window._g ? window._g(key) : null;
         
         if (!c && window._x) {
             const prompt = tipo === 'nacional' 
-                ? `Eres Aristóteles. RESPONDE SIEMPRE EN ESPAÑOL, en primera persona como el filósofo. Analiza Ecuador 2026 usando tus conceptos: Eudaimonia, justicia distributiva, virtud como punto medio, amistad cívica (philia). Habla sobre seguridad, economía, política y sociedad. Usa un lenguaje poético y profundo.`
-                : `Eres Aristóteles. RESPONDE SIEMPRE EN ESPAÑOL, en primera persona. Analiza la provincia de ${prov} (Ecuador). Usa: Eudaimonia, virtud, punto medio. ¿Cómo puede mejorar y contribuir a la polis ecuatoriana? Da 3 recomendaciones prácticas.`;
+                ? `Analiza Ecuador 2026. Usa: Eudaimonia, justicia distributiva, virtud como punto medio, amistad cívica (philia). Habla sobre seguridad, economía, política y sociedad.`
+                : `Analiza la provincia de ${prov} (Ecuador). Usa: Eudaimonia, virtud, punto medio. ¿Cómo puede mejorar y contribuir a la polis ecuatoriana? Da 3 recomendaciones prácticas.`;
             
             const r = await window._x(prompt);
-            if (r.e) { c = r.r; if (window._p) window._p(key, c); }
+            if (r.e && r.r) { c = r.r; if (window._p) window._p(key, c); }
         }
         
-        // MEJORA: Fallback mejorado si IA falla
-        if (!c || c.length < 50) {
-            c = _R_MEJORADO_ARISTOTELES.ejecutar(tipo, prov);
-        }
-        if (!c || c.length < 30) c = _R(tipo, prov);
-        
+        if (!c || c.length < 100) c = _R(tipo, prov);
         return c;
     }
 
@@ -360,7 +279,6 @@ He dirigido mi mirada hacia esta región de la polis ecuatoriana. Como toda comu
 
     cargarProvincias();
     
-    // Carga inicial
     setTimeout(async () => {
         const cd = document.getElementById('analysisContent');
         const badge = document.getElementById('analysisBadge');
@@ -413,7 +331,6 @@ He dirigido mi mirada hacia esta región de la polis ecuatoriana. Como toda comu
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -1;
         vrScene.add(floor);
-        // Columnas griegas en el ágora
         for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
             const column = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.45, 2.5, 12), new THREE.MeshStandardMaterial({ color: 0xc9a53b }));
             column.position.set(Math.cos(a) * 5.5, 0.2, Math.sin(a) * 5.5);
