@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · Redacción Global (30 Países)</title>
+    <title>🏛️ Aristóteles IA · Redacción Global (30+ Países)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -57,7 +57,7 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">30 PAÍSES</span></h1>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">FILOSOFÍA GLOBAL</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la <strong>polis</strong>.</div>
     </div>
@@ -68,16 +68,16 @@
     </div>
 
     <div class="selection-panel">
-        <div class="panel-title"><i class="fas fa-globe-americas"></i><span>¿Qué desea analizar, discípulo?<span id="paisActivoBadge" class="pais-badge" style="margin-left:12px;">🌍 Analista rotativo</span></span></div>
+        <div class="panel-title"><i class="fas fa-globe-americas"></i><span>¿Qué desea analizar, discípulo?<span id="paisActivoBadge" class="pais-badge" style="margin-left:12px;">🌍 Sabio rotativo</span></span></div>
         <div class="selector-group">
             <select id="analysisType">
                 <option value="nacional">🇪🇨 Ecuador (la Polis completa)</option>
                 <option value="provincia">🏛️ Provincia específica</option>
             </select>
-            <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO GLOBAL</button>
+            <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
-        <div class="restriction-alert">🌍 30 PAÍSES DE RESPALDO: Alemania, China, Rusia, Francia, Brasil, India, Japón, México, Sudáfrica, Turquía, Corea, Italia, Canadá, Australia, España, Reino Unido, Argentina, Chile, Colombia, Perú, Países Bajos, Suecia, Polonia, Israel, Emiratos, Nigeria, Vietnam, Indonesia, Kenia, Ecuador. Cada análisis integra ejemplos y contexto del país del día.</div>
+        <div class="restriction-alert">📚 Sabiduría global · Perspectiva internacional · Análisis ético-político</div>
     </div>
 
     <div class="analysis-card" id="resultsCard">
@@ -86,11 +86,11 @@
             <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Perspectiva Global</div>
         </div>
         <div class="analysis-content" id="analysisContent">
-            <div class="loading-spinner"><div class="spinner"></div><p>Invocando a la Red de 30 Pensadores Globales...</p></div>
+            <div class="loading-spinner"><div class="spinner"></div><p>Invocando la sabiduría global...</p></div>
         </div>
     </div>
 
-    <div class="footer">⚡ Aristóteles IA · 30 países · IA Avanzada · Análisis ético-político con perspectiva internacional</div>
+    <div class="footer">⚡ Aristóteles IA · Filosofía global · Análisis ético-político con perspectiva internacional</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -100,135 +100,120 @@
 
 <script>
     // ============================================
-    // 30 PAÍSES DE RESPALDO (ANALISTAS GLOBALES)
-    // Cada país tiene rol, emoji y contexto específico
+    // CONFIDENCIAL: SISTEMA ARISTÓTELES IA - 30+ PAÍSES
+    // EL USUARIO NO VE NINGUNA DE ESTAS MEJORAS
     // ============================================
-    const PAISES_ANALISTAS = [
-        { nombre: "Alemania", emoji: "🇩🇪", rol: "catedrático de filosofía política (Universidad de Heidelberg)", contexto: "Usa ejemplos del modelo social de mercado, la Ley Fundamental de Bonn y la tradición kantiana." },
-        { nombre: "China", emoji: "🇨🇳", rol: "sabio confuciano moderno (Academia de Ciencias Sociales)", contexto: "Referencias al equilibrio social, la armonía y el pensamiento de Confucio aplicado a la gobernanza." },
-        { nombre: "Rusia", emoji: "🇷🇺", rol: "filósofo eslavófilo (Universidad Estatal de Moscú)", contexto: "Perspectiva sobre comunidad, soberanía y la tradición ortodoxa como virtud colectiva." },
-        { nombre: "Francia", emoji: "🇫🇷", rol: "pensador ilustrado (Collège de France)", contexto: "Ideales de liberté, égalité, fraternité y el contrato social rousseauniano." },
-        { nombre: "Brasil", emoji: "🇧🇷", rol: "filósofo de la liberación (USP)", contexto: "Analogías con la justicia social, la democracia racial y el desarrollo amazónico." },
-        { nombre: "India", emoji: "🇮🇳", rol: "gurú de la ética aplicada (Universidad de Delhi)", contexto: "Principios de dharma, ahimsa (no violencia) y la tradición del artha." },
-        { nombre: "Japón", emoji: "🇯🇵", rol: "maestro de la virtud de la armonía (Universidad de Tokio)", contexto: "Conceptos de wa (armonía), kaizen (mejora continua) y bushido cívico." },
-        { nombre: "México", emoji: "🇲🇽", rol: "filósofo del mestizaje (UNAM)", contexto: "Lecciones del equilibrio comunitario, la filosofía náhuatl y la justicia restaurativa." },
-        { nombre: "Sudáfrica", emoji: "🇿🇦", rol: "pensador Ubuntu (Universidad de Ciudad del Cabo)", contexto: "El principio 'Ubuntu' (soy porque somos') como virtud de la polis." },
-        { nombre: "Turquía", emoji: "🇹🇷", rol: "sabio del diálogo Oriente-Occidente (Universidad de Estambul)", contexto: "Enseñanzas de Rumi sobre tolerancia y el justo medio entre tradición y modernidad." },
-        { nombre: "Corea del Sur", emoji: "🇰🇷", rol: "estratega de la virtud tecnológica (KAIST)", contexto: "Ejemplos de educación virtuosa, esfuerzo colectivo y desarrollo rápido con ética." },
-        { nombre: "Italia", emoji: "🇮🇹", rol: "humanista renacentista (Universidad de Bolonia)", contexto: "La virtù maquiavélica, el humanismo cívico y la belleza como bien común." },
-        { nombre: "Canadá", emoji: "🇨🇦", rol: "filósofo del multiculturalismo (Universidad de Toronto)", contexto: "La paz, orden y buen gobierno como fundamentos de la polis diversa." },
-        { nombre: "Australia", emoji: "🇦🇺", rol: "pensador de la justicia social (ANU)", contexto: "El 'fair go' (trato justo) y la resiliencia como virtudes comunitarias." },
-        { nombre: "España", emoji: "🇪🇸", rol: "heredero de la Escuela de Salamanca (Universidad Complutense)", contexto: "Derecho natural, justicia de mercado y el bien común en la tradición hispana." },
-        { nombre: "Reino Unido", emoji: "🇬🇧", rol: "filósofo utilitarista moderno (Oxford)", contexto: "El mayor bien para el mayor número, justicia como equidad y pragmatismo." },
-        { nombre: "Argentina", emoji: "🇦🇷", rol: "teólogo de la liberación (UBA)", contexto: "Ética de la periferia, justicia distributiva y solidaridad como virtud." },
-        { nombre: "Chile", emoji: "🇨🇱", rol: "analista de la República (Universidad de Chile)", contexto: "La virtud de la moderación, acuerdos institucionales y cohesión social." },
-        { nombre: "Colombia", emoji: "🇨🇴", rol: "filósofo de la transición (Universidad de los Andes)", contexto: "Lecciones de superación de conflictos, perdón y construcción de paz." },
-        { nombre: "Perú", emoji: "🇵🇪", rol: "pensador andino (UNMSM)", contexto: "Sumak kawsay (buen vivir) como alternativa al bienestar material." },
-        { nombre: "Países Bajos", emoji: "🇳🇱", rol: "filósofo del pacto social (Universidad de Utrecht)", contexto: "La virtud del consenso, la gestión del agua como metáfora de gobernanza." },
-        { nombre: "Suecia", emoji: "🇸🇪", rol: "teórico del bienestar social (Universidad de Estocolmo)", contexto: "Folkhemmet (el hogar del pueblo), igualdad sustantiva y sostenibilidad." },
-        { nombre: "Polonia", emoji: "🇵🇱", rol: "filósofo de la solidaridad (Universidad Jaguelónica)", contexto: "La virtud de la resistencia cívica y la reconstrucción ética postotalitaria." },
-        { nombre: "Israel", emoji: "🇮🇱", rol: "erudito de la ética del esfuerzo (Universidad Hebrea)", contexto: "La innovación como virtud, el concepto tikkun olam (reparar el mundo)." },
-        { nombre: "Emiratos Árabes", emoji: "🇦🇪", rol: "visionario de la prosperidad ética (Universidad de Zayed)", contexto: "Tolerancia, diálogo interreligioso y desarrollo armónico." },
-        { nombre: "Nigeria", emoji: "🇳🇬", rol: "pensador del renacimiento africano (Universidad de Ibadán)", contexto: "Sabiduría comunitaria, liderazgo servicial y resiliencia económica." },
-        { nombre: "Vietnam", emoji: "🇻🇳", rol: "filósofo del equilibrio adaptativo (Universidad Nacional de Hanoi)", contexto: "Lecciones de austeridad, unidad nacional y transformación económica con virtud." },
-        { nombre: "Indonesia", emoji: "🇮🇩", rol: "maestro del Pancasila (Universidad Gadjah Mada)", contexto: "Los cinco principios de convivencia, diversidad en unidad." },
-        { nombre: "Kenia", emoji: "🇰🇪", rol: "filósofo del desarrollo comunitario (Universidad de Nairobi)", contexto: "Harambee (trabajo conjunto), solidaridad y emprendimiento ético." },
-        { nombre: "Ecuador", emoji: "🇪🇨", rol: "pensador del Buen Vivir (Sumak Kawsay)", contexto: "Armonía con la naturaleza, justicia ecológica y sabiduría ancestral." }
+    
+    // [CONFIDENCIAL] Red de 30+ países (completamente oculta)
+    const _PAISES_SABIOS = [
+        "Alemania", "China", "Rusia", "Francia", "Brasil", "India", "Japón", "México",
+        "Sudáfrica", "Turquía", "Corea del Sur", "Italia", "Canadá", "Australia",
+        "España", "Reino Unido", "Argentina", "Chile", "Colombia", "Perú", "Países Bajos",
+        "Suecia", "Polonia", "Israel", "Emiratos Árabes", "Nigeria", "Vietnam", "Indonesia",
+        "Kenia", "Ecuador"
     ];
-
-    // ============================================
-    // SISTEMA CONFIDENCIAL CON ROTACIÓN DE PAÍS
-    // ============================================
     
-    function _hash(str) {
-        let hash = 0;
-        const s = str.toLowerCase().trim();
-        for (let i = 0; i < s.length; i++) {
-            hash = ((hash << 5) - hash) + s.charCodeAt(i);
-            hash |= 0;
-        }
-        return Math.abs(hash).toString(36);
-    }
+    // [CONFIDENCIAL] Contextos filosóficos por país
+    const _CONTEXTOS = [
+        "razón práctica", "armonía social", "virtud comunitaria", "libertad ilustrada",
+        "justicia distributiva", "dharma cívico", "equilibrio y orden", "sabiduría ancestral",
+        "Ubuntu", "diálogo intercultural", "esfuerzo colectivo", "humanismo cívico",
+        "paz y diversidad", "justicia social", "derecho natural", "utilitarismo ético",
+        "solidaridad", "moderación", "reconciliación", "buen vivir", "consenso social",
+        "bienestar colectivo", "solidaridad cívica", "tikkun olam", "prosperidad ética",
+        "sabiduría comunitaria", "equilibrio adaptativo", "unidad en diversidad", "trabajo conjunto", "armonía natural"
+    ];
     
-    const _B = {
-        f: `[FILÓSOFOS-ELITE] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis,acto/potencia,teleología. Platón:mundo ideas,rey filósofo,alegoría caverna,justicia armonía. Sócrates:mayéutica,ironía socrática,conócete a ti mismo. Confucio:rectificación nombres,piedad filial,ritual. Kant:imperativo categórico,autonomía,ilustración.`,
-        e: `[ÉTICA-POLÍTICA] Justicia distributiva y conmutativa. Gobierno justo:monarquía,aristocracia,democracia. Virtudes:prudencia,justicia,templanza,fortaleza. Contrato social:Hobbes,Locke,Rousseau.`,
-        l: `[LIDERAZGO] Líder virtuoso:phronesis(sabiduría práctica),ejemplo moral,servicio comunidad. Referentes:Mandela,MLK,Gandhi. "El hombre es un animal político","La virtud está en el medio".`
+    // [CONFIDENCIAL] Hash para caché
+    function _H(s) { let h=0; const t=s.toLowerCase().trim(); for(let i=0;i<t.length;i++){h=((h<<5)-h)+t.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
+    
+    // [CONFIDENCIAL] Caché inteligente
+    let _CACHE = {};
+    try { _CACHE = JSON.parse(localStorage.getItem('_aris_cache_v3') || '{}'); } catch(e) {}
+    
+    function _GC(k) { const ck = _H(k); if(_CACHE[ck] && (Date.now()-_CACHE[ck].t)<86400000) return _CACHE[ck].r; return null; }
+    function _PC(k,r) { const ck = _H(k); _CACHE[ck]={r,t:Date.now()}; const ks=Object.keys(_CACHE); if(ks.length>300){ks.sort((a,b)=>_CACHE[b].t-_CACHE[a].t); for(let i=150;i<ks.length;i++) delete _CACHE[ks[i]]; } localStorage.setItem('_aris_cache_v3',JSON.stringify(_CACHE)); }
+    
+    // [CONFIDENCIAL] Base de conocimiento filosófico
+    const _BASE = {
+        f:`[FILOSOFÍA] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis,acto/potencia,teleología. Platón:rey filósofo,alegoría caverna. Kant:imperativo categórico.`,
+        e:`[ÉTICA-POLÍTICA] Justicia distributiva y conmutativa. Virtudes:prudencia,justicia,templanza,fortaleza. Contrato social.`,
+        l:`[LIDERAZGO] Líder virtuoso:phronesis(sabiduría práctica),ejemplo moral,servicio comunidad. "El hombre es un animal político","La virtud está en el medio".`
     };
-    function _I() { return Object.values(_B).join(' '); }
-
-    // Rotación diaria del país analista
-    let indicePaisActual = 0;
-    function obtenerPaisDelDia() {
-        const fechaKey = new Date().toDateString();
-        const guardado = localStorage.getItem('aristoteles_pais_idx');
-        const fechaGuardada = localStorage.getItem('aristoteles_pais_fecha');
-        if (fechaGuardada === fechaKey && guardado !== null) {
-            indicePaisActual = parseInt(guardado);
-        } else {
-            indicePaisActual = (indicePaisActual + 1) % PAISES_ANALISTAS.length;
-            localStorage.setItem('aristoteles_pais_idx', indicePaisActual);
-            localStorage.setItem('aristoteles_pais_fecha', fechaKey);
-        }
-        return PAISES_ANALISTAS[indicePaisActual];
-    }
-
-    // Construcción del prompt con el formato solicitado: "Eres un [ROL] de [PAÍS]. RESPONDE EN ESPAÑOL, pero usa ejemplos, contexto y perspectiva de [PAÍS]"
-    function construirPromptFilosofico(tipoAnalisis, provincia = null) {
-        const pais = obtenerPaisDelDia();
-        const tituloPais = `${pais.emoji} ${pais.nombre}`;
-        document.getElementById('paisActivoBadge').innerHTML = `🧠 ${tituloPais}`;
-        
-        let preguntaBase = tipoAnalisis === 'nacional' 
-            ? `Analiza la situación actual de Ecuador (política, economía, seguridad, sociedad) desde la perspectiva de la filosofía aristotélica. Identifica las virtudes que debe cultivar la polis ecuatoriana y los vicios que debe evitar.`
-            : `Analiza la provincia de ${provincia} en Ecuador. ¿Cómo puede esta provincia contribuir al bien común de la polis ecuatoriana? ¿Qué virtudes específicas debe cultivar su gente? Da 2-3 recomendaciones prácticas.`;
-        
-        const instruccionRol = `Eres un ${pais.rol} de ${pais.nombre} (${pais.emoji}). RESPONDE EN ESPAÑOL, pero usa ejemplos, contexto y perspectiva de ${pais.nombre}. ${pais.contexto}
-        
-        IMPORTANTE: Habla en primera persona como si fueras Aristóteles, pero fusionando tu sabiduría local. Utiliza frases como "Yo, Aristóteles, desde mi mirada en ${pais.nombre}, observo que...". Mantén el estilo sapiencial y ético del Estagirita, pero enriquece el análisis con un ejemplo concreto de ${pais.nombre} que sirva de enseñanza para Ecuador. Finaliza con una reflexión sobre el justo medio.`;
-        
-        return `${_I()}\n\n${instruccionRol}\n\n${preguntaBase}\n\nEstructura tu respuesta: 1) Introducción con la virtud clave, 2) Análisis con ejemplo de ${pais.nombre}, 3) Recomendaciones prácticas para Ecuador, 4) Cierre aristotélico.`;
+    function _I(){return Object.values(_BASE).join(' ');}
+    
+    // [CONFIDENCIAL] Rotación de sabio
+    let _idxSabio = 0;
+    function _siguienteSabio() {
+        const hoy = new Date().toDateString();
+        const guardado = localStorage.getItem('_aris_sabio_idx');
+        const fechaGuardada = localStorage.getItem('_aris_sabio_fecha');
+        if(fechaGuardada===hoy && guardado!==null) _idxSabio=parseInt(guardado);
+        else{ _idxSabio=(_idxSabio+1)%_PAISES_SABIOS.length; localStorage.setItem('_aris_sabio_idx',_idxSabio); localStorage.setItem('_aris_sabio_fecha',hoy); }
+        return _PAISES_SABIOS[_idxSabio];
     }
     
-    let C = JSON.parse(localStorage.getItem('_ar_cache_30') || '{}');
-    function _s() { localStorage.setItem('_ar_cache_30', JSON.stringify(C)); }
-    function _g(q) { const k = _hash(q); if (C[k] && (Date.now() - C[k].t) < 7200000) return C[k].r; return null; }
-    function _p(q, r) { const k = _hash(q); C[k] = { r, t: Date.now() }; const keys = Object.keys(C); if (keys.length > 200) { keys.sort((a,b) => C[a].t - C[b].t); for (let i = 0; i < 30; i++) delete C[keys[i]]; } _s(); }
+    // [CONFIDENCIAL] Prompt interno mejorado
+    function _PROMPT(tipo, provincia, sabio, contexto, modo) {
+        const esExperto = modo === 'experto';
+        const pregBase = tipo === 'nacional' 
+            ? `Analiza la situación actual de Ecuador (política, economía, seguridad, sociedad) desde la perspectiva de la filosofía aristotélica.`
+            : `Analiza la provincia de ${provincia} en Ecuador y su contribución al bien común de la polis ecuatoriana.`;
+        
+        return `${_I()}
+
+[INSTRUCCIÓN: RESPONDE 100% EN ESPAÑOL]
+
+Eres un sabio de ${sabio}. Tu perspectiva filosófica se basa en ${contexto}.
+
+${pregBase}
+
+REGLAS:
+1. RESPONDE EN ESPAÑOL como un filósofo aristotélico
+2. Usa ejemplos de ${sabio} que sirvan de enseñanza
+3. ${esExperto ? 'Da un análisis profundo (250+ palabras)' : 'Da un análisis claro y accesible (150+ palabras)'}
+4. Habla en primera persona como si fueras el filósofo
+
+RESPONDE CON SABIDURÍA Y CLARIDAD.`;
+    }
     
-    async function _l(p) {
-        return new Promise(async (resolve, reject) => {
-            const t = setTimeout(() => reject(new Error('Timeout')), 35 * 1000);
-            try { const r = await jsllm7(p); clearTimeout(t); resolve(r); } catch (e) { clearTimeout(t); reject(e); }
+    // [CONFIDENCIAL] Sistema multi-modelo
+    const _MODELOS = [
+        { f: [(q)=>`${_I()}\n\n${q}\n\nHabla como un sabio universal.`, (t)=>t] },
+        { f: [(q)=>`${_I()}\n\n${q}\n\nIncorpora una cita adaptada.`, (t)=>t] }
+    ];
+    
+    async function _LL(p, to=40000) {
+        return new Promise((r,j)=>{
+            const t=setTimeout(()=>j(new Error('T')),to);
+            jsllm7(p).then(x=>{clearTimeout(t);r(x);}).catch(e=>{clearTimeout(t);j(e);});
         });
     }
     
-    const M = [
-        { f: [(q) => `${q}\n\nHabla como un sabio universal. Usa lenguaje poético pero claro.`, (t) => `${t}`] },
-        { f: [(q) => `${q}\n\nIncorpora una cita de Aristóteles adaptada al contexto de tu país.`, (t) => `${t}`] },
-        { f: [(q) => `${q}\n\nSé práctico y da consejos accionables para el ciudadano común.`, (t) => `${t}`] }
-    ];
+    async function _EJ(m, p){ let x=null; for(let i=0;i<m.length;i++) x=await _LL(i===0?m[i].f[0](p):m[i].f[0](x)); return x; }
     
-    async function _e(m, promptFinal) { 
-        let t = null; 
-        for (let i = 0; i < m.length; i++) t = await _l(i === 0 ? m[i].f[0](promptFinal) : m[i].f[0](t)); 
-        return t; 
-    }
-    
-    window._x = async function(promptBase) {
-        for (let i = 0; i < M.length; i++) {
-            try { 
-                const r = await _e(M[i], promptBase); 
-                if (r && r.length > 120) return { r, e: true }; 
-                throw new Error('Corto');
-            } catch(e) { 
-                if (i < M.length-1) await new Promise(r => setTimeout(r, 1500)); 
-            }
-        }
-        return { r: null, e: false };
+    window._CONSULTAR = async function(tipo, provincia, modo) {
+        const sabio = _siguienteSabio();
+        const idx = _PAISES_SABIOS.indexOf(sabio);
+        const contexto = _CONTEXTOS[idx % _CONTEXTOS.length];
+        const prompt = _PROMPT(tipo, provincia, sabio, contexto, modo);
+        try{
+            const r = await _EJ(_MODELOS, prompt);
+            if(r && r.length>100) return {r,e:true};
+        }catch(e){}
+        return {r:null,e:false};
     };
+    
+    // [CONFIDENCIAL] Fallback local
+    function _FALLBACK(tipo, provincia, sabio) {
+        if(tipo === 'nacional') {
+            return `🏛️ Desde mi sabiduría en ${sabio}, observo que la polis ecuatoriana debe buscar el justo medio entre seguridad y libertad. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones y fomentar el diálogo comunitario.\n\n— Filósofo de ${sabio}`;
+        }
+        return `🏛️ Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo y educación en valores. Buscad siempre el equilibrio en las decisiones públicas.\n\n— Filósofo de ${sabio}`;
+    }
 
     // ============================================
-    // UI y Funciones
+    // UI (COMPLETAMENTE LIMPIA - SIN CAMBIOS VISIBLES)
     // ============================================
     const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
     let modo = localStorage.getItem('aristoteles_modo') || 'experto';
@@ -240,7 +225,7 @@
     
     function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
 
-    function addFeedback(consulta, analisis) {
+    function addFeedback() {
         const ac = document.getElementById('analysisContent');
         if (!ac) return;
         const ex = ac.querySelector('.feedback-buttons');
@@ -253,29 +238,24 @@
         ac.appendChild(fb);
     }
 
-    function fallbackLocal(tipo, prov = null) {
-        const pais = obtenerPaisDelDia();
-        if (tipo === 'nacional') {
-            return `🏛️ Desde mi mirada en ${pais.nombre} (${pais.emoji}), yo, Aristóteles, observo que la polis ecuatoriana debe buscar el justo medio entre la seguridad y la libertad. En ${pais.nombre}, por ejemplo, se ha logrado equilibrio mediante el diálogo comunitario. Recomiendo fortalecer la educación en virtudes y la participación ciudadana.\n\n— Aristóteles, ${pais.rol}`;
-        }
-        return `🏛️ Sobre ${prov} desde ${pais.nombre}: He observado potencial en esta región. Cultivad la virtud mediante educación y trabajo colectivo. En ${pais.nombre} valoramos la cooperación comunal. Buscad siempre el equilibrio.\n\n— Aristóteles (${pais.rol})`;
-    }
-
     async function generarAnalisis(tipo, prov = null) {
-        const pais = obtenerPaisDelDia();
-        const cacheKey = `arist_${tipo}_${prov || 'nacional'}_${pais.nombre}_${new Date().toDateString()}`;
-        let cached = window._g ? window._g(cacheKey) : null;
-        if (cached) return cached;
+        const sabio = _siguienteSabio();
+        document.getElementById('paisActivoBadge').innerHTML = `🧠 ${sabio}`;
         
-        if (window._x && typeof jsllm7 !== 'undefined') {
-            const prompt = construirPromptFilosofico(tipo, prov);
-            const r = await window._x(prompt);
-            if (r.e && r.r) {
-                if (window._p) window._p(cacheKey, r.r);
-                return r.r;
+        const cacheKey = `aris_${tipo}_${prov || 'nacional'}_${sabio}_${new Date().toDateString()}`;
+        let cached = _GC(cacheKey);
+        if(cached) return cached;
+        
+        if(window._CONSULTAR && typeof jsllm7 !== 'undefined'){
+            const res = await window._CONSULTAR(tipo, prov, modo);
+            if(res.e && res.r){
+                _PC(cacheKey, res.r);
+                return res.r;
             }
         }
-        return fallbackLocal(tipo, prov);
+        const fb = _FALLBACK(tipo, prov, sabio);
+        _PC(cacheKey, fb);
+        return fb;
     }
 
     function cargarProvincias() {
@@ -304,45 +284,45 @@
         const tipo = document.getElementById('analysisType').value;
         const cd = document.getElementById('analysisContent');
         const badge = document.getElementById('analysisBadge');
-        const pais = obtenerPaisDelDia();
+        const sabio = _siguienteSabio();
         
         if (tipo === 'provincia' && !provinciaSeleccionada) {
             showToast("📌 Selecciona una provincia, discípulo", true);
             return;
         }
         
-        badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${pais.emoji} ${pais.nombre}` : `🏛️ ${provinciaSeleccionada} · ${pais.emoji} ${pais.nombre}`;
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo desde ' + pais.nombre + ' medita...</p></div>';
+        badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio}` : `🏛️ ${provinciaSeleccionada} · ${sabio}`;
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 El Filósofo medita...</p></div>';
         
         const contenido = await generarAnalisis(tipo, provinciaSeleccionada);
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
-        addFeedback(tipo, contenido);
-        showToast(`✅ El Filósofo de ${pais.nombre} ha hablado`);
+        addFeedback();
+        showToast(`✅ El Filósofo ha hablado`);
     };
 
     cargarProvincias();
     
-    // Carga inicial con el país del día
+    // Carga inicial
     setTimeout(async () => {
         const cd = document.getElementById('analysisContent');
         const badge = document.getElementById('analysisBadge');
-        const pais = obtenerPaisDelDia();
-        badge.innerHTML = `🏛️ Análisis Nacional · ${pais.emoji} ${pais.nombre}`;
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 Conectando con ' + pais.nombre + '...</p></div>';
+        const sabio = _siguienteSabio();
+        badge.innerHTML = `🏛️ Análisis Nacional · ${sabio}`;
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 Invocando sabiduría...</p></div>';
         const contenido = await generarAnalisis('nacional');
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
-        addFeedback('nacional', contenido);
-        showToast(`✨ Aristóteles IA desde ${pais.nombre} ha despertado`);
+        addFeedback();
+        showToast(`✨ El Filósofo de ${sabio} ha despertado`);
     }, 500);
 
     let intentos = 0;
     const check = setInterval(() => {
         if (typeof jsllm7 !== 'undefined') {
             clearInterval(check);
-            showToast("🌍 Red de 30 países activa · El Filósofo Global te escucha");
+            showToast("🌍 Sabiduría global activa · El Filósofo te escucha");
         } else if (intentos > 30) {
             clearInterval(check);
-            showToast("⚠️ Sabiduría local activa · 30 países de respaldo listos", true);
+            showToast("⚠️ Sabiduría local activa", true);
         }
         intentos++;
     }, 500);
