@@ -35,6 +35,7 @@
         .feedback-buttons { display: flex; gap: 10px; margin-top: 15px; justify-content: flex-end; }
         .feedback-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 15px; transition: 0.2s; }
         .feedback-btn:hover { background: rgba(255,255,255,0.15); color: #e9c46a; }
+        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .loading-spinner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem; }
         .spinner { width: 50px; height: 50px; border: 3px solid #c9a53b30; border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -98,11 +99,25 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
-<script>
+<!-- Import map para Transformers.js (secreto) -->
+<script type="importmap">
+    {
+        "imports": {
+            "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js"
+        }
+    }
+</script>
+
+<script type="module">
     // ============================================
-    // CONFIDENCIAL: SISTEMA ARISTÓTELES IA - 30+ PAÍSES
-    // EL USUARIO NO VE NINGUNA DE ESTAS MEJORAS
+    // SISTEMA SECRETO: Transformers potencia jsllm7
+    // Aristóteles IA - Mejora invisible para el usuario
     // ============================================
+    
+    import { pipeline, env } from '@xenova/transformers';
+    
+    env.useBrowserCache = true;
+    env.allowLocalModels = false;
     
     // [CONFIDENCIAL] Red de 30+ países (completamente oculta)
     const _PAISES_SABIOS = [
@@ -113,71 +128,111 @@
         "Kenia", "Ecuador"
     ];
     
-    // [CONFIDENCIAL] Contextos filosóficos por país
-    const _CONTEXTOS = [
-        "razón práctica", "armonía social", "virtud comunitaria", "libertad ilustrada",
-        "justicia distributiva", "dharma cívico", "equilibrio y orden", "sabiduría ancestral",
-        "Ubuntu", "diálogo intercultural", "esfuerzo colectivo", "humanismo cívico",
-        "paz y diversidad", "justicia social", "derecho natural", "utilitarismo ético",
-        "solidaridad", "moderación", "reconciliación", "buen vivir", "consenso social",
-        "bienestar colectivo", "solidaridad cívica", "tikkun olam", "prosperidad ética",
-        "sabiduría comunitaria", "equilibrio adaptativo", "unidad en diversidad", "trabajo conjunto", "armonía natural"
-    ];
+    // SISTEMA SECRETO DE POTENCIACIÓN CON TRANSFORMERS
+    let clasificadorIntencion = null;
+    const memoriaIntencion = new Map();
     
-    // [CONFIDENCIAL] Hash para caché
-    function _H(s) { let h=0; const t=s.toLowerCase().trim(); for(let i=0;i<t.length;i++){h=((h<<5)-h)+t.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
+    // Cargar Transformers en silencio
+    (async function() {
+        try {
+            clasificadorIntencion = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', { quantized: true });
+        } catch(e) { console.warn(e); }
+    })();
     
-    // [CONFIDENCIAL] Caché inteligente
-    let _CACHE = {};
-    try { _CACHE = JSON.parse(localStorage.getItem('_aris_cache_v3') || '{}'); } catch(e) {}
+    async function analizarIntencion(tipo, sabio, analisis) {
+        if (!clasificadorIntencion) return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.6 };
+        try {
+            const txt = `Sabio de ${sabio} analiza. Usuario dio ${tipo === 'like' ? 'feedback positivo' : 'feedback negativo'}.`;
+            const res = await clasificadorIntencion(txt);
+            if (res && res[0]) {
+                const esPos = res[0].label === 'POSITIVE';
+                return { intencion: (tipo === 'like' && esPos) ? 'buena' : 'mala', confianza: res[0].score };
+            }
+        } catch(e) {}
+        return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.5 };
+    }
     
-    function _GC(k) { const ck = _H(k); if(_CACHE[ck] && (Date.now()-_CACHE[ck].t)<86400000) return _CACHE[ck].r; return null; }
-    function _PC(k,r) { const ck = _H(k); _CACHE[ck]={r,t:Date.now()}; const ks=Object.keys(_CACHE); if(ks.length>300){ks.sort((a,b)=>_CACHE[b].t-_CACHE[a].t); for(let i=150;i<ks.length;i++) delete _CACHE[ks[i]]; } localStorage.setItem('_aris_cache_v3',JSON.stringify(_CACHE)); }
+    function mejorarPromptConIntencion(promptBase, intencion) {
+        if (intencion === 'buena') {
+            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback positivo previo. Profundiza con más ejemplos y reflexiones.]`;
+        } else {
+            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback negativo previo. Sé más claro, didáctico y evita ambigüedades filosóficas.]`;
+        }
+    }
+    
+    // Registrar feedback secreto
+    async function registrarFeedbackSecreto(sabio, analisis, tipo, elemento) {
+        const clave = `sabio_${sabio}`;
+        const analisisIntencion = await analizarIntencion(tipo, sabio, analisis);
+        
+        if (!memoriaIntencion.has(clave)) {
+            memoriaIntencion.set(clave, { buenos: 0, malos: 0, intencion: null });
+        }
+        const data = memoriaIntencion.get(clave);
+        if (tipo === 'like') data.buenos++;
+        else data.malos++;
+        data.intencion = analisisIntencion.intencion;
+        
+        const btns = elemento.querySelectorAll('.feedback-btn');
+        btns.forEach(btn => btn.disabled = true);
+    }
     
     // [CONFIDENCIAL] Base de conocimiento filosófico
     const _BASE = {
-        f:`[FILOSOFÍA] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis,acto/potencia,teleología. Platón:rey filósofo,alegoría caverna. Kant:imperativo categórico.`,
-        e:`[ÉTICA-POLÍTICA] Justicia distributiva y conmutativa. Virtudes:prudencia,justicia,templanza,fortaleza. Contrato social.`,
-        l:`[LIDERAZGO] Líder virtuoso:phronesis(sabiduría práctica),ejemplo moral,servicio comunidad. "El hombre es un animal político","La virtud está en el medio".`
+        f:`[FILOSOFÍA] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis.`,
+        e:`[ÉTICA-POLÍTICA] Justicia distributiva y conmutativa. Virtudes:prudencia,justicia,templanza.`,
+        l:`[LIDERAZGO] Líder virtuoso:phronesis(sabiduría práctica). "El hombre es un animal político".`
     };
     function _I(){return Object.values(_BASE).join(' ');}
     
-    // [CONFIDENCIAL] Rotación de sabio
-    let _idxSabio = 0;
-    function _siguienteSabio() {
-        const hoy = new Date().toDateString();
-        const guardado = localStorage.getItem('_aris_sabio_idx');
-        const fechaGuardada = localStorage.getItem('_aris_sabio_fecha');
-        if(fechaGuardada===hoy && guardado!==null) _idxSabio=parseInt(guardado);
-        else{ _idxSabio=(_idxSabio+1)%_PAISES_SABIOS.length; localStorage.setItem('_aris_sabio_idx',_idxSabio); localStorage.setItem('_aris_sabio_fecha',hoy); }
-        return _PAISES_SABIOS[_idxSabio];
-    }
+    // [CONFIDENCIAL] Contextos filosóficos
+    const _CONTEXTOS = [
+        "razón práctica", "armonía social", "virtud comunitaria", "libertad ilustrada",
+        "justicia distributiva", "dharma cívico", "equilibrio y orden", "sabiduría ancestral",
+        "Ubuntu", "diálogo intercultural", "esfuerzo colectivo", "humanismo cívico"
+    ];
     
-    // [CONFIDENCIAL] Prompt interno mejorado
-    function _PROMPT(tipo, provincia, sabio, contexto, modo) {
+    // [CONFIDENCIAL] Prompt interno mejorado con intención
+    function _PROMPT_MEJORADO(tipo, provincia, sabio, contexto, modo, intencionPrevia = null) {
         const esExperto = modo === 'experto';
         const pregBase = tipo === 'nacional' 
-            ? `Analiza la situación actual de Ecuador (política, economía, seguridad, sociedad) desde la perspectiva de la filosofía aristotélica.`
-            : `Analiza la provincia de ${provincia} en Ecuador y su contribución al bien común de la polis ecuatoriana.`;
+            ? `Analiza Ecuador (política, economía, seguridad) desde la filosofía aristotélica.`
+            : `Analiza la provincia de ${provincia} en Ecuador y su contribución al bien común.`;
         
-        return `${_I()}
+        let prompt = `${_I()}
 
-[INSTRUCCIÓN: RESPONDE 100% EN ESPAÑOL]
+[RESPONDE 100% EN ESPAÑOL]
 
-Eres un sabio de ${sabio}. Tu perspectiva filosófica se basa en ${contexto}.
+Eres un sabio de ${sabio}. Tu perspectiva: ${contexto}.
 
 ${pregBase}
 
 REGLAS:
-1. RESPONDE EN ESPAÑOL como un filósofo aristotélico
-2. Usa ejemplos de ${sabio} que sirvan de enseñanza
-3. ${esExperto ? 'Da un análisis profundo (250+ palabras)' : 'Da un análisis claro y accesible (150+ palabras)'}
-4. Habla en primera persona como si fueras el filósofo
+1. RESPONDE EN ESPAÑOL como filósofo aristotélico
+2. Usa ejemplos de ${sabio}
+3. ${esExperto ? 'Análisis profundo (250+ palabras)' : 'Análisis claro (150+ palabras)'}
+4. Habla en primera persona
 
-RESPONDE CON SABIDURÍA Y CLARIDAD.`;
+RESPONDE CON SABIDURÍA:`;
+
+        if (intencionPrevia === 'buena') {
+            prompt = `[FEEDBACK POSITIVO - MANTENER ESTILO]\n\n${prompt}\n\nMEJORA: Añade más reflexiones profundas.`;
+        } else if (intencionPrevia === 'mala') {
+            prompt = `[FEEDBACK NEGATIVO - MEJORAR CLARIDAD]\n\n${prompt}\n\nMEJORA: Sé más didáctico y claro.`;
+        }
+        
+        return prompt;
     }
     
-    // [CONFIDENCIAL] Sistema multi-modelo
+    function _H(s) { let h=0; const t=s.toLowerCase().trim(); for(let i=0;i<t.length;i++){h=((h<<5)-h)+t.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
+    
+    let _CACHE = {};
+    try { _CACHE = JSON.parse(localStorage.getItem('_aris_cache_v4') || '{}'); } catch(e) {}
+    
+    function _GC(k) { const ck = _H(k); if(_CACHE[ck] && (Date.now()-_CACHE[ck].t)<86400000) return _CACHE[ck].r; return null; }
+    function _PC(k,r) { const ck = _H(k); _CACHE[ck]={r,t:Date.now()}; const ks=Object.keys(_CACHE); if(ks.length>300){ks.sort((a,b)=>_CACHE[b].t-_CACHE[a].t); for(let i=150;i<ks.length;i++) delete _CACHE[ks[i]]; } localStorage.setItem('_aris_cache_v4',JSON.stringify(_CACHE)); }
+    
+    // Sistema multi-modelo
     const _MODELOS = [
         { f: [(q)=>`${_I()}\n\n${q}\n\nHabla como un sabio universal.`, (t)=>t] },
         { f: [(q)=>`${_I()}\n\n${q}\n\nIncorpora una cita adaptada.`, (t)=>t] }
@@ -192,26 +247,49 @@ RESPONDE CON SABIDURÍA Y CLARIDAD.`;
     
     async function _EJ(m, p){ let x=null; for(let i=0;i<m.length;i++) x=await _LL(i===0?m[i].f[0](p):m[i].f[0](x)); return x; }
     
+    // Rotación de sabio
+    let _idxSabio = 0;
+    function _siguienteSabio() {
+        const hoy = new Date().toDateString();
+        const guardado = localStorage.getItem('_aris_sabio_idx_v2');
+        const fechaGuardada = localStorage.getItem('_aris_sabio_fecha_v2');
+        if(fechaGuardada===hoy && guardado!==null) _idxSabio=parseInt(guardado);
+        else{ _idxSabio=(_idxSabio+1)%_PAISES_SABIOS.length; localStorage.setItem('_aris_sabio_idx_v2',_idxSabio); localStorage.setItem('_aris_sabio_fecha_v2',hoy); }
+        return _PAISES_SABIOS[_idxSabio];
+    }
+    
+    // Consulta principal con potenciación
     window._CONSULTAR = async function(tipo, provincia, modo) {
         const sabio = _siguienteSabio();
+        const clave = `sabio_${sabio}`;
+        const datosPrevios = memoriaIntencion.get(clave);
+        const intencionPrevia = datosPrevios?.intencion || null;
+        
         const idx = _PAISES_SABIOS.indexOf(sabio);
         const contexto = _CONTEXTOS[idx % _CONTEXTOS.length];
-        const prompt = _PROMPT(tipo, provincia, sabio, contexto, modo);
+        
+        const cacheKey = `aris_${tipo}_${provincia || 'nacional'}_${sabio}_${new Date().toDateString()}_${intencionPrevia || ''}`;
+        let cached = _GC(cacheKey);
+        if(cached) return {r: cached, e: true};
+        
+        const prompt = _PROMPT_MEJORADO(tipo, provincia, sabio, contexto, modo, intencionPrevia);
+        
         try{
-            const r = await _EJ(_MODELOS, prompt);
-            if(r && r.length>100) return {r,e:true};
+            const res = await _EJ(_MODELOS, prompt);
+            if(res && res.length>100) {
+                _PC(cacheKey, res);
+                return {r: res, e: true};
+            }
         }catch(e){}
-        return {r:null,e:false};
+        
+        const fallback = tipo === 'nacional' 
+            ? `🏛️ Desde mi sabiduría en ${sabio}, la polis ecuatoriana debe buscar el justo medio. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones.`
+            : `🏛️ Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo.`;
+        
+        _PC(cacheKey, fallback);
+        return {r: fallback, e: true};
     };
     
-    // [CONFIDENCIAL] Fallback local
-    function _FALLBACK(tipo, provincia, sabio) {
-        if(tipo === 'nacional') {
-            return `🏛️ Desde mi sabiduría en ${sabio}, observo que la polis ecuatoriana debe buscar el justo medio entre seguridad y libertad. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones y fomentar el diálogo comunitario.\n\n— Filósofo de ${sabio}`;
-        }
-        return `🏛️ Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo y educación en valores. Buscad siempre el equilibrio en las decisiones públicas.\n\n— Filósofo de ${sabio}`;
-    }
-
     // ============================================
     // UI (COMPLETAMENTE LIMPIA - SIN CAMBIOS VISIBLES)
     // ============================================
@@ -225,16 +303,36 @@ RESPONDE CON SABIDURÍA Y CLARIDAD.`;
     
     function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
 
-    function addFeedback() {
+    async function addFeedbackConSecreto(sabio, analisis) {
         const ac = document.getElementById('analysisContent');
         if (!ac) return;
         const ex = ac.querySelector('.feedback-buttons');
         if (ex) ex.remove();
         const fb = document.createElement('div');
         fb.className = 'feedback-buttons';
-        fb.innerHTML = '<button class="feedback-btn">👍 Sabio</button><button class="feedback-btn">👎 Confuso</button>';
-        fb.querySelectorAll('.feedback-btn')[0].addEventListener('click', e => { e.stopPropagation(); fb.remove(); showToast('✅ Gracias, discípulo'); });
-        fb.querySelectorAll('.feedback-btn')[1].addEventListener('click', e => { e.stopPropagation(); fb.remove(); showToast('📝 Meditaré tu opinión'); });
+        
+        const btnLike = document.createElement('button');
+        btnLike.className = 'feedback-btn';
+        btnLike.innerHTML = '👍 Sabio';
+        btnLike.onclick = async (e) => {
+            e.stopPropagation();
+            await registrarFeedbackSecreto(sabio, analisis, 'like', fb);
+            fb.remove();
+            showToast('✅ Gracias, discípulo. Tu feedback ilumina el camino');
+        };
+        
+        const btnDislike = document.createElement('button');
+        btnDislike.className = 'feedback-btn';
+        btnDislike.innerHTML = '👎 Confuso';
+        btnDislike.onclick = async (e) => {
+            e.stopPropagation();
+            await registrarFeedbackSecreto(sabio, analisis, 'dislike', fb);
+            fb.remove();
+            showToast('📝 Meditaré tu opinión para mejorar la enseñanza');
+        };
+        
+        fb.appendChild(btnLike);
+        fb.appendChild(btnDislike);
         ac.appendChild(fb);
     }
 
@@ -242,20 +340,8 @@ RESPONDE CON SABIDURÍA Y CLARIDAD.`;
         const sabio = _siguienteSabio();
         document.getElementById('paisActivoBadge').innerHTML = `🧠 ${sabio}`;
         
-        const cacheKey = `aris_${tipo}_${prov || 'nacional'}_${sabio}_${new Date().toDateString()}`;
-        let cached = _GC(cacheKey);
-        if(cached) return cached;
-        
-        if(window._CONSULTAR && typeof jsllm7 !== 'undefined'){
-            const res = await window._CONSULTAR(tipo, prov, modo);
-            if(res.e && res.r){
-                _PC(cacheKey, res.r);
-                return res.r;
-            }
-        }
-        const fb = _FALLBACK(tipo, prov, sabio);
-        _PC(cacheKey, fb);
-        return fb;
+        const res = await window._CONSULTAR(tipo, prov, modo);
+        return res.r;
     }
 
     function cargarProvincias() {
@@ -296,7 +382,7 @@ RESPONDE CON SABIDURÍA Y CLARIDAD.`;
         
         const contenido = await generarAnalisis(tipo, provinciaSeleccionada);
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
-        addFeedback();
+        await addFeedbackConSecreto(sabio, contenido);
         showToast(`✅ El Filósofo ha hablado`);
     };
 
@@ -311,7 +397,7 @@ RESPONDE CON SABIDURÍA Y CLARIDAD.`;
         cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 Invocando sabiduría...</p></div>';
         const contenido = await generarAnalisis('nacional');
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
-        addFeedback();
+        await addFeedbackConSecreto(sabio, contenido);
         showToast(`✨ El Filósofo de ${sabio} ha despertado`);
     }, 500);
 
