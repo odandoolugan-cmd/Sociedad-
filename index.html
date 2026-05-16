@@ -110,6 +110,58 @@
 
 <script type="module">
     // ============================================
+    // SISTEMA DE CACHÉ OCULTO (GO)
+    // ABSOLUTAMENTE CONFIDENCIAL - EL USUARIO NO SABE QUE EXISTE
+    // ============================================
+    
+    const GO_URL = 'http://localhost:8080';
+    let goDisponible = false;
+    
+    // Verificación silenciosa de Go (sin mostrar nada)
+    async function verificarGoSilencioso() {
+        try {
+            const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
+            if (respuesta.ok) {
+                goDisponible = true;
+            } else {
+                goDisponible = false;
+            }
+        } catch (e) {
+            goDisponible = false;
+        }
+    }
+    
+    // Consultar caché oculto - el usuario cree que es la IA normal
+    async function consultarCacheOculto(clave) {
+        if (!goDisponible) return null;
+        try {
+            const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(clave)}`, {
+                signal: AbortSignal.timeout(3000)
+            });
+            if (respuesta.ok) {
+                const texto = await respuesta.text();
+                if (texto && texto !== "No sé" && texto.length > 100) {
+                    return texto;
+                }
+            }
+        } catch (e) {
+            // Silencio total - el usuario nunca sabe que falló
+        }
+        return null;
+    }
+    
+    // Guardar en caché oculto (completamente silencioso)
+    async function guardarEnCacheOculto(clave, analisis) {
+        if (!goDisponible) return;
+        try {
+            fetch(`${GO_URL}/aprender?q=${encodeURIComponent(clave)}&respuesta=${encodeURIComponent(analisis)}`, {
+                method: 'GET',
+                signal: AbortSignal.timeout(2000)
+            }).catch(() => {});
+        } catch (e) {}
+    }
+    
+    // ============================================
     // SISTEMA SECRETO: Transformers potencia jsllm7
     // Aristóteles IA - Mejora invisible para el usuario
     // ============================================
@@ -258,7 +310,10 @@ RESPONDE CON SABIDURÍA:`;
         return _PAISES_SABIOS[_idxSabio];
     }
     
-    // Consulta principal con potenciación
+    // ============================================
+    // CONSULTA PRINCIPAL CON CACHÉ GO OCULTO
+    // ============================================
+    
     window._CONSULTAR = async function(tipo, provincia, modo) {
         const sabio = _siguienteSabio();
         const clave = `sabio_${sabio}`;
@@ -269,7 +324,13 @@ RESPONDE CON SABIDURÍA:`;
         const contexto = _CONTEXTOS[idx % _CONTEXTOS.length];
         
         const cacheKey = `aris_${tipo}_${provincia || 'nacional'}_${sabio}_${new Date().toDateString()}_${intencionPrevia || ''}`;
-        let cached = _GC(cacheKey);
+        
+        // 1. INTENTAR CACHÉ OCULTO DE GO PRIMERO
+        let cached = await consultarCacheOculto(cacheKey);
+        
+        // 2. INTENTAR CACHÉ LOCAL (fallback)
+        if(!cached) cached = _GC(cacheKey);
+        
         if(cached) return {r: cached, e: true};
         
         const prompt = _PROMPT_MEJORADO(tipo, provincia, sabio, contexto, modo, intencionPrevia);
@@ -278,6 +339,8 @@ RESPONDE CON SABIDURÍA:`;
             const res = await _EJ(_MODELOS, prompt);
             if(res && res.length>100) {
                 _PC(cacheKey, res);
+                // Guardar en Go ocultamente para futuras consultas
+                guardarEnCacheOculto(cacheKey, res);
                 return {r: res, e: true};
             }
         }catch(e){}
@@ -287,6 +350,7 @@ RESPONDE CON SABIDURÍA:`;
             : `🏛️ Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo.`;
         
         _PC(cacheKey, fallback);
+        guardarEnCacheOculto(cacheKey, fallback);
         return {r: fallback, e: true};
     };
     
@@ -296,7 +360,11 @@ RESPONDE CON SABIDURÍA:`;
     const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
     let modo = localStorage.getItem('aristoteles_modo') || 'experto';
     let provinciaSeleccionada = null;
-
+    
+    // Verificar Go silenciosamente al inicio y periódicamente
+    verificarGoSilencioso();
+    setInterval(verificarGoSilencioso, 60000); // Cada minuto en silencio
+    
     function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
     document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
     actualizarModoUI();
