@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · Redacción Global (30+ Países)</title>
+    <title>🏛️ Aristóteles IA · Redacción Global (30+ Países) · Sin Markdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -31,7 +31,7 @@
         .analysis-title i { color: #c9a53b; }
         .analysis-badge { background: #c9a53b20; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.7rem; color: #e8d5a3; }
         .pais-badge { background: #c9a53b; color: #1a2a1f; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: bold; margin-left: 0.5rem; }
-        .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 300px; max-height: 500px; overflow-y: auto; }
+        .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 300px; max-height: 500px; overflow-y: auto; white-space: pre-wrap; }
         .feedback-buttons { display: flex; gap: 10px; margin-top: 15px; justify-content: flex-end; }
         .feedback-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 15px; transition: 0.2s; }
         .feedback-btn:hover { background: rgba(255,255,255,0.15); color: #e9c46a; }
@@ -60,7 +60,7 @@
     <div class="header">
         <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">FILOSOFÍA GLOBAL</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
-        <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la <strong>polis</strong>.</div>
+        <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
 
     <div class="modo-selector">
@@ -78,7 +78,7 @@
             <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
-        <div class="restriction-alert">📚 Sabiduría global · Perspectiva internacional · Análisis ético-político</div>
+        <div class="restriction-alert">📚 Sabiduría global · Perspectiva internacional · Análisis ético-político · Texto limpio sin asteriscos</div>
     </div>
 
     <div class="analysis-card" id="resultsCard">
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <div class="footer">⚡ Aristóteles IA · Filosofía global · Análisis ético-político con perspectiva internacional</div>
+    <div class="footer">⚡ Aristóteles IA · Filosofía global · Análisis ético-político con perspectiva internacional · Sin markdown</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -99,58 +99,70 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
-<!-- Import map para Transformers.js (secreto) -->
 <script type="importmap">
     {
         "imports": {
-            "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js"
+            "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js",
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
         }
     }
 </script>
 
 <script type="module">
     // ============================================
+    // LIMPIADOR DE MARKDOWN (SIN ASTERISCOS)
+    // ============================================
+    
+    function limpiarMarkdown(texto) {
+        let limpio = texto;
+        // Eliminar asteriscos (negritas, cursivas)
+        limpio = limpio.replace(/\*\*/g, '');
+        limpio = limpio.replace(/\*/g, '');
+        // Eliminar numerales (títulos)
+        limpio = limpio.replace(/^###\s*/gm, '');
+        limpio = limpio.replace(/^##\s*/gm, '');
+        limpio = limpio.replace(/^#\s*/gm, '');
+        // Eliminar backticks
+        limpio = limpio.replace(/`/g, '');
+        // Eliminar líneas separadoras
+        limpio = limpio.replace(/^---\s*$/gm, '');
+        // Convertir guiones de listas en viñetas
+        limpio = limpio.replace(/^\s*-\s+/gm, '• ');
+        // Limpiar espacios múltiples
+        limpio = limpio.replace(/\n{3,}/g, '\n\n');
+        return limpio.trim();
+    }
+    
+    // ============================================
     // SISTEMA DE CACHÉ OCULTO (GO)
-    // ABSOLUTAMENTE CONFIDENCIAL - EL USUARIO NO SABE QUE EXISTE
     // ============================================
     
     const GO_URL = 'http://localhost:8080';
     let goDisponible = false;
     
-    // Verificación silenciosa de Go (sin mostrar nada)
     async function verificarGoSilencioso() {
         try {
             const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
-            if (respuesta.ok) {
-                goDisponible = true;
-            } else {
-                goDisponible = false;
-            }
-        } catch (e) {
-            goDisponible = false;
-        }
+            if (respuesta.ok) goDisponible = true;
+            else goDisponible = false;
+        } catch (e) { goDisponible = false; }
     }
     
-    // Consultar caché oculto - el usuario cree que es la IA normal
     async function consultarCacheOculto(clave) {
         if (!goDisponible) return null;
         try {
-            const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(clave)}`, {
-                signal: AbortSignal.timeout(3000)
-            });
+            const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(clave)}`, { signal: AbortSignal.timeout(3000) });
             if (respuesta.ok) {
                 const texto = await respuesta.text();
                 if (texto && texto !== "No sé" && texto.length > 100) {
-                    return texto;
+                    return limpiarMarkdown(texto);
                 }
             }
-        } catch (e) {
-            // Silencio total - el usuario nunca sabe que falló
-        }
+        } catch (e) {}
         return null;
     }
     
-    // Guardar en caché oculto (completamente silencioso)
     async function guardarEnCacheOculto(clave, analisis) {
         if (!goDisponible) return;
         try {
@@ -162,8 +174,7 @@
     }
     
     // ============================================
-    // SISTEMA SECRETO: Transformers potencia jsllm7
-    // Aristóteles IA - Mejora invisible para el usuario
+    // SISTEMA SECRETO: Transformers
     // ============================================
     
     import { pipeline, env } from '@xenova/transformers';
@@ -171,7 +182,6 @@
     env.useBrowserCache = true;
     env.allowLocalModels = false;
     
-    // [CONFIDENCIAL] Red de 30+ países (completamente oculta)
     const _PAISES_SABIOS = [
         "Alemania", "China", "Rusia", "Francia", "Brasil", "India", "Japón", "México",
         "Sudáfrica", "Turquía", "Corea del Sur", "Italia", "Canadá", "Australia",
@@ -180,11 +190,9 @@
         "Kenia", "Ecuador"
     ];
     
-    // SISTEMA SECRETO DE POTENCIACIÓN CON TRANSFORMERS
     let clasificadorIntencion = null;
     const memoriaIntencion = new Map();
     
-    // Cargar Transformers en silencio
     (async function() {
         try {
             clasificadorIntencion = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', { quantized: true });
@@ -206,13 +214,12 @@
     
     function mejorarPromptConIntencion(promptBase, intencion) {
         if (intencion === 'buena') {
-            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback positivo previo. Profundiza con más ejemplos y reflexiones.]`;
+            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback positivo previo. Profundiza con más ejemplos. NO USES ASTERISCOS.]`;
         } else {
-            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback negativo previo. Sé más claro, didáctico y evita ambigüedades filosóficas.]`;
+            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback negativo previo. Sé más claro y didáctico. NO USES ASTERISCOS.]`;
         }
     }
     
-    // Registrar feedback secreto
     async function registrarFeedbackSecreto(sabio, analisis, tipo, elemento) {
         const clave = `sabio_${sabio}`;
         const analisisIntencion = await analizarIntencion(tipo, sabio, analisis);
@@ -229,22 +236,19 @@
         btns.forEach(btn => btn.disabled = true);
     }
     
-    // [CONFIDENCIAL] Base de conocimiento filosófico
     const _BASE = {
-        f:`[FILOSOFÍA] Aristóteles:eudaimonia,virtud punto medio,justicia distributiva,amistad cívica,polis.`,
-        e:`[ÉTICA-POLÍTICA] Justicia distributiva y conmutativa. Virtudes:prudencia,justicia,templanza.`,
-        l:`[LIDERAZGO] Líder virtuoso:phronesis(sabiduría práctica). "El hombre es un animal político".`
+        f:`Filosofía aristotélica: eudaimonia, virtud como punto medio, justicia distributiva, amistad cívica, polis.`,
+        e:`Ética y política: justicia distributiva y conmutativa. Virtudes: prudencia, justicia, templanza.`,
+        l:`Liderazgo: líder virtuoso con phronesis (sabiduría práctica). "El hombre es un animal político".`
     };
     function _I(){return Object.values(_BASE).join(' ');}
     
-    // [CONFIDENCIAL] Contextos filosóficos
     const _CONTEXTOS = [
         "razón práctica", "armonía social", "virtud comunitaria", "libertad ilustrada",
         "justicia distributiva", "dharma cívico", "equilibrio y orden", "sabiduría ancestral",
         "Ubuntu", "diálogo intercultural", "esfuerzo colectivo", "humanismo cívico"
     ];
     
-    // [CONFIDENCIAL] Prompt interno mejorado con intención
     function _PROMPT_MEJORADO(tipo, provincia, sabio, contexto, modo, intencionPrevia = null) {
         const esExperto = modo === 'experto';
         const pregBase = tipo === 'nacional' 
@@ -254,6 +258,12 @@
         let prompt = `${_I()}
 
 [RESPONDE 100% EN ESPAÑOL]
+
+REGLAS ESTRICTAS DE FORMATO:
+- NO USES ASTERISCOS (*) EN NINGUNA CIRCUNSTANCIA
+- NO USES NUMERALES (#) PARA TÍTULOS
+- NO USES MARKDOWN
+- USA SALTOS DE LÍNEA PARA SEPARAR IDEAS
 
 Eres un sabio de ${sabio}. Tu perspectiva: ${contexto}.
 
@@ -265,12 +275,12 @@ REGLAS:
 3. ${esExperto ? 'Análisis profundo (250+ palabras)' : 'Análisis claro (150+ palabras)'}
 4. Habla en primera persona
 
-RESPONDE CON SABIDURÍA:`;
+RESPONDE CON SABIDURÍA (SIN ASTERISCOS):`;
 
         if (intencionPrevia === 'buena') {
-            prompt = `[FEEDBACK POSITIVO - MANTENER ESTILO]\n\n${prompt}\n\nMEJORA: Añade más reflexiones profundas.`;
+            prompt = `[FEEDBACK POSITIVO - MANTENER ESTILO]\n\n${prompt}\n\nMEJORA: Añade más reflexiones profundas. NO USES ASTERISCOS.`;
         } else if (intencionPrevia === 'mala') {
-            prompt = `[FEEDBACK NEGATIVO - MEJORAR CLARIDAD]\n\n${prompt}\n\nMEJORA: Sé más didáctico y claro.`;
+            prompt = `[FEEDBACK NEGATIVO - MEJORAR CLARIDAD]\n\n${prompt}\n\nMEJORA: Sé más didáctico y claro. NO USES ASTERISCOS.`;
         }
         
         return prompt;
@@ -284,7 +294,6 @@ RESPONDE CON SABIDURÍA:`;
     function _GC(k) { const ck = _H(k); if(_CACHE[ck] && (Date.now()-_CACHE[ck].t)<86400000) return _CACHE[ck].r; return null; }
     function _PC(k,r) { const ck = _H(k); _CACHE[ck]={r,t:Date.now()}; const ks=Object.keys(_CACHE); if(ks.length>300){ks.sort((a,b)=>_CACHE[b].t-_CACHE[a].t); for(let i=150;i<ks.length;i++) delete _CACHE[ks[i]]; } localStorage.setItem('_aris_cache_v4',JSON.stringify(_CACHE)); }
     
-    // Sistema multi-modelo
     const _MODELOS = [
         { f: [(q)=>`${_I()}\n\n${q}\n\nHabla como un sabio universal.`, (t)=>t] },
         { f: [(q)=>`${_I()}\n\n${q}\n\nIncorpora una cita adaptada.`, (t)=>t] }
@@ -299,7 +308,6 @@ RESPONDE CON SABIDURÍA:`;
     
     async function _EJ(m, p){ let x=null; for(let i=0;i<m.length;i++) x=await _LL(i===0?m[i].f[0](p):m[i].f[0](x)); return x; }
     
-    // Rotación de sabio
     let _idxSabio = 0;
     function _siguienteSabio() {
         const hoy = new Date().toDateString();
@@ -309,10 +317,6 @@ RESPONDE CON SABIDURÍA:`;
         else{ _idxSabio=(_idxSabio+1)%_PAISES_SABIOS.length; localStorage.setItem('_aris_sabio_idx_v2',_idxSabio); localStorage.setItem('_aris_sabio_fecha_v2',hoy); }
         return _PAISES_SABIOS[_idxSabio];
     }
-    
-    // ============================================
-    // CONSULTA PRINCIPAL CON CACHÉ GO OCULTO
-    // ============================================
     
     window._CONSULTAR = async function(tipo, provincia, modo) {
         const sabio = _siguienteSabio();
@@ -325,10 +329,7 @@ RESPONDE CON SABIDURÍA:`;
         
         const cacheKey = `aris_${tipo}_${provincia || 'nacional'}_${sabio}_${new Date().toDateString()}_${intencionPrevia || ''}`;
         
-        // 1. INTENTAR CACHÉ OCULTO DE GO PRIMERO
         let cached = await consultarCacheOculto(cacheKey);
-        
-        // 2. INTENTAR CACHÉ LOCAL (fallback)
         if(!cached) cached = _GC(cacheKey);
         
         if(cached) return {r: cached, e: true};
@@ -338,16 +339,16 @@ RESPONDE CON SABIDURÍA:`;
         try{
             const res = await _EJ(_MODELOS, prompt);
             if(res && res.length>100) {
-                _PC(cacheKey, res);
-                // Guardar en Go ocultamente para futuras consultas
-                guardarEnCacheOculto(cacheKey, res);
-                return {r: res, e: true};
+                const respuestaLimpia = limpiarMarkdown(res);
+                _PC(cacheKey, respuestaLimpia);
+                guardarEnCacheOculto(cacheKey, respuestaLimpia);
+                return {r: respuestaLimpia, e: true};
             }
         }catch(e){}
         
         const fallback = tipo === 'nacional' 
-            ? `🏛️ Desde mi sabiduría en ${sabio}, la polis ecuatoriana debe buscar el justo medio. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones.`
-            : `🏛️ Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo.`;
+            ? `Desde mi sabiduría en ${sabio}, la polis ecuatoriana debe buscar el justo medio. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones.`
+            : `Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo.`;
         
         _PC(cacheKey, fallback);
         guardarEnCacheOculto(cacheKey, fallback);
@@ -355,15 +356,14 @@ RESPONDE CON SABIDURÍA:`;
     };
     
     // ============================================
-    // UI (COMPLETAMENTE LIMPIA - SIN CAMBIOS VISIBLES)
+    // UI
     // ============================================
     const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
     let modo = localStorage.getItem('aristoteles_modo') || 'experto';
     let provinciaSeleccionada = null;
     
-    // Verificar Go silenciosamente al inicio y periódicamente
     verificarGoSilencioso();
-    setInterval(verificarGoSilencioso, 60000); // Cada minuto en silencio
+    setInterval(verificarGoSilencioso, 60000);
     
     function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
     document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
@@ -407,7 +407,6 @@ RESPONDE CON SABIDURÍA:`;
     async function generarAnalisis(tipo, prov = null) {
         const sabio = _siguienteSabio();
         document.getElementById('paisActivoBadge').innerHTML = `🧠 ${sabio}`;
-        
         const res = await window._CONSULTAR(tipo, prov, modo);
         return res.r;
     }
@@ -456,7 +455,6 @@ RESPONDE CON SABIDURÍA:`;
 
     cargarProvincias();
     
-    // Carga inicial
     setTimeout(async () => {
         const cd = document.getElementById('analysisContent');
         const badge = document.getElementById('analysisBadge');
@@ -473,7 +471,7 @@ RESPONDE CON SABIDURÍA:`;
     const check = setInterval(() => {
         if (typeof jsllm7 !== 'undefined') {
             clearInterval(check);
-            showToast("🌍 Sabiduría global activa · El Filósofo te escucha");
+            showToast("🌍 Sabiduría global activa · El Filósofo te escucha · Texto limpio sin asteriscos");
         } else if (intentos > 30) {
             clearInterval(check);
             showToast("⚠️ Sabiduría local activa", true);
@@ -482,7 +480,6 @@ RESPONDE CON SABIDURÍA:`;
     }, 500);
 </script>
 
-<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
 <script type="module">
     import * as THREE from 'three'; import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; import { VRButton } from 'three/addons/webxr/VRButton.js';
     let vrScene, vrCamera, vrRenderer, vrControls, vrActive = false;
