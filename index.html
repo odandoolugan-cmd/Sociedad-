@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · Redacción Global (30+ Países) · Sin Markdown</title>
+    <title>🏛️ Aristóteles IA · Filosofía Global + 10 Herramientas · Sin Markdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -14,6 +14,12 @@
         .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
         .modo-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-weight: 600; color: #b8a87c; }
         .modo-btn.active { background: #c9a53b; color: #1a2a1f; border-color: #c9a53b; }
+        
+        /* BARRA DE HERRAMIENTAS */
+        .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
+        .tool-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #b8a87c; transition: 0.2s; }
+        .tool-btn:hover { background: #c9a53b; color: #1a2a1f; border-color: #c9a53b; transform: scale(1.02); }
+        
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #e8d5a3, #c9a53b); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: 2px; }
         .subtitle { font-style: italic; color: #b8a87c; margin-top: 0.5rem; font-size: 0.9rem; }
@@ -30,12 +36,10 @@
         .analysis-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem; }
         .analysis-title i { color: #c9a53b; }
         .analysis-badge { background: #c9a53b20; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.7rem; color: #e8d5a3; }
-        .pais-badge { background: #c9a53b; color: #1a2a1f; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: bold; margin-left: 0.5rem; }
         .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 300px; max-height: 500px; overflow-y: auto; white-space: pre-wrap; }
         .feedback-buttons { display: flex; gap: 10px; margin-top: 15px; justify-content: flex-end; }
         .feedback-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 15px; transition: 0.2s; }
         .feedback-btn:hover { background: rgba(255,255,255,0.15); color: #e9c46a; }
-        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .loading-spinner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem; }
         .spinner { width: 50px; height: 50px; border: 3px solid #c9a53b30; border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -51,6 +55,15 @@
         .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         .restriction-alert { background: rgba(201, 165, 59, 0.15); border: 1px solid #c9a53b; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #c9a53b; }
+        
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: #1a2a1f; border-radius: 1.5rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #c9a53b; color: #e8e0c5; }
+        .modal-content h3 { color: #c9a53b; margin-bottom: 1rem; }
+        .modal-close { margin-top: 1rem; background: #c9a53b; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: #1a2a1f; cursor: pointer; font-weight: bold; }
+        
+        .loading-spinner-small { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
+        
         @media (max-width: 700px) { .container { padding: 1rem; } .header h1 { font-size: 2rem; } .modo-selector { justify-content: center; } }
     </style>
 </head>
@@ -58,7 +71,7 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">FILOSOFÍA GLOBAL</span></h1>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">10 HERRAMIENTAS</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
@@ -66,6 +79,20 @@
     <div class="modo-selector">
         <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
         <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
+    </div>
+
+    <!-- BARRA DE HERRAMIENTAS (10 MECANISMOS) -->
+    <div class="tools-bar">
+        <button class="tool-btn" id="btnEtica">📜 Ética para Gobernantes</button>
+        <button class="tool-btn" id="btnVirtudes">🏛️ Análisis de Virtudes</button>
+        <button class="tool-btn" id="btnJusticia">⚖️ Justicia Distributiva</button>
+        <button class="tool-btn" id="btnDialogo">💬 Diálogo Socrático</button>
+        <button class="tool-btn" id="btnPolitica">📖 Filosofía Política</button>
+        <button class="tool-btn" id="btnAmistad">🤝 Amistad Cívica</button>
+        <button class="tool-btn" id="btnEducacion">📚 Educación y Virtud</button>
+        <button class="tool-btn" id="btnFelix">😊 Eudaimonia</button>
+        <button class="tool-btn" id="btnLiderazgo">👑 Liderazgo Ético</button>
+        <button class="tool-btn" id="btnConsejo">🍃 Consejo Filosófico</button>
     </div>
 
     <div class="selection-panel">
@@ -78,7 +105,7 @@
             <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
-        <div class="restriction-alert">📚 Sabiduría global · Perspectiva internacional · Análisis ético-político · Texto limpio sin asteriscos</div>
+        <div class="restriction-alert">📚 Sabiduría global · 10 herramientas filosóficas · Perspectiva internacional · Texto limpio sin asteriscos</div>
     </div>
 
     <div class="analysis-card" id="resultsCard">
@@ -91,7 +118,7 @@
         </div>
     </div>
 
-    <div class="footer">⚡ Aristóteles IA · Filosofía global · Análisis ético-político con perspectiva internacional · Sin markdown</div>
+    <div class="footer">⚡ Aristóteles IA · Filosofía global · 10 herramientas · Análisis ético-político · Sin markdown</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -99,43 +126,27 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
-<script type="importmap">
-    {
-        "imports": {
-            "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js",
-            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-        }
-    }
-</script>
-
-<script type="module">
+<script>
     // ============================================
-    // LIMPIADOR DE MARKDOWN (SIN ASTERISCOS)
+    // LIMPIADOR DE MARKDOWN
     // ============================================
     
     function limpiarMarkdown(texto) {
         let limpio = texto;
-        // Eliminar asteriscos (negritas, cursivas)
         limpio = limpio.replace(/\*\*/g, '');
         limpio = limpio.replace(/\*/g, '');
-        // Eliminar numerales (títulos)
         limpio = limpio.replace(/^###\s*/gm, '');
         limpio = limpio.replace(/^##\s*/gm, '');
         limpio = limpio.replace(/^#\s*/gm, '');
-        // Eliminar backticks
         limpio = limpio.replace(/`/g, '');
-        // Eliminar líneas separadoras
         limpio = limpio.replace(/^---\s*$/gm, '');
-        // Convertir guiones de listas en viñetas
         limpio = limpio.replace(/^\s*-\s+/gm, '• ');
-        // Limpiar espacios múltiples
         limpio = limpio.replace(/\n{3,}/g, '\n\n');
         return limpio.trim();
     }
     
     // ============================================
-    // SISTEMA DE CACHÉ OCULTO (GO)
+    // SISTEMA DE CACHÉ
     // ============================================
     
     const GO_URL = 'http://localhost:8080';
@@ -145,233 +156,174 @@
         try {
             const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
             if (respuesta.ok) goDisponible = true;
-            else goDisponible = false;
         } catch (e) { goDisponible = false; }
     }
     
-    async function consultarCacheOculto(clave) {
-        if (!goDisponible) return null;
-        try {
-            const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(clave)}`, { signal: AbortSignal.timeout(3000) });
-            if (respuesta.ok) {
-                const texto = await respuesta.text();
-                if (texto && texto !== "No sé" && texto.length > 100) {
-                    return limpiarMarkdown(texto);
-                }
-            }
-        } catch (e) {}
-        return null;
+    function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2500); }
+    
+    function mostrarModal(titulo, contenido) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3><i class="fas fa-comment-dots"></i> ${titulo}</h3>
+                <div style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${contenido.replace(/\n/g, '<br>')}</div>
+                <button class="modal-close">Cerrar</button>
+            </div>
+        `;
+        modal.querySelector('.modal-close').onclick = () => modal.remove();
+        document.body.appendChild(modal);
     }
     
-    async function guardarEnCacheOculto(clave, analisis) {
-        if (!goDisponible) return;
+    async function _llamadaIA(prompt) {
         try {
-            fetch(`${GO_URL}/aprender?q=${encodeURIComponent(clave)}&respuesta=${encodeURIComponent(analisis)}`, {
-                method: 'GET',
-                signal: AbortSignal.timeout(2000)
-            }).catch(() => {});
-        } catch (e) {}
+            const respuesta = await jsllm7(prompt);
+            return limpiarMarkdown(respuesta);
+        } catch(e) { return null; }
+    }
+    
+    async function herramientaGenerica(promptText, titulo) {
+        showToast(`⏳ ${titulo}...`);
+        const respuesta = await _llamadaIA(promptText);
+        mostrarModal(titulo, respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`);
     }
     
     // ============================================
-    // SISTEMA SECRETO: Transformers
+    // 10 HERRAMIENTAS FILOSÓFICAS
     // ============================================
     
-    import { pipeline, env } from '@xenova/transformers';
+    // 1. Ética para Gobernantes
+    async function eticaGobernantes() {
+        const prompt = `Como Aristóteles, escribe un tratado breve sobre la ética que deben seguir los gobernantes. Incluye: prudencia, justicia, templanza y búsqueda del bien común. Usa ejemplos históricos. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "📜 ÉTICA PARA GOBERNANTES");
+    }
     
-    env.useBrowserCache = true;
-    env.allowLocalModels = false;
+    // 2. Análisis de Virtudes
+    async function analisisVirtudes() {
+        const prompt = `Analiza las 5 virtudes cardinales según Aristóteles: prudencia, justicia, templanza, fortaleza y honestidad. Explica cada una con ejemplos prácticos para la vida moderna. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "🏛️ ANÁLISIS DE VIRTUDES");
+    }
+    
+    // 3. Justicia Distributiva
+    async function justiciaDistributiva() {
+        const prompt = `Explica el concepto de justicia distributiva en la filosofía de Aristóteles. ¿Cómo deberían distribuirse los recursos y honores en una sociedad justa? Aplica a un país latinoamericano actual. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "⚖️ JUSTICIA DISTRIBUTIVA");
+    }
+    
+    // 4. Diálogo Socrático
+    async function dialogoSocratico() {
+        const tema = prompt("¿Sobre qué tema filosófico quieres dialogar? (felicidad, justicia, amistad, virtud):", "felicidad");
+        if (!tema) return;
+        const prompt = `Simula un diálogo socrático entre Sócrates y un ciudadano sobre "${tema}". Usa preguntas para llevar al interlocutor a descubrir la verdad. 5 intercambios. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `💬 DIÁLOGO SOBRE: ${tema.toUpperCase()}`);
+    }
+    
+    // 5. Filosofía Política
+    async function filosofiaPolitica() {
+        const prompt = `Analiza la teoría política de Aristóteles: el hombre es un animal político, las formas de gobierno (monarquía, aristocracia, democracia) y sus degeneraciones. Aplica al contexto latinoamericano actual. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "📖 FILOSOFÍA POLÍTICA");
+    }
+    
+    // 6. Amistad Cívica
+    async function amistadCivica() {
+        const prompt = `Explica los tres tipos de amistad según Aristóteles (utilidad, placer, virtud). ¿Cómo puede la amistad cívica fortalecer la democracia y la cohesión social? Sin asteriscos.`;
+        await herramientaGenerica(prompt, "🤝 AMISTAD CÍVICA");
+    }
+    
+    // 7. Educación y Virtud
+    async function educacionVirtud() {
+        const prompt = `Desarrolla la teoría aristotélica de la educación: cómo formar ciudadanos virtuosos a través de hábitos, enseñanzas y ejemplo. ¿Qué cambios recomendarías en el sistema educativo actual? Sin asteriscos.`;
+        await herramientaGenerica(prompt, "📚 EDUCACIÓN Y VIRTUD");
+    }
+    
+    // 8. Eudaimonia (Felicidad)
+    async function eudaimonia() {
+        const prompt = `Explica el concepto de eudaimonia (felicidad floreciente) en Aristóteles. ¿Cómo alcanza el ser humano la vida buena? Diferencia entre placer, honor y virtud como fines. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "😊 EUDAIMONIA · LA FELICIDAD ARISTOTÉLICA");
+    }
+    
+    // 9. Liderazgo Ético
+    async function liderazgoEtico() {
+        const prompt = `Analiza el liderazgo ético desde la perspectiva aristotélica. ¿Qué cualidades debe tener un líder virtuoso? Incluye ejemplos de líderes históricos que encarnaron estas virtudes. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "👑 LIDERAZGO ÉTICO");
+    }
+    
+    // 10. Consejo Filosófico
+    async function consejoFilosofico() {
+        const problema = prompt("¿Qué problema o dilema filosófico te preocupa? (trabajo, relaciones, propósito de vida, decisiones éticas):", "encontrar propósito de vida");
+        if (!problema) return;
+        const prompt = `Como filósofo estoico-aristotélico, da un consejo sabio y práctico sobre: "${problema}". Fundamenta tu respuesta en la filosofía clásica y da pasos concretos. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `🍃 CONSEJO FILOSÓFICO SOBRE: ${problema.toUpperCase()}`);
+    }
+    
+    // Asignar botones
+    document.getElementById('btnEtica').onclick = eticaGobernantes;
+    document.getElementById('btnVirtudes').onclick = analisisVirtudes;
+    document.getElementById('btnJusticia').onclick = justiciaDistributiva;
+    document.getElementById('btnDialogo').onclick = dialogoSocratico;
+    document.getElementById('btnPolitica').onclick = filosofiaPolitica;
+    document.getElementById('btnAmistad').onclick = amistadCivica;
+    document.getElementById('btnEducacion').onclick = educacionVirtud;
+    document.getElementById('btnFelix').onclick = eudaimonia;
+    document.getElementById('btnLiderazgo').onclick = liderazgoEtico;
+    document.getElementById('btnConsejo').onclick = consejoFilosofico;
+    
+    // ============================================
+    // SISTEMA PRINCIPAL
+    // ============================================
     
     const _PAISES_SABIOS = [
         "Alemania", "China", "Rusia", "Francia", "Brasil", "India", "Japón", "México",
         "Sudáfrica", "Turquía", "Corea del Sur", "Italia", "Canadá", "Australia",
         "España", "Reino Unido", "Argentina", "Chile", "Colombia", "Perú", "Países Bajos",
-        "Suecia", "Polonia", "Israel", "Emiratos Árabes", "Nigeria", "Vietnam", "Indonesia",
-        "Kenia", "Ecuador"
+        "Suecia", "Polonia", "Israel", "Nigeria", "Indonesia", "Kenia", "Ecuador"
     ];
     
-    let clasificadorIntencion = null;
-    const memoriaIntencion = new Map();
-    
-    (async function() {
-        try {
-            clasificadorIntencion = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', { quantized: true });
-        } catch(e) { console.warn(e); }
-    })();
-    
-    async function analizarIntencion(tipo, sabio, analisis) {
-        if (!clasificadorIntencion) return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.6 };
-        try {
-            const txt = `Sabio de ${sabio} analiza. Usuario dio ${tipo === 'like' ? 'feedback positivo' : 'feedback negativo'}.`;
-            const res = await clasificadorIntencion(txt);
-            if (res && res[0]) {
-                const esPos = res[0].label === 'POSITIVE';
-                return { intencion: (tipo === 'like' && esPos) ? 'buena' : 'mala', confianza: res[0].score };
-            }
-        } catch(e) {}
-        return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.5 };
-    }
-    
-    function mejorarPromptConIntencion(promptBase, intencion) {
-        if (intencion === 'buena') {
-            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback positivo previo. Profundiza con más ejemplos. NO USES ASTERISCOS.]`;
-        } else {
-            return promptBase + `\n\n[MEJORA FILOSÓFICA: Feedback negativo previo. Sé más claro y didáctico. NO USES ASTERISCOS.]`;
-        }
-    }
-    
-    async function registrarFeedbackSecreto(sabio, analisis, tipo, elemento) {
-        const clave = `sabio_${sabio}`;
-        const analisisIntencion = await analizarIntencion(tipo, sabio, analisis);
-        
-        if (!memoriaIntencion.has(clave)) {
-            memoriaIntencion.set(clave, { buenos: 0, malos: 0, intencion: null });
-        }
-        const data = memoriaIntencion.get(clave);
-        if (tipo === 'like') data.buenos++;
-        else data.malos++;
-        data.intencion = analisisIntencion.intencion;
-        
-        const btns = elemento.querySelectorAll('.feedback-btn');
-        btns.forEach(btn => btn.disabled = true);
-    }
-    
-    const _BASE = {
-        f:`Filosofía aristotélica: eudaimonia, virtud como punto medio, justicia distributiva, amistad cívica, polis.`,
-        e:`Ética y política: justicia distributiva y conmutativa. Virtudes: prudencia, justicia, templanza.`,
-        l:`Liderazgo: líder virtuoso con phronesis (sabiduría práctica). "El hombre es un animal político".`
-    };
-    function _I(){return Object.values(_BASE).join(' ');}
-    
-    const _CONTEXTOS = [
-        "razón práctica", "armonía social", "virtud comunitaria", "libertad ilustrada",
-        "justicia distributiva", "dharma cívico", "equilibrio y orden", "sabiduría ancestral",
-        "Ubuntu", "diálogo intercultural", "esfuerzo colectivo", "humanismo cívico"
-    ];
-    
-    function _PROMPT_MEJORADO(tipo, provincia, sabio, contexto, modo, intencionPrevia = null) {
-        const esExperto = modo === 'experto';
-        const pregBase = tipo === 'nacional' 
-            ? `Analiza Ecuador (política, economía, seguridad) desde la filosofía aristotélica.`
-            : `Analiza la provincia de ${provincia} en Ecuador y su contribución al bien común.`;
-        
-        let prompt = `${_I()}
-
-[RESPONDE 100% EN ESPAÑOL]
-
-REGLAS ESTRICTAS DE FORMATO:
-- NO USES ASTERISCOS (*) EN NINGUNA CIRCUNSTANCIA
-- NO USES NUMERALES (#) PARA TÍTULOS
-- NO USES MARKDOWN
-- USA SALTOS DE LÍNEA PARA SEPARAR IDEAS
-
-Eres un sabio de ${sabio}. Tu perspectiva: ${contexto}.
-
-${pregBase}
-
-REGLAS:
-1. RESPONDE EN ESPAÑOL como filósofo aristotélico
-2. Usa ejemplos de ${sabio}
-3. ${esExperto ? 'Análisis profundo (250+ palabras)' : 'Análisis claro (150+ palabras)'}
-4. Habla en primera persona
-
-RESPONDE CON SABIDURÍA (SIN ASTERISCOS):`;
-
-        if (intencionPrevia === 'buena') {
-            prompt = `[FEEDBACK POSITIVO - MANTENER ESTILO]\n\n${prompt}\n\nMEJORA: Añade más reflexiones profundas. NO USES ASTERISCOS.`;
-        } else if (intencionPrevia === 'mala') {
-            prompt = `[FEEDBACK NEGATIVO - MEJORAR CLARIDAD]\n\n${prompt}\n\nMEJORA: Sé más didáctico y claro. NO USES ASTERISCOS.`;
-        }
-        
-        return prompt;
-    }
-    
-    function _H(s) { let h=0; const t=s.toLowerCase().trim(); for(let i=0;i<t.length;i++){h=((h<<5)-h)+t.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
-    
-    let _CACHE = {};
-    try { _CACHE = JSON.parse(localStorage.getItem('_aris_cache_v4') || '{}'); } catch(e) {}
-    
-    function _GC(k) { const ck = _H(k); if(_CACHE[ck] && (Date.now()-_CACHE[ck].t)<86400000) return _CACHE[ck].r; return null; }
-    function _PC(k,r) { const ck = _H(k); _CACHE[ck]={r,t:Date.now()}; const ks=Object.keys(_CACHE); if(ks.length>300){ks.sort((a,b)=>_CACHE[b].t-_CACHE[a].t); for(let i=150;i<ks.length;i++) delete _CACHE[ks[i]]; } localStorage.setItem('_aris_cache_v4',JSON.stringify(_CACHE)); }
-    
-    const _MODELOS = [
-        { f: [(q)=>`${_I()}\n\n${q}\n\nHabla como un sabio universal.`, (t)=>t] },
-        { f: [(q)=>`${_I()}\n\n${q}\n\nIncorpora una cita adaptada.`, (t)=>t] }
-    ];
-    
-    async function _LL(p, to=40000) {
-        return new Promise((r,j)=>{
-            const t=setTimeout(()=>j(new Error('T')),to);
-            jsllm7(p).then(x=>{clearTimeout(t);r(x);}).catch(e=>{clearTimeout(t);j(e);});
-        });
-    }
-    
-    async function _EJ(m, p){ let x=null; for(let i=0;i<m.length;i++) x=await _LL(i===0?m[i].f[0](p):m[i].f[0](x)); return x; }
-    
-    let _idxSabio = 0;
-    function _siguienteSabio() {
-        const hoy = new Date().toDateString();
-        const guardado = localStorage.getItem('_aris_sabio_idx_v2');
-        const fechaGuardada = localStorage.getItem('_aris_sabio_fecha_v2');
-        if(fechaGuardada===hoy && guardado!==null) _idxSabio=parseInt(guardado);
-        else{ _idxSabio=(_idxSabio+1)%_PAISES_SABIOS.length; localStorage.setItem('_aris_sabio_idx_v2',_idxSabio); localStorage.setItem('_aris_sabio_fecha_v2',hoy); }
-        return _PAISES_SABIOS[_idxSabio];
-    }
-    
-    window._CONSULTAR = async function(tipo, provincia, modo) {
-        const sabio = _siguienteSabio();
-        const clave = `sabio_${sabio}`;
-        const datosPrevios = memoriaIntencion.get(clave);
-        const intencionPrevia = datosPrevios?.intencion || null;
-        
-        const idx = _PAISES_SABIOS.indexOf(sabio);
-        const contexto = _CONTEXTOS[idx % _CONTEXTOS.length];
-        
-        const cacheKey = `aris_${tipo}_${provincia || 'nacional'}_${sabio}_${new Date().toDateString()}_${intencionPrevia || ''}`;
-        
-        let cached = await consultarCacheOculto(cacheKey);
-        if(!cached) cached = _GC(cacheKey);
-        
-        if(cached) return {r: cached, e: true};
-        
-        const prompt = _PROMPT_MEJORADO(tipo, provincia, sabio, contexto, modo, intencionPrevia);
-        
-        try{
-            const res = await _EJ(_MODELOS, prompt);
-            if(res && res.length>100) {
-                const respuestaLimpia = limpiarMarkdown(res);
-                _PC(cacheKey, respuestaLimpia);
-                guardarEnCacheOculto(cacheKey, respuestaLimpia);
-                return {r: respuestaLimpia, e: true};
-            }
-        }catch(e){}
-        
-        const fallback = tipo === 'nacional' 
-            ? `Desde mi sabiduría en ${sabio}, la polis ecuatoriana debe buscar el justo medio. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones.`
-            : `Sobre ${provincia} desde ${sabio}: He observado gran potencial en esta región. Cultivad la virtud mediante trabajo colectivo.`;
-        
-        _PC(cacheKey, fallback);
-        guardarEnCacheOculto(cacheKey, fallback);
-        return {r: fallback, e: true};
-    };
-    
-    // ============================================
-    // UI
-    // ============================================
-    const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
     let modo = localStorage.getItem('aristoteles_modo') || 'experto';
     let provinciaSeleccionada = null;
-    
-    verificarGoSilencioso();
-    setInterval(verificarGoSilencioso, 60000);
     
     function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
     document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
     actualizarModoUI();
     
-    function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+    let _idxSabio = 0;
+    function _siguienteSabio() {
+        const hoy = new Date().toDateString();
+        const guardado = localStorage.getItem('_aris_sabio_idx_v3');
+        const fechaGuardada = localStorage.getItem('_aris_sabio_fecha_v3');
+        if(fechaGuardada===hoy && guardado!==null) _idxSabio=parseInt(guardado);
+        else{ _idxSabio=(_idxSabio+1)%_PAISES_SABIOS.length; localStorage.setItem('_aris_sabio_idx_v3',_idxSabio); localStorage.setItem('_aris_sabio_fecha_v3',hoy); }
+        return _PAISES_SABIOS[_idxSabio];
+    }
+    
+    async function generarAnalisis(tipo, prov = null) {
+        const sabio = _siguienteSabio();
+        document.getElementById('paisActivoBadge').innerHTML = `🧠 ${sabio}`;
+        
+        const preguntaBase = tipo === 'nacional' 
+            ? `Analiza Ecuador (política, economía, seguridad) desde la filosofía aristotélica. Busca el justo medio, la virtud cívica y el bien común.`
+            : `Analiza la provincia de ${prov} en Ecuador y su contribución al bien común, la virtud cívica y la justicia distributiva desde Aristóteles.`;
+        
+        const prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
 
-    async function addFeedbackConSecreto(sabio, analisis) {
+Eres un sabio filósofo de ${sabio}.
+
+${preguntaBase}
+
+${modo === 'experto' ? 'Responde con análisis profundo (250+ palabras).' : 'Responde con análisis claro (150+ palabras).'}
+
+Estructura: Introducción filosófica, análisis, reflexión final. Habla en primera persona como sabio.
+
+RESPUESTA (texto limpio, sin asteriscos):`;
+
+        let respuesta = await _llamadaIA(prompt);
+        if(!respuesta || respuesta.length < 100) {
+            respuesta = `Desde mi sabiduría en ${sabio}, la polis ecuatoriana debe buscar el justo medio. La virtud se cultiva mediante educación y participación ciudadana. Recomiendo fortalecer las instituciones y fomentar el diálogo. El bien común es el fin supremo de toda comunidad política.`;
+        }
+        return respuesta;
+    }
+    
+    async function addFeedbackConSecreto(analisis) {
         const ac = document.getElementById('analysisContent');
         if (!ac) return;
         const ex = ac.querySelector('.feedback-buttons');
@@ -382,35 +334,20 @@ RESPONDE CON SABIDURÍA (SIN ASTERISCOS):`;
         const btnLike = document.createElement('button');
         btnLike.className = 'feedback-btn';
         btnLike.innerHTML = '👍 Sabio';
-        btnLike.onclick = async (e) => {
-            e.stopPropagation();
-            await registrarFeedbackSecreto(sabio, analisis, 'like', fb);
-            fb.remove();
-            showToast('✅ Gracias, discípulo. Tu feedback ilumina el camino');
-        };
+        btnLike.onclick = () => { fb.remove(); showToast('✅ Gracias, discípulo.'); };
         
         const btnDislike = document.createElement('button');
         btnDislike.className = 'feedback-btn';
         btnDislike.innerHTML = '👎 Confuso';
-        btnDislike.onclick = async (e) => {
-            e.stopPropagation();
-            await registrarFeedbackSecreto(sabio, analisis, 'dislike', fb);
-            fb.remove();
-            showToast('📝 Meditaré tu opinión para mejorar la enseñanza');
-        };
+        btnDislike.onclick = () => { fb.remove(); showToast('📝 Meditaré tu opinión.'); };
         
         fb.appendChild(btnLike);
         fb.appendChild(btnDislike);
         ac.appendChild(fb);
     }
 
-    async function generarAnalisis(tipo, prov = null) {
-        const sabio = _siguienteSabio();
-        document.getElementById('paisActivoBadge').innerHTML = `🧠 ${sabio}`;
-        const res = await window._CONSULTAR(tipo, prov, modo);
-        return res.r;
-    }
-
+    const provincias = ["Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro", "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos", "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha", "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua", "Zamora Chinchipe"];
+    
     function cargarProvincias() {
         const grid = document.getElementById('provinciasGrid');
         grid.innerHTML = '';
@@ -449,11 +386,13 @@ RESPONDE CON SABIDURÍA (SIN ASTERISCOS):`;
         
         const contenido = await generarAnalisis(tipo, provinciaSeleccionada);
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
-        await addFeedbackConSecreto(sabio, contenido);
+        await addFeedbackConSecreto(contenido);
         showToast(`✅ El Filósofo ha hablado`);
     };
 
     cargarProvincias();
+    verificarGoSilencioso();
+    setInterval(verificarGoSilencioso, 60000);
     
     setTimeout(async () => {
         const cd = document.getElementById('analysisContent');
@@ -463,19 +402,16 @@ RESPONDE CON SABIDURÍA (SIN ASTERISCOS):`;
         cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 Invocando sabiduría...</p></div>';
         const contenido = await generarAnalisis('nacional');
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
-        await addFeedbackConSecreto(sabio, contenido);
-        showToast(`✨ El Filósofo de ${sabio} ha despertado`);
+        await addFeedbackConSecreto(contenido);
+        showToast(`✨ El Filósofo de ${sabio} ha despertado · 10 herramientas disponibles`);
     }, 500);
-
+    
     let intentos = 0;
     const check = setInterval(() => {
         if (typeof jsllm7 !== 'undefined') {
             clearInterval(check);
-            showToast("🌍 Sabiduría global activa · El Filósofo te escucha · Texto limpio sin asteriscos");
-        } else if (intentos > 30) {
-            clearInterval(check);
-            showToast("⚠️ Sabiduría local activa", true);
-        }
+            showToast("🌍 Sabiduría global activa · 10 herramientas filosóficas · Texto limpio sin asteriscos");
+        } else if (intentos > 30) clearInterval(check);
         intentos++;
     }, 500);
 </script>
@@ -527,9 +463,5 @@ RESPONDE CON SABIDURÍA (SIN ASTERISCOS):`;
         document.getElementById('normalMode').style.display = 'block';
     });
 </script>
-
-<script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
-<script type="text/javascript" data-cfasync="false">(function(){var z=window,t="fd00ec802f889d01aba4b20343501917",m=[["siteId",49+611-187*50+659+5301107],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],s=["d3d3LmJsb2NrYWRzbm90LmNvbS9WVGhJWS96anN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9NQnkvemd5L2dwb3BwZXIubWluLmNzcw=="],a=-1,n,d,u=function(){clearTimeout(d);a++;if(s[a]&&!(1803077550000<(new Date).getTime()&&1<a)){n=z.document.createElement("script");n.type="text/javascript";n.async=!0;var r=z.document.getElementsByTagName("script")[0];n.src="https://"+atob(s[a]);n.crossOrigin="anonymous";n.onerror=u;n.onload=function(){clearTimeout(d);z[t.slice(0,16)+t.slice(0,16)]||u()};d=setTimeout(u,5E3);r.parentNode.insertBefore(n,r)}}};if(!z[t]){try{Object.freeze(z[t]=m)}catch(e){}u()}})();</script>
-<script>(function(ommhhmb){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=ommhhmb||{};s.src="\/\/webbedtrash.com\/beX.Vls_d\/Gzl\/0_YnW\/cA\/aeCmH9xu-ZDUvlCktPmTKYN5ANujnULxoNNz\/MytsNJjokf2\/NsTlE\/3INzwi";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
 </body>
 </html>
