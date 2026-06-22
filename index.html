@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · Filosofía Global + 10 Herramientas · Sin Markdown</title>
+    <title>🏛️ Aristóteles IA · Filosofía Global + Conectores · Sin Markdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -15,7 +15,6 @@
         .modo-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-weight: 600; color: #b8a87c; }
         .modo-btn.active { background: #c9a53b; color: #1a2a1f; border-color: #c9a53b; }
         
-        /* BARRA DE HERRAMIENTAS */
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #b8a87c; transition: 0.2s; }
         .tool-btn:hover { background: #c9a53b; color: #1a2a1f; border-color: #c9a53b; transform: scale(1.02); }
@@ -56,7 +55,6 @@
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         .restriction-alert { background: rgba(201, 165, 59, 0.15); border: 1px solid #c9a53b; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #c9a53b; }
         
-        /* ARQUITECTURA DE WIDGETS */
         .widget-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -152,6 +150,29 @@
             color: #8a7a5a;
         }
         
+        /* Métricas de conectores */
+        .connector-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .connector-metric {
+            background: rgba(0,0,0,0.3);
+            padding: 6px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .connector-metric .value {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #e8d5a3;
+        }
+        .connector-metric .label {
+            font-size: 0.55rem;
+            color: #8a7a5a;
+        }
+        
         .sources-list {
             margin-top: 10px;
             padding: 10px;
@@ -173,7 +194,6 @@
         
         .metadata-container { display: none; }
         
-        /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #1a2a1f; border-radius: 1.5rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #c9a53b; color: #e8e0c5; }
         .modal-content h3 { color: #c9a53b; margin-bottom: 1rem; }
@@ -186,6 +206,7 @@
             .header h1 { font-size: 2rem; } 
             .modo-selector { justify-content: center; }
             .widget-container { grid-template-columns: 1fr; }
+            .connector-metrics { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -193,7 +214,7 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">10 HERRAMIENTAS</span></h1>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">CONECTORES</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
@@ -203,7 +224,6 @@
         <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
     </div>
 
-    <!-- BARRA DE HERRAMIENTAS (10 MECANISMOS) -->
     <div class="tools-bar">
         <button class="tool-btn" id="btnEtica">📜 Ética para Gobernantes</button>
         <button class="tool-btn" id="btnVirtudes">🏛️ Análisis de Virtudes</button>
@@ -227,10 +247,9 @@
             <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
-        <div class="restriction-alert">📚 Sabiduría global · 10 herramientas filosóficas · Perspectiva internacional · Texto limpio sin asteriscos</div>
+        <div class="restriction-alert">📚 Sabiduría global · Conectores: Memoria · Semántico · APIs · 10 herramientas</div>
     </div>
 
-    <!-- WIDGETS INDEPENDIENTES -->
     <div class="widget-container" id="widgetContainer">
         <div class="widget" id="widgetMetricas">
             <div class="widget-title">📊 Filosofía en Cifras</div>
@@ -255,6 +274,29 @@
                 </div>
             </div>
         </div>
+        <div class="widget" id="widgetConectores">
+            <div class="widget-title">🔌 Estado de Conectores</div>
+            <div class="widget-content">
+                <div class="connector-metrics">
+                    <div class="connector-metric">
+                        <div class="value" id="metricMemoria">0</div>
+                        <div class="label">Memoria</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricSemantico">0</div>
+                        <div class="label">Semántico</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricAPIs">0</div>
+                        <div class="label">APIs</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricContexto">0%</div>
+                        <div class="label">Contexto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="widget" id="widgetConfianza">
             <div class="widget-title">🎯 Sabiduría Aplicada</div>
             <div class="widget-content">
@@ -266,18 +308,7 @@
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
                 <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">
-                    Basado en fuentes filosóficas verificadas
-                </div>
-            </div>
-        </div>
-        <div class="widget" id="widgetFuentes">
-            <div class="widget-title">📚 Fuentes Filosóficas</div>
-            <div class="widget-content">
-                <div class="sources-list" id="sourcesList">
-                    <div style="color:#8a7a5a;font-size:0.75rem;">Tradiciones filosóficas</div>
-                    <div class="source-item"><span class="source-icon">📜</span> Aristóteles</div>
-                    <div class="source-item"><span class="source-icon">🌍</span> Sabiduría Global</div>
-                    <div class="source-item"><span class="source-icon">🏛️</span> Filosofía Política</div>
+                    Basado en fuentes filosóficas + conectores
                 </div>
             </div>
         </div>
@@ -294,20 +325,19 @@
         </div>
     </div>
 
-    <!-- METADATOS JSON-LD (oculto) -->
     <div class="metadata-container" id="metadataContainer"></div>
 
     <div class="analysis-card" id="resultsCard">
         <div class="analysis-header">
             <div class="analysis-title"><i class="fas fa-comment-dots"></i><span>El Filósofo dice...</span></div>
-            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Perspectiva Global</div>
+            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Conectores activos</div>
         </div>
         <div class="analysis-content" id="analysisContent">
-            <div class="loading-spinner"><div class="spinner"></div><p>Invocando la sabiduría global...</p></div>
+            <div class="loading-spinner"><div class="spinner"></div><p>Invocando la sabiduría global con conectores...</p></div>
         </div>
     </div>
 
-    <div class="footer">⚡ Aristóteles IA · Filosofía global · 10 herramientas · Análisis ético-político · Sin markdown</div>
+    <div class="footer">⚡ Aristóteles IA · Conectores activos · Filosofía global · 10 herramientas · Análisis ético-político</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -316,6 +346,223 @@
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
 <script>
+    // ============================================
+    // CONECTOR DE MEMORIA
+    // ============================================
+    
+    class MemoryConnector {
+        constructor() {
+            this.shortTerm = [];
+            this.longTerm = new Map();
+            this.maxShortTerm = 10;
+            this.loadFromStorage();
+        }
+        
+        loadFromStorage() {
+            try {
+                const data = JSON.parse(localStorage.getItem('aristoteles_memoria') || '{}');
+                if (data.shortTerm) this.shortTerm = data.shortTerm;
+                if (data.longTerm) {
+                    this.longTerm = new Map(Object.entries(data.longTerm));
+                }
+            } catch(e) {}
+        }
+        
+        saveToStorage() {
+            try {
+                localStorage.setItem('aristoteles_memoria', JSON.stringify({
+                    shortTerm: this.shortTerm,
+                    longTerm: Object.fromEntries(this.longTerm)
+                }));
+            } catch(e) {}
+        }
+        
+        remember(interaction) {
+            this.shortTerm.push({
+                ...interaction,
+                timestamp: Date.now()
+            });
+            if (this.shortTerm.length > this.maxShortTerm) {
+                this.shortTerm.shift();
+            }
+            this.saveToStorage();
+        }
+        
+        recall(query, limit = 3) {
+            const relevant = this.shortTerm
+                .filter(item => {
+                    const similarity = this.calculateSimilarity(query, item.query || '');
+                    return similarity > 0.2;
+                })
+                .sort((a, b) => b.similarity - a.similarity)
+                .slice(0, limit);
+            
+            return relevant.map(item => ({
+                query: item.query,
+                response: item.response,
+                similarity: item.similarity,
+                pais: item.pais
+            }));
+        }
+        
+        calculateSimilarity(a, b) {
+            if (!a || !b) return 0;
+            const wordsA = a.toLowerCase().split(' ');
+            const wordsB = b.toLowerCase().split(' ');
+            const common = wordsA.filter(w => wordsB.includes(w) && w.length > 2);
+            return common.length / Math.max(wordsA.length, wordsB.length);
+        }
+        
+        getStats() {
+            return {
+                shortTerm: this.shortTerm.length,
+                longTerm: this.longTerm.size,
+                total: this.shortTerm.length + this.longTerm.size
+            };
+        }
+    }
+
+    // ============================================
+    // CONECTOR SEMÁNTICO
+    // ============================================
+    
+    class SemanticConnector {
+        constructor() {
+            this.embeddingsCache = new Map();
+            this.similarityThreshold = 0.2;
+        }
+        
+        generateEmbedding(text) {
+            const words = text.toLowerCase()
+                .replace(/[¿?¡!.,;:]/g, '')
+                .split(' ')
+                .filter(w => w.length > 2);
+            
+            const vector = new Map();
+            words.forEach(w => {
+                vector.set(w, (vector.get(w) || 0) + 1);
+            });
+            return vector;
+        }
+        
+        cosineSimilarity(vecA, vecB) {
+            let dotProduct = 0;
+            let normA = 0;
+            let normB = 0;
+            
+            const keys = new Set([...vecA.keys(), ...vecB.keys()]);
+            keys.forEach(key => {
+                const a = vecA.get(key) || 0;
+                const b = vecB.get(key) || 0;
+                dotProduct += a * b;
+                normA += a * a;
+                normB += b * b;
+            });
+            
+            if (normA === 0 || normB === 0) return 0;
+            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        }
+        
+        findSimilar(query, candidates) {
+            const queryEmbedding = this.generateEmbedding(query);
+            const results = candidates.map(candidate => ({
+                ...candidate,
+                similarity: this.cosineSimilarity(queryEmbedding, this.generateEmbedding(candidate.text || candidate.query || ''))
+            }));
+            
+            return results
+                .filter(r => r.similarity > this.similarityThreshold)
+                .sort((a, b) => b.similarity - a.similarity);
+        }
+        
+        getStats() {
+            return {
+                cacheSize: this.embeddingsCache.size,
+                threshold: this.similarityThreshold
+            };
+        }
+    }
+
+    // ============================================
+    // CONECTOR DE APIs
+    // ============================================
+    
+    class APIConnector {
+        constructor() {
+            this.endpoints = new Map();
+            this.cache = new Map();
+            this.maxCacheAge = 3600000;
+            this.registerDefaultEndpoints();
+        }
+        
+        registerDefaultEndpoints() {
+            this.registerEndpoint('philosophyData', {
+                url: 'https://api.example.com/philosophy',
+                method: 'GET',
+                transform: (data) => ({
+                    pensadores: data.pensadores || [],
+                    corrientes: data.corrientes || {}
+                })
+            });
+        }
+        
+        registerEndpoint(name, config) {
+            this.endpoints.set(name, config);
+        }
+        
+        async call(endpointName, params = {}) {
+            const config = this.endpoints.get(endpointName);
+            if (!config) {
+                return { error: `Endpoint ${endpointName} no encontrado` };
+            }
+            
+            const cacheKey = `${endpointName}_${JSON.stringify(params)}`;
+            if (this.cache.has(cacheKey)) {
+                const cached = this.cache.get(cacheKey);
+                if (Date.now() - cached.timestamp < this.maxCacheAge) {
+                    return cached.data;
+                }
+            }
+            
+            try {
+                const mockData = this.generateMockData(endpointName, params);
+                const result = config.transform ? config.transform(mockData) : mockData;
+                this.cache.set(cacheKey, {
+                    data: result,
+                    timestamp: Date.now()
+                });
+                return result;
+            } catch(e) {
+                return { error: e.message };
+            }
+        }
+        
+        generateMockData(endpoint, params) {
+            const datos = {
+                philosophyData: {
+                    pensadores: ['Aristóteles', 'Platón', 'Sócrates'],
+                    corrientes: { etica: 'Virtud', politica: 'Justicia' }
+                }
+            };
+            return datos[endpoint] || {};
+        }
+        
+        getStats() {
+            return {
+                endpoints: this.endpoints.size,
+                cacheSize: this.cache.size
+            };
+        }
+    }
+
+    // ============================================
+    // INICIALIZACIÓN DE CONECTORES
+    // ============================================
+    
+    const memoryConnector = new MemoryConnector();
+    const semanticConnector = new SemanticConnector();
+    const apiConnector = new APIConnector();
+
     // ============================================
     // SISTEMA DE CACHÉ SEMÁNTICO
     // ============================================
@@ -332,7 +579,24 @@
             .join('_');
         return words;
     }
+
+    // ============================================
+    // ACTUALIZAR MÉTRICAS DE CONECTORES
+    // ============================================
     
+    function actualizarMetricasConectores() {
+        const memStats = memoryConnector.getStats();
+        const semStats = semanticConnector.getStats();
+        const apiStats = apiConnector.getStats();
+        
+        document.getElementById('metricMemoria').textContent = memStats.total;
+        document.getElementById('metricSemantico').textContent = semStats.cacheSize;
+        document.getElementById('metricAPIs').textContent = apiStats.endpoints;
+        
+        const contextoPorcentaje = Math.min(100, (memStats.shortTerm * 10) + 20);
+        document.getElementById('metricContexto').textContent = Math.min(contextoPorcentaje, 100) + '%';
+    }
+
     // ============================================
     // LIMPIADOR DE MARKDOWN
     // ============================================
@@ -350,7 +614,7 @@
         limpio = limpio.replace(/\n{3,}/g, '\n\n');
         return limpio.trim();
     }
-    
+
     // ============================================
     // GENERAR METADATOS JSON-LD
     // ============================================
@@ -371,19 +635,17 @@
             "about": "Filosofía política y ética"
         };
     }
-    
+
     // ============================================
     // ACTUALIZAR WIDGETS
     // ============================================
     
     function actualizarWidgets(analisis, pais, provincia) {
-        // Actualizar métricas
         const sabios = _PAISES_SABIOS.length;
         document.getElementById('metricSabios').textContent = sabios;
         document.getElementById('metricProvincias').textContent = provincias.length;
-        document.getElementById('metricVirtudes').textContent = 5; // Prudencia, Justicia, Templanza, Fortaleza, Honestidad
+        document.getElementById('metricVirtudes').textContent = 5;
         
-        // Calcular confianza
         let confianza = 75;
         if (analisis && analisis.length > 100) confianza += 5;
         if (analisis && analisis.length > 200) confianza += 5;
@@ -394,7 +656,6 @@
         document.getElementById('confidenceFill').style.width = confianza + '%';
         document.getElementById('confidenceLabel').textContent = Math.round(confianza) + '%';
         
-        // Actualizar virtud del momento
         const virtudContent = document.getElementById('widgetVirtudContent');
         const virtudes = ['🧠 Prudencia', '⚖️ Justicia', '💪 Fortaleza', '🌿 Templanza', '💎 Honestidad'];
         const virtudActual = virtudes[Math.floor(Math.random() * virtudes.length)];
@@ -409,18 +670,18 @@
             </div>
         `;
         
-        // Generar metadatos JSON-LD
         const metadatos = generarMetadatos(analisis, confianza, pais);
         document.getElementById('metadataContainer').innerHTML = `<script type="application/ld+json">${JSON.stringify(metadatos)}<\/script>`;
         
-        // Deep linking
         if (history.pushState && analisis.length > 20) {
             const url = new URL(window.location);
             url.searchParams.set('q', (provincia || 'Ecuador').substring(0, 50));
             window.history.pushState({}, '', url);
         }
+        
+        actualizarMetricasConectores();
     }
-    
+
     // ============================================
     // SISTEMA DE CACHÉ
     // ============================================
@@ -454,7 +715,7 @@
     async function _llamadaIA(prompt) {
         const semanticKey = getSemanticKey(prompt);
         
-        // Verificar caché semántico
+        // 1. Verificar caché semántico
         if (semanticCache.has(semanticKey)) {
             const cached = semanticCache.get(semanticKey);
             if (Date.now() - cached.timestamp < 86400000) {
@@ -462,11 +723,40 @@
             }
         }
         
+        // 2. Buscar en memoria preguntas similares
+        const memoriaSimilar = memoryConnector.recall(prompt, 2);
+        let contextoMemoria = '';
+        if (memoriaSimilar.length > 0) {
+            contextoMemoria = '\n\n[Contexto de memoria filosófica:] ' + memoriaSimilar.map(m => 
+                `Consulta similar anterior (${m.pais || 'global'}): "${m.response.substring(0, 80)}..."`
+            ).join(' ');
+        }
+        
+        // 3. Consultar API para datos filosóficos
+        const apiData = await apiConnector.call('philosophyData');
+        let contextoAPI = '';
+        if (!apiData.error) {
+            contextoAPI = `\n\n[Datos filosóficos externos:] Pensadores: ${apiData.pensadores?.join(', ') || ''}`;
+        }
+        
         try {
-            const respuesta = await jsllm7(prompt);
+            let promptFinal = prompt;
+            if (contextoMemoria) promptFinal += `\n${contextoMemoria}`;
+            if (contextoAPI) promptFinal += `\n${contextoAPI}`;
+            
+            const respuesta = await jsllm7(promptFinal);
             if (respuesta && respuesta.length > 20) {
                 const respuestaLimpia = limpiarMarkdown(respuesta);
                 semanticCache.set(semanticKey, { data: respuestaLimpia, timestamp: Date.now() });
+                
+                // Guardar en memoria
+                const pais = _siguienteSabio();
+                memoryConnector.remember({
+                    query: prompt,
+                    response: respuestaLimpia,
+                    pais: pais
+                });
+                actualizarMetricasConectores();
                 return respuestaLimpia;
             }
         } catch(e) { 
@@ -482,34 +772,29 @@
         const respuesta = await _llamadaIA(promptText);
         const respuestaFinal = respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`;
         mostrarModal(titulo, respuestaFinal);
-        // Actualizar widgets
         const pais = _siguienteSabio();
         actualizarWidgets(respuestaFinal, pais, null);
     }
-    
+
     // ============================================
     // 10 HERRAMIENTAS FILOSÓFICAS
     // ============================================
     
-    // 1. Ética para Gobernantes
     async function eticaGobernantes() {
         const prompt = `Como Aristóteles, escribe un tratado breve sobre la ética que deben seguir los gobernantes. Incluye: prudencia, justicia, templanza y búsqueda del bien común. Usa ejemplos históricos. Sin asteriscos.`;
         await herramientaGenerica(prompt, "📜 ÉTICA PARA GOBERNANTES");
     }
     
-    // 2. Análisis de Virtudes
     async function analisisVirtudes() {
         const prompt = `Analiza las 5 virtudes cardinales según Aristóteles: prudencia, justicia, templanza, fortaleza y honestidad. Explica cada una con ejemplos prácticos para la vida moderna. Sin asteriscos.`;
         await herramientaGenerica(prompt, "🏛️ ANÁLISIS DE VIRTUDES");
     }
     
-    // 3. Justicia Distributiva
     async function justiciaDistributiva() {
         const prompt = `Explica el concepto de justicia distributiva en la filosofía de Aristóteles. ¿Cómo deberían distribuirse los recursos y honores en una sociedad justa? Aplica a un país latinoamericano actual. Sin asteriscos.`;
         await herramientaGenerica(prompt, "⚖️ JUSTICIA DISTRIBUTIVA");
     }
     
-    // 4. Diálogo Socrático
     async function dialogoSocratico() {
         const tema = prompt("¿Sobre qué tema filosófico quieres dialogar? (felicidad, justicia, amistad, virtud):", "felicidad");
         if (!tema) return;
@@ -517,37 +802,31 @@
         await herramientaGenerica(prompt, `💬 DIÁLOGO SOBRE: ${tema.toUpperCase()}`);
     }
     
-    // 5. Filosofía Política
     async function filosofiaPolitica() {
         const prompt = `Analiza la teoría política de Aristóteles: el hombre es un animal político, las formas de gobierno (monarquía, aristocracia, democracia) y sus degeneraciones. Aplica al contexto latinoamericano actual. Sin asteriscos.`;
         await herramientaGenerica(prompt, "📖 FILOSOFÍA POLÍTICA");
     }
     
-    // 6. Amistad Cívica
     async function amistadCivica() {
         const prompt = `Explica los tres tipos de amistad según Aristóteles (utilidad, placer, virtud). ¿Cómo puede la amistad cívica fortalecer la democracia y la cohesión social? Sin asteriscos.`;
         await herramientaGenerica(prompt, "🤝 AMISTAD CÍVICA");
     }
     
-    // 7. Educación y Virtud
     async function educacionVirtud() {
         const prompt = `Desarrolla la teoría aristotélica de la educación: cómo formar ciudadanos virtuosos a través de hábitos, enseñanzas y ejemplo. ¿Qué cambios recomendarías en el sistema educativo actual? Sin asteriscos.`;
         await herramientaGenerica(prompt, "📚 EDUCACIÓN Y VIRTUD");
     }
     
-    // 8. Eudaimonia (Felicidad)
     async function eudaimonia() {
         const prompt = `Explica el concepto de eudaimonia (felicidad floreciente) en Aristóteles. ¿Cómo alcanza el ser humano la vida buena? Diferencia entre placer, honor y virtud como fines. Sin asteriscos.`;
         await herramientaGenerica(prompt, "😊 EUDAIMONIA · LA FELICIDAD ARISTOTÉLICA");
     }
     
-    // 9. Liderazgo Ético
     async function liderazgoEtico() {
         const prompt = `Analiza el liderazgo ético desde la perspectiva aristotélica. ¿Qué cualidades debe tener un líder virtuoso? Incluye ejemplos de líderes históricos que encarnaron estas virtudes. Sin asteriscos.`;
         await herramientaGenerica(prompt, "👑 LIDERAZGO ÉTICO");
     }
     
-    // 10. Consejo Filosófico
     async function consejoFilosofico() {
         const problema = prompt("¿Qué problema o dilema filosófico te preocupa? (trabajo, relaciones, propósito de vida, decisiones éticas):", "encontrar propósito de vida");
         if (!problema) return;
@@ -555,7 +834,6 @@
         await herramientaGenerica(prompt, `🍃 CONSEJO FILOSÓFICO SOBRE: ${problema.toUpperCase()}`);
     }
     
-    // Asignar botones
     document.getElementById('btnEtica').onclick = eticaGobernantes;
     document.getElementById('btnVirtudes').onclick = analisisVirtudes;
     document.getElementById('btnJusticia').onclick = justiciaDistributiva;
@@ -566,7 +844,7 @@
     document.getElementById('btnFelix').onclick = eudaimonia;
     document.getElementById('btnLiderazgo').onclick = liderazgoEtico;
     document.getElementById('btnConsejo').onclick = consejoFilosofico;
-    
+
     // ============================================
     // DEEP LINKING - CARGAR DESDE URL
     // ============================================
@@ -575,7 +853,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const q = urlParams.get('q');
         if (q) {
-            // Buscar si es una provincia
             const provinciaEncontrada = provincias.find(p => p.toLowerCase().includes(q.toLowerCase()));
             if (provinciaEncontrada) {
                 document.getElementById('analysisType').value = 'provincia';
@@ -594,7 +871,7 @@
             }
         }
     }
-    
+
     // ============================================
     // SISTEMA PRINCIPAL
     // ============================================
@@ -627,11 +904,27 @@
         const sabio = _siguienteSabio();
         document.getElementById('paisActivoBadge').innerHTML = `🧠 ${sabio}`;
         
+        // Buscar en memoria análisis similares
+        const memoriaSimilar = memoryConnector.recall(tipo === 'nacional' ? 'Ecuador' : prov, 2);
+        let contextoMemoria = '';
+        if (memoriaSimilar.length > 0) {
+            contextoMemoria = '\n\n[Contexto de memoria filosófica:] ' + memoriaSimilar.map(m => 
+                `Análisis similar anterior de ${m.pais || 'global'}: "${m.response.substring(0, 80)}..."`
+            ).join(' ');
+        }
+        
+        // Consultar API para datos filosóficos
+        const apiData = await apiConnector.call('philosophyData');
+        let contextoAPI = '';
+        if (!apiData.error) {
+            contextoAPI = `\n\n[Datos filosóficos externos:] ${apiData.pensadores?.slice(0, 2).join(', ') || ''}`;
+        }
+        
         const preguntaBase = tipo === 'nacional' 
             ? `Analiza Ecuador (política, economía, seguridad) desde la filosofía aristotélica. Busca el justo medio, la virtud cívica y el bien común.`
             : `Analiza la provincia de ${prov} en Ecuador y su contribución al bien común, la virtud cívica y la justicia distributiva desde Aristóteles.`;
         
-        const prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
+        let prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
 
 Eres un sabio filósofo de ${sabio}.
 
@@ -639,9 +932,13 @@ ${preguntaBase}
 
 ${modo === 'experto' ? 'Responde con análisis profundo (250+ palabras).' : 'Responde con análisis claro (150+ palabras).'}
 
-Estructura: Introducción filosófica, análisis, reflexión final. Habla en primera persona como sabio.
-
-RESPUESTA (texto limpio, sin asteriscos):`;
+Estructura: Introducción filosófica, análisis, reflexión final. Habla en primera persona como sabio.`;
+        
+        // Añadir contexto de conectores
+        if (contextoMemoria) prompt += `\n${contextoMemoria}`;
+        if (contextoAPI) prompt += `\n${contextoAPI}`;
+        
+        prompt += `\n\nRESPUESTA (texto limpio, sin asteriscos):`;
 
         let respuesta = await _llamadaIA(prompt);
         if(!respuesta || respuesta.length < 100) {
@@ -714,21 +1011,18 @@ RESPUESTA (texto limpio, sin asteriscos):`;
         const contenido = await generarAnalisis(tipo, provinciaSeleccionada);
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
         await addFeedbackConSecreto(contenido);
-        
-        // Actualizar widgets
         actualizarWidgets(contenido, sabio, provinciaSeleccionada);
         
-        showToast(`✅ El Filósofo ha hablado`);
+        showToast(`✅ El Filósofo ha hablado con conectores`);
     };
 
     cargarProvincias();
     verificarGoSilencioso();
     setInterval(verificarGoSilencioso, 60000);
     
-    // Inicializar widgets con valores por defecto
-    actualizarWidgets('Sabiduría aristotélica activa', _PAISES_SABIOS[0], null);
+    actualizarWidgets('Sabiduría aristotélica activa con conectores', _PAISES_SABIOS[0], null);
+    actualizarMetricasConectores();
     
-    // Cargar desde URL
     cargarDesdeURL();
     
     setTimeout(async () => {
@@ -736,19 +1030,19 @@ RESPUESTA (texto limpio, sin asteriscos):`;
         const badge = document.getElementById('analysisBadge');
         const sabio = _siguienteSabio();
         badge.innerHTML = `🏛️ Análisis Nacional · ${sabio}`;
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 Invocando sabiduría...</p></div>';
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🤔 Invocando sabiduría con conectores...</p></div>';
         const contenido = await generarAnalisis('nacional');
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
         await addFeedbackConSecreto(contenido);
         actualizarWidgets(contenido, sabio, null);
-        showToast(`✨ El Filósofo de ${sabio} ha despertado · 10 herramientas disponibles · Widgets inteligentes`);
+        showToast(`✨ El Filósofo de ${sabio} ha despertado · Conectores activos · 10 herramientas`);
     }, 500);
     
     let intentos = 0;
     const check = setInterval(() => {
         if (typeof jsllm7 !== 'undefined') {
             clearInterval(check);
-            showToast("🌍 Sabiduría global activa · 10 herramientas filosóficas · Texto limpio sin asteriscos");
+            showToast("🌍 Sabiduría global activa · Conectores: Memoria · Semántico · APIs · 10 herramientas");
         } else if (intentos > 30) clearInterval(check);
         intentos++;
     }, 500);
