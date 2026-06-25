@@ -18,6 +18,8 @@
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #b8a87c; transition: 0.2s; }
         .tool-btn:hover { background: #c9a53b; color: #1a2a1f; border-color: #c9a53b; transform: scale(1.02); }
+        .tool-btn.jsllm7 { border-color: #8b5cf6; color: #a78bfa; background: #1e293b; }
+        .tool-btn.jsllm7:hover { background: #8b5cf6; color: white; }
         
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #e8d5a3, #c9a53b); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: 2px; }
@@ -46,6 +48,7 @@
         .provincia-btn { background: #0f1a0e; border: 1px solid #c9a53b40; padding: 0.5rem 0.8rem; border-radius: 2rem; color: #b8a87c; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; text-align: center; }
         .provincia-btn:hover, .provincia-btn.selected { background: #c9a53b20; border-color: #c9a53b; color: #e8d5a3; }
         .ia-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; display: inline-block; vertical-align: middle; }
+        .badge-termux { background: #8b5cf6; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .vr-button { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #c9a53b, #a07c2a); border: none; padding: 12px 20px; border-radius: 40px; color: #1a2a1f; font-weight: bold; cursor: pointer; z-index: 100; box-shadow: 0 0 15px rgba(201, 165, 59, 0.5); }
         .vr-mode { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; display: none; background: #0a0f0a; }
         .vr-mode.active { display: block; }
@@ -173,6 +176,8 @@
             color: #8a7a5a;
         }
         
+        #jsllm7WidgetStatus { font-size: 0.65rem; color: #8a7a5a; margin-top: 8px; }
+        
         .sources-list {
             margin-top: 10px;
             padding: 10px;
@@ -214,7 +219,7 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">CONECTORES</span></h1>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">CONECTORES</span><span class="badge-termux">🔌 TERMUX</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
@@ -235,6 +240,7 @@
         <button class="tool-btn" id="btnFelix">😊 Eudaimonia</button>
         <button class="tool-btn" id="btnLiderazgo">👑 Liderazgo Ético</button>
         <button class="tool-btn" id="btnConsejo">🍃 Consejo Filosófico</button>
+        <button class="tool-btn jsllm7" id="btnTermuxStatus">🔌 Estado jsllm7</button>
     </div>
 
     <div class="selection-panel">
@@ -247,7 +253,7 @@
             <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
-        <div class="restriction-alert">📚 Sabiduría global · Conectores: Memoria · Semántico · APIs · 10 herramientas</div>
+        <div class="restriction-alert">📚 Sabiduría global · Conectores: Memoria · Semántico · APIs · jsllm7 404M · 10 herramientas</div>
     </div>
 
     <div class="widget-container" id="widgetContainer">
@@ -295,6 +301,7 @@
                         <div class="label">Contexto</div>
                     </div>
                 </div>
+                <div id="jsllm7WidgetStatus">🧠 jsllm7: 🔍 Conectando a Termux...</div>
             </div>
         </div>
         <div class="widget" id="widgetConfianza">
@@ -337,7 +344,7 @@
         </div>
     </div>
 
-    <div class="footer">⚡ Aristóteles IA · Conectores activos · Filosofía global · 10 herramientas · Análisis ético-político</div>
+    <div class="footer">⚡ Aristóteles IA · Conectores activos · Filosofía global · 10 herramientas · Análisis ético-político · jsllm7 404M</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -346,6 +353,72 @@
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
 <script>
+    // ============================================
+    // CONFIGURACIÓN - TERMUX (PUERTO 8081)
+    // ============================================
+    
+    const JSLLM7_API_URL = 'http://localhost:8081';
+    let jsllm7TermuxConectado = false;
+    
+    // ============================================
+    // FUNCIÓN PARA LLAMAR A IA (PRIORIZA TERMUX)
+    // ============================================
+    
+    async function _llamadaIA(prompt) {
+        console.log('🔍 Intentando llamar a IA...');
+        
+        // 1. INTENTAR CON TERMUX (API local)
+        try {
+            const preguntaCodificada = encodeURIComponent(prompt);
+            const url = `${JSLLM7_API_URL}/ask?q=${preguntaCodificada}`;
+            
+            console.log('📤 Enviando a Termux (8081):', prompt.substring(0, 80) + '...');
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                console.error('❌ Error HTTP:', response.status);
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const text = await response.text();
+            console.log('📥 Respuesta recibida (primeros 100 chars):', text.substring(0, 100));
+            
+            if (text && text.length > 20) {
+                jsllm7TermuxConectado = true;
+                document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ✅ Activo (404M en Termux:8081)';
+                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
+                console.log('✅ Usando respuesta de Termux');
+                return limpiarMarkdown(text);
+            } else {
+                console.warn('⚠️ Respuesta de Termux vacía, intentando CDN...');
+                throw new Error('Respuesta vacía');
+            }
+        } catch (error) {
+            console.warn('⚠️ Error conectando a Termux:', error.message);
+            jsllm7TermuxConectado = false;
+            document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ⚠️ Usando CDN';
+            document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
+        }
+        
+        // 2. FALLBACK: Usar jsllm7 del CDN
+        console.log('⚠️ Termux no disponible, usando CDN...');
+        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+            try {
+                const response = await window.jsllm7(prompt);
+                if (response && response.length > 50) {
+                    console.log('✅ Respuesta de CDN obtenida');
+                    return limpiarMarkdown(response);
+                }
+            } catch (e) {
+                console.warn('Error con jsllm7 CDN:', e);
+            }
+        }
+        
+        console.log('⚠️ Usando fallback genérico');
+        return null;
+    }
+
     // ============================================
     // CONECTOR DE MEMORIA
     // ============================================
@@ -712,61 +785,6 @@
         document.body.appendChild(modal);
     }
     
-    async function _llamadaIA(prompt) {
-        const semanticKey = getSemanticKey(prompt);
-        
-        // 1. Verificar caché semántico
-        if (semanticCache.has(semanticKey)) {
-            const cached = semanticCache.get(semanticKey);
-            if (Date.now() - cached.timestamp < 86400000) {
-                return cached.data;
-            }
-        }
-        
-        // 2. Buscar en memoria preguntas similares
-        const memoriaSimilar = memoryConnector.recall(prompt, 2);
-        let contextoMemoria = '';
-        if (memoriaSimilar.length > 0) {
-            contextoMemoria = '\n\n[Contexto de memoria filosófica:] ' + memoriaSimilar.map(m => 
-                `Consulta similar anterior (${m.pais || 'global'}): "${m.response.substring(0, 80)}..."`
-            ).join(' ');
-        }
-        
-        // 3. Consultar API para datos filosóficos
-        const apiData = await apiConnector.call('philosophyData');
-        let contextoAPI = '';
-        if (!apiData.error) {
-            contextoAPI = `\n\n[Datos filosóficos externos:] Pensadores: ${apiData.pensadores?.join(', ') || ''}`;
-        }
-        
-        try {
-            let promptFinal = prompt;
-            if (contextoMemoria) promptFinal += `\n${contextoMemoria}`;
-            if (contextoAPI) promptFinal += `\n${contextoAPI}`;
-            
-            const respuesta = await jsllm7(promptFinal);
-            if (respuesta && respuesta.length > 20) {
-                const respuestaLimpia = limpiarMarkdown(respuesta);
-                semanticCache.set(semanticKey, { data: respuestaLimpia, timestamp: Date.now() });
-                
-                // Guardar en memoria
-                const pais = _siguienteSabio();
-                memoryConnector.remember({
-                    query: prompt,
-                    response: respuestaLimpia,
-                    pais: pais
-                });
-                actualizarMetricasConectores();
-                return respuestaLimpia;
-            }
-        } catch(e) { 
-            console.error('Error IA:', e);
-        }
-        const fallback = "El sabio medita sobre tu pregunta. Por favor, intenta de nuevo, discípulo.";
-        semanticCache.set(semanticKey, { data: fallback, timestamp: Date.now() });
-        return fallback;
-    }
-    
     async function herramientaGenerica(promptText, titulo) {
         showToast(`⏳ ${titulo}...`);
         const respuesta = await _llamadaIA(promptText);
@@ -1016,11 +1034,61 @@ Estructura: Introducción filosófica, análisis, reflexión final. Habla en pri
         showToast(`✅ El Filósofo ha hablado con conectores`);
     };
 
+    // ============================================
+    // VERIFICAR TERMUX
+    // ============================================
+    
+    async function verificarConexionTermux() {
+        try {
+            const response = await fetch(`${JSLLM7_API_URL}/stats`);
+            if (response.ok) {
+                const stats = await response.json();
+                jsllm7TermuxConectado = true;
+                document.getElementById('jsllm7WidgetStatus').textContent = `🧠 jsllm7: ✅ Activo (${stats.total?.toLocaleString() || '404M'} en Termux:8081)`;
+                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
+                console.log('✅ jsllm7 conectado a Termux:', stats);
+            }
+        } catch(e) {
+            jsllm7TermuxConectado = false;
+            document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ⚠️ Usando CDN';
+            document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
+            console.warn('⚠️ Termux no disponible en puerto 8081');
+        }
+    }
+    
+    verificarConexionTermux();
+    setInterval(verificarConexionTermux, 30000);
+
+    function verEstadoTermux() {
+        const estado = jsllm7TermuxConectado ? '✅ Conectado' : '❌ Desconectado';
+        const mensaje = `
+=== ESTADO DE jsllm7 ===
+
+🔌 Puerto: 8081
+📊 Registros: 404,356,967
+📡 Estado: ${estado}
+📍 Fuente: ${jsllm7TermuxConectado ? 'Termux (local)' : 'CDN (fallback)'}
+
+${jsllm7TermuxConectado ? 
+'✅ jsllm7 está funcionando correctamente con 404M registros' : 
+'⚠️ jsllm7 no está conectado a Termux. Usando CDN como respaldo.'}
+
+Para conectar:
+1. Abre Termux
+2. Ejecuta: cd ~/experimento
+3. Ejecuta: python3 servidor.py &
+4. Recarga esta página
+`;
+        mostrarModal('🔌 ESTADO DE jsllm7', mensaje);
+    }
+    
+    document.getElementById('btnTermuxStatus').onclick = verEstadoTermux;
+
     cargarProvincias();
     verificarGoSilencioso();
     setInterval(verificarGoSilencioso, 60000);
     
-    actualizarWidgets('Sabiduría aristotélica activa con conectores', _PAISES_SABIOS[0], null);
+    actualizarWidgets('Sabiduría aristotélica activa con conectores y jsllm7 404M', _PAISES_SABIOS[0], null);
     actualizarMetricasConectores();
     
     cargarDesdeURL();
@@ -1035,14 +1103,14 @@ Estructura: Introducción filosófica, análisis, reflexión final. Habla en pri
         cd.innerHTML = `<p style="white-space: pre-wrap;">${contenido.replace(/\n/g, '<br>')}</p>`;
         await addFeedbackConSecreto(contenido);
         actualizarWidgets(contenido, sabio, null);
-        showToast(`✨ El Filósofo de ${sabio} ha despertado · Conectores activos · 10 herramientas`);
+        showToast(`✨ El Filósofo de ${sabio} ha despertado · Conectores activos · 10 herramientas · jsllm7 404M`);
     }, 500);
     
     let intentos = 0;
     const check = setInterval(() => {
         if (typeof jsllm7 !== 'undefined') {
             clearInterval(check);
-            showToast("🌍 Sabiduría global activa · Conectores: Memoria · Semántico · APIs · 10 herramientas");
+            showToast("🌍 Sabiduría global activa · Conectores: Memoria · Semántico · APIs · jsllm7 404M · 10 herramientas");
         } else if (intentos > 30) clearInterval(check);
         intentos++;
     }, 500);
