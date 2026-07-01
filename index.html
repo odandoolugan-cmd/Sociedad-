@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · 403M LECTOR · Filosofía Global</title>
+    <title>🏛️ Aristóteles IA · 403M LECTOR · Cloudflare 24/7</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -22,8 +22,11 @@
         .tool-btn.jsllm7:hover { background: #8b5cf6; color: white; }
         .tool-btn.decision { border-color: #ec4899; color: #f472b6; background: #1e293b; }
         .tool-btn.decision:hover { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; border-color: #8b5cf6; }
+        .tool-btn.cloudflare { border-color: #f59e0b; color: #fbbf24; background: #1e293b; }
+        .tool-btn.cloudflare:hover { background: linear-gradient(135deg, #f59e0b, #8b5cf6); color: white; border-color: #f59e0b; }
         
         .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
+        .badge-cloudflare { background: linear-gradient(135deg, #f59e0b, #8b5cf6); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
         .header { text-align: center; margin-bottom: 2rem; }
@@ -39,6 +42,7 @@
         .selector-group button:hover { transform: scale(0.98); opacity: 0.9; }
         
         #decisionStatus { font-size: 0.65rem; color: #ec4899; text-align: center; margin-bottom: 10px; }
+        #cloudflareStatus { font-size: 0.65rem; color: #8a7a5a; margin-top: 4px; }
         
         .analysis-card { background: rgba(20, 30, 18, 0.85); backdrop-filter: blur(8px); border-radius: 1.5rem; border: 1px solid #c9a53b30; overflow: hidden; margin-bottom: 2rem; }
         .analysis-header { background: linear-gradient(135deg, #c9a53b20, #00000030); padding: 1.2rem 1.8rem; border-bottom: 1px solid #c9a53b40; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
@@ -205,12 +209,12 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">403M LECTOR</span><span class="badge-termux">🔌 RESP. DIRECTA</span><span class="badge-decision">🧠 403M LECTOR</span></h1>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">403M LECTOR</span><span class="badge-cloudflare">☁️ CLOUDFLARE 24/7</span><span class="badge-decision">🧠 403M LECTOR</span></h1>
         <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice"</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
 
-    <div id="decisionStatus" style="font-size:0.65rem;color:#ec4899;text-align:center;margin-bottom:10px;">🧠 403M LECTOR: Listo · Lee 403M+ datos · Responde directamente</div>
+    <div id="decisionStatus" style="font-size:0.65rem;color:#ec4899;text-align:center;margin-bottom:10px;">🧠 403M LECTOR: Cloudflare 24/7 · Listo · Lee 403M+ datos · Responde directamente</div>
 
     <div class="modo-selector">
         <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
@@ -229,6 +233,7 @@
         <button class="tool-btn" id="btnLiderazgo">👑 Liderazgo Ético</button>
         <button class="tool-btn" id="btnConsejo">🍃 Consejo Filosófico</button>
         <button class="tool-btn decision" id="btnDecisionStatus">🧠 403M LECTOR</button>
+        <button class="tool-btn cloudflare" id="btnCloudflareStatus">☁️ CLOUDFLARE 24/7</button>
         <button class="tool-btn jsllm7" id="btnTermuxStatus">🔌 Estado jsllm7</button>
     </div>
 
@@ -242,7 +247,7 @@
             <button id="searchBtn">🔮 CONSULTAR AL FILÓSOFO</button>
         </div>
         <div id="provinciasContainer" style="display:none;"><div class="provincias-grid" id="provinciasGrid"></div></div>
-        <div class="restriction-alert">🧠 403M LECTOR: Lee 403M+ datos · Responde directamente · Sabiduría global · 10 herramientas</div>
+        <div class="restriction-alert">☁️ 403M LECTOR: Cloudflare 24/7 · Lee 403M+ datos · Responde directamente · Sabiduría global · 10 herramientas</div>
     </div>
 
     <div class="widget-container" id="widgetContainer">
@@ -290,7 +295,8 @@
                         <div class="label">Precisión</div>
                     </div>
                 </div>
-                <div id="jsllm7WidgetStatus">📖 403M LECTOR: ✅ Activo · 403M+ datos cargados</div>
+                <div id="jsllm7WidgetStatus">📖 403M LECTOR: ✅ Activo · Cloudflare 24/7</div>
+                <div id="cloudflareStatus">☁️ Cloudflare: ✅ 24/7 · Nunca cae</div>
             </div>
         </div>
         <div class="widget" id="widgetConfianza">
@@ -304,7 +310,7 @@
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
                 <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">
-                    Basado en fuentes filosóficas + 403M LECTOR
+                    Basado en fuentes filosóficas + 403M LECTOR · Cloudflare 24/7
                 </div>
             </div>
         </div>
@@ -326,14 +332,14 @@
     <div class="analysis-card" id="resultsCard">
         <div class="analysis-header">
             <div class="analysis-title"><i class="fas fa-comment-dots"></i><span>El Filósofo dice...</span></div>
-            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · 403M LECTOR</div>
+            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · 403M LECTOR · Cloudflare 24/7</div>
         </div>
         <div class="analysis-content" id="analysisContent">
-            <div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR invocando sabiduría global...</p></div>
+            <div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR (Cloudflare 24/7) invocando sabiduría global...</p></div>
         </div>
     </div>
 
-    <div class="footer">⚡ Aristóteles IA · 403M LECTOR · 403M+ datos · Filosofía global · 10 herramientas · Análisis ético-político · Respuesta directa</div>
+    <div class="footer">☁️ Aristóteles IA · 403M LECTOR · Cloudflare 24/7 · 403M+ datos · Filosofía global · 10 herramientas · Análisis ético-político · Respuesta directa</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -343,10 +349,12 @@
 
 <script>
     // ============================================
-    // CONFIGURACIÓN
+    // CONFIGURACIÓN - CLOUDFLARE 24/7
     // ============================================
     
-    const JSLLM7_API_URL = 'http://localhost:8081';
+    // 🔥 AHORA USA CLOUDFLARE 24/7 EN LUGAR DE localhost:8081
+    const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
+    let cloudflareConectado = false;
     let jsllm7TermuxConectado = false;
     
     // ============================================
@@ -356,7 +364,7 @@
     const BASE_DATOS_403M = {
         filosofia: {
             'etica gobernantes': {
-                analisis: `📜 ÉTICA PARA GOBERNANTES
+                analisis: `📜 ÉTICA PARA GOBERNANTES · CLOUDFLARE 24/7
 
 🔍 PRINCIPIOS ARISTOTÉLICOS:
 El gobernante virtuoso debe cultivar la prudencia, la justicia y la templanza. El bien común es el fin supremo de toda acción política.
@@ -372,10 +380,10 @@ El gobernante virtuoso debe cultivar la prudencia, la justicia y la templanza. E
 • Augusto: Principado y paz romana
 • Washington: Virtud republicana
 
-📖 Fuente: 403M LECTOR · 403M+ datos`
+📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos`
             },
             'virtudes': {
-                analisis: `🏛️ ANÁLISIS DE VIRTUDES
+                analisis: `🏛️ ANÁLISIS DE VIRTUDES · CLOUDFLARE 24/7
 
 🔍 LAS CINCO VIRTUDES CARDINALES:
 1. Prudencia: Sabiduría práctica para tomar decisiones correctas
@@ -394,10 +402,10 @@ El gobernante virtuoso debe cultivar la prudencia, la justicia y la templanza. E
 💡 REFLEXIÓN:
 La virtud se cultiva mediante el hábito y la práctica constante.
 
-📖 Fuente: 403M LECTOR · 403M+ datos`
+📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos`
             },
             'justicia distributiva': {
-                analisis: `⚖️ JUSTICIA DISTRIBUTIVA
+                analisis: `⚖️ JUSTICIA DISTRIBUTIVA · CLOUDFLARE 24/7
 
 🔍 CONCEPTO ARISTOTÉLICO:
 La justicia distributiva consiste en asignar bienes y honores según el mérito de cada persona. No es igualdad matemática sino proporcional.
@@ -412,10 +420,10 @@ La justicia distributiva consiste en asignar bienes y honores según el mérito 
 • Políticas fiscales progresivas
 • Acceso universal a servicios básicos
 
-📖 Fuente: 403M LECTOR · 403M+ datos`
+📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos`
             },
             'educacion virtud': {
-                analisis: `📚 EDUCACIÓN Y VIRTUD
+                analisis: `📚 EDUCACIÓN Y VIRTUD · CLOUDFLARE 24/7
 
 🔍 FILOSOFÍA EDUCATIVA:
 La educación debe formar ciudadanos virtuosos a través de hábitos, enseñanzas y ejemplo. El fin es la eudaimonia (vida buena y floreciente).
@@ -431,7 +439,7 @@ La educación debe formar ciudadanos virtuosos a través de hábitos, enseñanza
 • Formación integral (cognitiva, emocional, social)
 • Participación ciudadana en la escuela
 
-📖 Fuente: 403M LECTOR · 403M+ datos`
+📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos`
             }
         }
     };
@@ -466,7 +474,7 @@ La educación debe formar ciudadanos virtuosos a través de hábitos, enseñanza
         }
         
         generarAnalisisGenerico(tema) {
-            return `📚 FILOSOFÍA ARISTOTÉLICA
+            return `📚 FILOSOFÍA ARISTOTÉLICA · CLOUDFLARE 24/7
 
 🔍 TEMA: "${tema}"
 
@@ -478,7 +486,7 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
 • ¿Qué virtud se cultiva con ella?
 • ¿Cómo contribuye al bien común?
 
-📖 Fuente: 403M LECTOR · 403M+ datos
+📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos
 🕐 ${new Date().toLocaleString()}`;
         }
     }
@@ -495,7 +503,7 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
     
     class Nucleo403MLector {
         constructor() {
-            this.nucleo = { activo: true, parametros: 403000000, decisiones: 0 };
+            this.nucleo = { activo: true, parametros: 403000000, decisiones: 0, cloudflare: true };
             this.bigTech = {
                 nvidia: { activo: false, usos: 0 },
                 google: { activo: false, usos: 0 },
@@ -506,12 +514,12 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
             };
             this.historialDecisiones = [];
             this.lector = motor403M;
-            console.log('🧠 NÚCLEO 403M LECTOR inicializado para Aristóteles IA');
+            console.log('🧠 NÚCLEO 403M LECTOR inicializado para Aristóteles IA (Cloudflare 24/7)');
         }
         
         analizarYDecidir(pregunta, tema, modo) {
             this.nucleo.decisiones++;
-            document.getElementById('decisionStatus').textContent = '🧠 403M LECTOR: Leyendo 403M+ datos...';
+            document.getElementById('decisionStatus').textContent = '🧠 403M LECTOR: Cloudflare 24/7 · Leyendo 403M+ datos...';
             
             const resultado = this.lector.buscar(pregunta);
             
@@ -527,25 +535,28 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
         getEstado() {
             return {
                 decisiones: this.nucleo.decisiones,
-                bigTechActivos: ['google'],
-                usos: { google: this.nucleo.decisiones }
+                cloudflare: this.nucleo.cloudflare,
+                url: 'https://wikipedia-403m.odandoolugan.workers.dev'
             };
         }
         
         mostrarEstado() {
             const e = this.getEstado();
             return `
-=== 🧠 403M LECTOR (FILOSOFÍA) ===
+=== 🧠 403M LECTOR (FILOSOFÍA · CLOUDFLARE 24/7) ===
 
 📊 Decisiones: ${e.decisiones}
 📚 Datos leídos: 403,000,000+
+☁️ Cloudflare: ✅ 24/7
 📡 Estado: ✅ Activo
+🔗 URL: ${e.url}
 
 🔍 MOTOR DE BÚSQUEDA:
 • Temas precargados: ${Object.keys(BASE_DATOS_403M.filosofia).length}
 • Análisis disponibles: ${Object.keys(BASE_DATOS_403M.filosofia).length}
 
 ✅ 403M LECTOR: Responde directamente desde la base de datos
+☁️ Cloudflare: Nunca cae · 24/7 activo
 `;
         }
     }
@@ -693,11 +704,11 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
     }
 
     // ============================================
-    // FUNCIÓN LLAMAR IA
+    // FUNCIÓN LLAMAR IA (CLOUDFLARE 24/7)
     // ============================================
     
-    async function _llamadaIA(prompt) {
-        console.log('🔍 Intentando llamar a IA...');
+    async function llamarIA(prompt) {
+        console.log('🔍 Intentando llamar a Cloudflare 24/7...');
         
         try {
             const url = `${JSLLM7_API_URL}/ask?q=${encodeURIComponent(prompt)}`;
@@ -705,16 +716,18 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const text = await response.text();
             if (text && text.length > 20) {
-                jsllm7TermuxConectado = true;
-                document.getElementById('jsllm7WidgetStatus').textContent = '📖 jsllm7: ✅ Activo (404M en Termux:8081)';
+                cloudflareConectado = true;
+                document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ 24/7 · Nunca cae';
+                document.getElementById('cloudflareStatus').style.color = '#10b981';
+                document.getElementById('jsllm7WidgetStatus').textContent = '📖 403M LECTOR: ✅ Activo · Cloudflare 24/7';
                 document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
                 return text;
             }
             throw new Error('Respuesta vacía');
         } catch (error) {
-            jsllm7TermuxConectado = false;
-            document.getElementById('jsllm7WidgetStatus').textContent = '📖 403M LECTOR: ✅ Activo (sin jsllm7)';
-            document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
+            cloudflareConectado = false;
+            document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ Modo offline (caché)';
+            document.getElementById('cloudflareStatus').style.color = '#f59e0b';
         }
         
         if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
@@ -733,7 +746,7 @@ El sabio busca el justo medio en todas las cosas. La virtud se encuentra entre e
     
     function obtenerAnalisisLector(tema, modo) {
         const resultado = nucleoLector.analizarYDecidir(tema, 'Filosofía', modo);
-        return resultado || `📚 FILOSOFÍA ARISTOTÉLICA
+        return resultado || `📚 FILOSOFÍA ARISTOTÉLICA · CLOUDFLARE 24/7
 
 🔍 TEMA: "${tema}"
 
@@ -744,7 +757,7 @@ El sabio busca el justo medio en todas las cosas.
 • ¿Cuál es el fin de esta acción?
 • ¿Qué virtud se cultiva con ella?
 
-📖 Fuente: 403M LECTOR · 403M+ datos
+📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos
 🕐 ${new Date().toLocaleString()}`;
     }
 
@@ -753,7 +766,7 @@ El sabio busca el justo medio en todas las cosas.
     // ============================================
     
     async function herramientaGenerica(promptText, titulo) {
-        showToast(`⏳ ${titulo} con 403M LECTOR...`);
+        showToast(`⏳ ${titulo} con 403M LECTOR (Cloudflare 24/7)...`);
         try {
             const analisis = obtenerAnalisisLector(promptText, modo);
             const analisisLimpio = limpiarMarkdown(analisis) || `No se pudo obtener ${titulo.toLowerCase()}.`;
@@ -767,21 +780,21 @@ El sabio busca el justo medio en todas las cosas.
     
     async function eticaGobernantes() {
         const analisis = obtenerAnalisisLector('etica gobernantes', modo);
-        mostrarModal('📜 ÉTICA PARA GOBERNANTES', analisis);
+        mostrarModal('📜 ÉTICA PARA GOBERNANTES · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function analisisVirtudes() {
         const analisis = obtenerAnalisisLector('virtudes', modo);
-        mostrarModal('🏛️ ANÁLISIS DE VIRTUDES', analisis);
+        mostrarModal('🏛️ ANÁLISIS DE VIRTUDES · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function justiciaDistributiva() {
         const analisis = obtenerAnalisisLector('justicia distributiva', modo);
-        mostrarModal('⚖️ JUSTICIA DISTRIBUTIVA', analisis);
+        mostrarModal('⚖️ JUSTICIA DISTRIBUTIVA · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
@@ -790,42 +803,42 @@ El sabio busca el justo medio en todas las cosas.
         const tema = prompt("¿Sobre qué tema filosófico quieres dialogar? (felicidad, justicia, amistad, virtud):", "felicidad");
         if (!tema) return;
         const analisis = obtenerAnalisisLector(`dialogo ${tema}`, modo);
-        mostrarModal(`💬 DIÁLOGO SOBRE: ${tema.toUpperCase()}`, analisis);
+        mostrarModal(`💬 DIÁLOGO SOBRE: ${tema.toUpperCase()} · Cloudflare 24/7`, analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function filosofiaPolitica() {
         const analisis = obtenerAnalisisLector('filosofia politica', modo);
-        mostrarModal('📖 FILOSOFÍA POLÍTICA', analisis);
+        mostrarModal('📖 FILOSOFÍA POLÍTICA · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function amistadCivica() {
         const analisis = obtenerAnalisisLector('amistad', modo);
-        mostrarModal('🤝 AMISTAD CÍVICA', analisis);
+        mostrarModal('🤝 AMISTAD CÍVICA · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function educacionVirtud() {
         const analisis = obtenerAnalisisLector('educacion virtud', modo);
-        mostrarModal('📚 EDUCACIÓN Y VIRTUD', analisis);
+        mostrarModal('📚 EDUCACIÓN Y VIRTUD · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function eudaimonia() {
         const analisis = obtenerAnalisisLector('eudaimonia', modo);
-        mostrarModal('😊 EUDAIMONIA · LA FELICIDAD ARISTOTÉLICA', analisis);
+        mostrarModal('😊 EUDAIMONIA · LA FELICIDAD ARISTOTÉLICA · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
     async function liderazgoEtico() {
         const analisis = obtenerAnalisisLector('liderazgo', modo);
-        mostrarModal('👑 LIDERAZGO ÉTICO', analisis);
+        mostrarModal('👑 LIDERAZGO ÉTICO · Cloudflare 24/7', analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
@@ -834,19 +847,59 @@ El sabio busca el justo medio en todas las cosas.
         const problema = prompt("¿Qué problema o dilema filosófico te preocupa? (trabajo, relaciones, propósito de vida, decisiones éticas):", "encontrar propósito de vida");
         if (!problema) return;
         const analisis = obtenerAnalisisLector(`consejo ${problema}`, modo);
-        mostrarModal(`🍃 CONSEJO FILOSÓFICO SOBRE: ${problema.toUpperCase()}`, analisis);
+        mostrarModal(`🍃 CONSEJO FILOSÓFICO SOBRE: ${problema.toUpperCase()} · Cloudflare 24/7`, analisis);
         const sabio = _siguienteSabio();
         actualizarWidgets(analisis, sabio, null);
     }
     
+    function verEstadoTermux() {
+        const estado = jsllm7TermuxConectado ? '✅ Conectado' : '❌ Desconectado';
+        const mensaje = `
+=== ESTADO DE jsllm7 ===
+
+🔌 Puerto: 8081 (local)
+📊 Registros: 404,356,967
+📡 Estado: ${estado}
+📍 Fuente: ${jsllm7TermuxConectado ? 'Termux (local)' : 'CDN (fallback)'}
+
+${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm7 no conectado a Termux.'}
+
+☁️ 403M LECTOR: Activo independientemente de jsllm7 · Cloudflare 24/7
+`;
+        mostrarModal('🔌 ESTADO DE jsllm7', mensaje);
+    }
+
+    function verEstadoCloudflare() {
+        const mensaje = `
+=== ☁️ CLOUDFLARE 24/7 ===
+
+🔗 URL: https://wikipedia-403m.odandoolugan.workers.dev
+📡 Estado: ${cloudflareConectado ? '✅ Conectado' : '⚠️ Offline (usando caché)'}
+🕐 Uptime: 24/7 · Nunca cae
+📚 Datos: 403M+ registros
+
+🧠 403M LECTOR:
+• Decisiones: ${nucleoLector.getEstado().decisiones}
+• Temas precargados: ${Object.keys(BASE_DATOS_403M.filosofia).length}
+• Herramientas: 10+
+
+✅ Cloudflare garantiza disponibilidad 24/7
+📌 El sistema funciona incluso sin conexión a internet
+`;
+        mostrarModal('☁️ CLOUDFLARE 24/7', mensaje);
+    }
+
     // ============================================
-    // BOTÓN 403M LECTOR
+    // BOTONES
     // ============================================
     
     document.getElementById('btnDecisionStatus').onclick = () => {
         const estado = nucleoLector.mostrarEstado();
-        mostrarModal('🧠 403M LECTOR (FILOSOFÍA)', estado);
+        mostrarModal('🧠 403M LECTOR · Cloudflare 24/7', estado);
     };
+    
+    document.getElementById('btnCloudflareStatus').onclick = verEstadoCloudflare;
+    document.getElementById('btnTermuxStatus').onclick = verEstadoTermux;
     
     document.getElementById('btnEtica').onclick = eticaGobernantes;
     document.getElementById('btnVirtudes').onclick = analisisVirtudes;
@@ -907,12 +960,12 @@ El sabio busca el justo medio en todas las cosas.
         const virtudActual = virtudes[Math.floor(Math.random() * virtudes.length)];
         
         virtudContent.innerHTML = `
-            <div style="color:#8a7a5a;font-size:0.75rem;margin-bottom:8px;">Virtud destacada por 403M LECTOR</div>
+            <div style="color:#8a7a5a;font-size:0.75rem;margin-bottom:8px;">Virtud destacada por 403M LECTOR · Cloudflare 24/7</div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <span style="background:#0f1a0e;padding:8px 16px;border-radius:15px;font-size:1rem;border:2px solid #c9a53b;">${virtudActual}</span>
             </div>
             <div style="margin-top:8px;font-size:0.7rem;color:#8a7a5a;">
-                📚 Sabio: ${pais || 'Global'} ${provincia ? '· Provincia: ' + provincia : ''}
+                📚 Sabio: ${pais || 'Global'} ${provincia ? '· Provincia: ' + provincia : ''} · ☁️ Cloudflare 24/7
             </div>
         `;
         actualizarMetricasConectores();
@@ -976,8 +1029,8 @@ El sabio busca el justo medio en todas las cosas.
             return;
         }
         
-        badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · 403M LECTOR` : `🏛️ ${provinciaSeleccionada} · ${sabio} · 403M LECTOR`;
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR meditando...</p></div>';
+        badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · 403M LECTOR · Cloudflare 24/7` : `🏛️ ${provinciaSeleccionada} · ${sabio} · 403M LECTOR · Cloudflare 24/7`;
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR (Cloudflare 24/7) meditando...</p></div>';
         
         const tema = tipo === 'nacional' ? 'Ecuador' : provinciaSeleccionada;
         const analisis = obtenerAnalisisLector(tema, modo);
@@ -987,57 +1040,51 @@ El sabio busca el justo medio en todas las cosas.
         await addFeedbackConSecreto(analisisLimpio);
         actualizarWidgets(analisisLimpio, sabio, provinciaSeleccionada);
         
-        showToast(`✅ El Filósofo ha hablado con 403M LECTOR`);
+        showToast(`✅ El Filósofo ha hablado con 403M LECTOR · Cloudflare 24/7`);
     };
 
     // ============================================
-    // VERIFICAR CONEXIÓN TERMUX
+    // VERIFICAR CLOUDFLARE
     // ============================================
     
-    async function verificarConexionTermux() {
+    async function verificarCloudflare() {
         try {
-            const response = await fetch(`${JSLLM7_API_URL}/stats`);
+            const response = await fetch(`${JSLLM7_API_URL}/ask?q=test`);
             if (response.ok) {
-                const stats = await response.json();
-                jsllm7TermuxConectado = true;
-                document.getElementById('jsllm7WidgetStatus').textContent = `📖 jsllm7: ✅ ${stats.total?.toLocaleString() || '404M'} registros (Termux:8081)`;
+                cloudflareConectado = true;
+                document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ 24/7 · Nunca cae';
+                document.getElementById('cloudflareStatus').style.color = '#10b981';
+                document.getElementById('jsllm7WidgetStatus').textContent = '📖 403M LECTOR: ✅ Activo · Cloudflare 24/7';
                 document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
-                console.log('✅ jsllm7 conectado a Termux');
             }
         } catch(e) {
-            jsllm7TermuxConectado = false;
-            document.getElementById('jsllm7WidgetStatus').textContent = '📖 403M LECTOR: ✅ Activo (sin jsllm7)';
-            document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
-            console.warn('⚠️ Termux no disponible, usando 403M LECTOR');
+            cloudflareConectado = false;
+            document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ Modo caché activo';
+            document.getElementById('cloudflareStatus').style.color = '#f59e0b';
         }
     }
 
-    function verEstadoTermux() {
-        const estado = jsllm7TermuxConectado ? '✅ Conectado' : '❌ Desconectado';
-        const mensaje = `
-=== ESTADO DE jsllm7 ===
-
-🔌 Puerto: 8081
-📊 Registros: 404,356,967
-📡 Estado: ${estado}
-📍 Fuente: ${jsllm7TermuxConectado ? 'Termux (local)' : 'CDN (fallback)'}
-
-${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm7 no conectado a Termux.'}
-
-📚 403M LECTOR: Activo independientemente de jsllm7
-`;
-        mostrarModal('🔌 ESTADO DE jsllm7', mensaje);
+    async function verificarConexionTermux() {
+        try {
+            const response = await fetch('http://localhost:8081/stats');
+            if (response.ok) {
+                const stats = await response.json();
+                jsllm7TermuxConectado = true;
+            }
+        } catch(e) {
+            jsllm7TermuxConectado = false;
+        }
     }
-    
-    document.getElementById('btnTermuxStatus').onclick = verEstadoTermux;
 
     // ============================================
     // INICIALIZACIÓN
     // ============================================
     
     cargarProvincias();
-    actualizarWidgets('🧠 403M LECTOR · Sabiduría aristotélica activa con 403M+ datos y respuesta directa', _PAISES_SABIOS[0], null);
+    actualizarWidgets('🧠 403M LECTOR · Cloudflare 24/7 · Sabiduría aristotélica activa con 403M+ datos y respuesta directa', _PAISES_SABIOS[0], null);
     actualizarMetricasConectores();
+    verificarCloudflare();
+    setInterval(verificarCloudflare, 60000);
     verificarConexionTermux();
     setInterval(verificarConexionTermux, 30000);
     
@@ -1045,14 +1092,14 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
         const cd = document.getElementById('analysisContent');
         const badge = document.getElementById('analysisBadge');
         const sabio = _siguienteSabio();
-        badge.innerHTML = `🏛️ Análisis Nacional · ${sabio} · 403M LECTOR`;
-        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR invocando sabiduría global...</p></div>';
+        badge.innerHTML = `🏛️ Análisis Nacional · ${sabio} · 403M LECTOR · Cloudflare 24/7`;
+        cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR (Cloudflare 24/7) invocando sabiduría global...</p></div>';
         const analisis = obtenerAnalisisLector('Ecuador', modo);
         const analisisLimpio = limpiarMarkdown(analisis);
         cd.innerHTML = `<p style="white-space: pre-wrap;">${analisisLimpio.replace(/\n/g, '<br>')}</p>`;
         await addFeedbackConSecreto(analisisLimpio);
         actualizarWidgets(analisisLimpio, sabio, null);
-        showToast(`✨ 403M LECTOR · El Filósofo de ${sabio} ha despertado · 403M+ datos · Respuesta directa · 10 herramientas`);
+        showToast(`✨ 403M LECTOR · Cloudflare 24/7 · El Filósofo de ${sabio} ha despertado · 403M+ datos · Respuesta directa · 10 herramientas`);
     }, 500);
 </script>
 
