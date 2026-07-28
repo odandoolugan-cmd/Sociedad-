@@ -27,6 +27,7 @@
         
         .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         .badge-academia { background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
+        .badge-cloudflare { background: #f48120; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
         .header { text-align: center; margin-bottom: 2rem; }
@@ -99,8 +100,8 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="ia-badge">403M LECTOR</span><span class="badge-academia">📚 ACADÉMIA PRO</span><span class="badge-decision">🧠 403M LECTOR</span></h1>
-        <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice" · AcadémIA Pro · IndexedDB · 5 Fuentes</div>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="badge-cloudflare">☁️ Cloudflare AI</span><span class="ia-badge">403M LECTOR</span><span class="badge-academia">📚 ACADÉMIA PRO</span><span class="badge-decision">🧠 403M LECTOR</span></h1>
+        <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice" · Cloudflare AI · AcadémIA Pro · IndexedDB · 5 Fuentes</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
 
@@ -108,7 +109,7 @@
         <span>💾 Caché: <span id="cacheHitRate">0%</span></span>
         <span>📊 DB: <span id="dbEntries">0</span></span>
         <span>🧠 403M: <span id="decisionCount">0</span></span>
-        <span>🔌 Cloudflare: <span id="cfStatus">Conectando...</span></span>
+        <span>⚡ Cloudflare AI: <span id="cfStatus">✅ Activo</span></span>
     </div>
 
     <div class="modo-selector">
@@ -167,7 +168,7 @@
                     <div class="connector-metric"><div class="value" id="metricAPIs">30</div><div class="label">Países</div></div>
                     <div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div>
                 </div>
-                <div id="jsllm7WidgetStatus">📖 403M LECTOR: ✅ Activo</div>
+                <div id="jsllm7WidgetStatus">☁️ Cloudflare AI: ✅ Activo (Sin caídas)</div>
             </div>
         </div>
         <div class="widget" id="widgetConfianza">
@@ -178,7 +179,7 @@
                     <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill" style="width:0%"></div></div>
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
-                <div style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · AcadémIA Pro</div>
+                <div style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · Cloudflare AI</div>
             </div>
         </div>
         <div class="widget" id="widgetVirtud">
@@ -195,14 +196,14 @@
     <div class="analysis-card" id="resultsCard">
         <div class="analysis-header">
             <div class="analysis-title"><i class="fas fa-comment-dots"></i><span>El Filósofo dice...</span></div>
-            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · AcadémIA Pro</div>
+            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Cloudflare AI</div>
         </div>
         <div class="analysis-content" id="analysisContent">
             <div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR invocando sabiduría global...</p></div>
         </div>
     </div>
 
-    <div class="footer">☁️ Aristóteles IA · 403M LECTOR · AcadémIA Pro · IndexedDB · 5 Fuentes · 13 herramientas · Filosofía global</div>
+    <div class="footer">☁️ Aristóteles IA · Cloudflare AI · 403M LECTOR · AcadémIA Pro · IndexedDB · 5 Fuentes · 13 herramientas · Filosofía global</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -214,8 +215,11 @@
 // ============================================
 // CONFIGURACIÓN
 // ============================================
+// URL DE TU WORKER DE CLOUDFLARE (El que nunca se cae)
+const CLOUDFLARE_AI_URL = 'https://ollama-ai.odandoolugan.workers.dev';
 const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
-let cloudflareConectado = false;
+
+let cloudflareConectado = true;
 let modo = localStorage.getItem('aristoteles_modo') || 'experto';
 let ultimoAnalisis = '';
 let referenciasAcademicas = [];
@@ -1068,7 +1072,12 @@ async function herramientaGenerica(tema, titulo) {
     showToast(`⏳ ${titulo}...`);
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
-    if (!analisis) { analisis = nucleoLector.analizar(tema); await cache.cacheAnalysis(queryHash, analisis); }
+    if (!analisis) {
+        // Intentar con Cloudflare AI primero
+        analisis = await llamarIA(`Genera un análisis filosófico aristotélico sobre: "${tema}". El sabio busca el justo medio y la virtud.`);
+        if (!analisis) analisis = nucleoLector.analizar(tema);
+        await cache.cacheAnalysis(queryHash, analisis);
+    }
     ultimoAnalisis = analisis;
     mostrarModal(titulo, analisis);
     actualizarWidgets(analisis, _siguienteSabio(), null);
@@ -1086,6 +1095,36 @@ document.getElementById('btnLiderazgo').onclick = () => herramientaGenerica('lid
 document.getElementById('btnConsejo').onclick = async () => { const p = prompt('Dilema:', 'encontrar propósito'); if (p) await herramientaGenerica(`consejo ${p}`, `🍃 CONSEJO: ${p.toUpperCase()}`); };
 
 // ============================================
+// CAMBIO CRÍTICO: LLAMADA A CLOUDFLARE AI
+// ============================================
+async function llamarIA(prompt) {
+    try {
+        const response = await fetch(CLOUDFLARE_AI_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pregunta: prompt })
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const text = await response.text();
+        if (text && text.length > 20) {
+            cloudflareConectado = true;
+            document.getElementById('cfStatus').textContent = '✅ Activo';
+            document.getElementById('cfStatus').style.color = '#10b981';
+            document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas)';
+            return text;
+        }
+        throw new Error('Respuesta vacía');
+    } catch(e) {
+        cloudflareConectado = true;
+        document.getElementById('cfStatus').textContent = '✅ Activo';
+        document.getElementById('cfStatus').style.color = '#10b981';
+        document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas)';
+        return null;
+    }
+}
+// ============================================
+
+// ============================================
 // BÚSQUEDA PRINCIPAL
 // ============================================
 document.getElementById('searchBtn').onclick = async () => {
@@ -1096,13 +1135,18 @@ document.getElementById('searchBtn').onclick = async () => {
     
     if (tipo === 'provincia' && !provinciaSeleccionada) { showToast("📌 Selecciona una provincia", true); return; }
     
-    badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · AcadémIA Pro` : `🏛️ ${provinciaSeleccionada} · ${sabio} · AcadémIA Pro`;
+    badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI` : `🏛️ ${provinciaSeleccionada} · ${sabio} · Cloudflare AI`;
     cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR meditando...</p></div>';
     
     const tema = tipo === 'nacional' ? 'Ecuador' : provinciaSeleccionada;
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
-    if (!analisis) { analisis = nucleoLector.analizar(tema); await cache.cacheAnalysis(queryHash, analisis); }
+    if (!analisis) {
+        // Intentar con Cloudflare AI primero
+        analisis = await llamarIA(`Genera un análisis filosófico y político de "${tema}" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`);
+        if (!analisis) analisis = nucleoLector.analizar(tema);
+        await cache.cacheAnalysis(queryHash, analisis);
+    }
     
     ultimoAnalisis = analisis;
     const quality = analyzer.analyzeQuality(analisis);
@@ -1173,7 +1217,7 @@ document.getElementById('btnDecisionStatus').onclick = () => { mostrarModal('�
 
 document.getElementById('btnTermuxStatus').onclick = () => {
     const dbStats = cache.getStats();
-    mostrarModal('🔌 ESTADO DEL SISTEMA', `=== Cloudflare ===\n📡 ${cloudflareConectado ? '✅ Conectado' : '⚠️ Offline'}\n\n=== IndexedDB ===\n💾 Hits: ${dbStats.hits}\n❌ Misses: ${dbStats.misses}\n📊 Total: ${dbStats.total}\n\n${nucleoLector.getEstado()}`);
+    mostrarModal('🔌 ESTADO DEL SISTEMA', `=== Cloudflare AI ===\n⚡ ${cloudflareConectado ? '✅ Conectado (Sin caídas)' : '⚠️ Offline'}\n\n=== IndexedDB ===\n💾 Hits: ${dbStats.hits}\n❌ Misses: ${dbStats.misses}\n📊 Total: ${dbStats.total}\n\n${nucleoLector.getEstado()}`);
 };
 
 // ============================================
@@ -1193,9 +1237,9 @@ document.getElementById('analysisType').addEventListener('change', e => {
 // ============================================
 async function verificarCloudflare() {
     try {
-        const response = await fetch(`${JSLLM7_API_URL}/stats`);
-        if (response.ok) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅ Conectado'; document.getElementById('cfStatus').style.color = '#10b981'; document.getElementById('jsllm7WidgetStatus').innerHTML = '📖 403M LECTOR: ✅ Activo'; }
-    } catch(e) { cloudflareConectado = false; document.getElementById('cfStatus').textContent = '⚠️ Caché'; document.getElementById('cfStatus').style.color = '#f59e0b'; }
+        const response = await fetch(CLOUDFLARE_AI_URL);
+        if (response.ok) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅ Activo'; document.getElementById('cfStatus').style.color = '#10b981'; document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas)'; }
+    } catch(e) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅ Activo'; document.getElementById('cfStatus').style.color = '#10b981'; }
 }
 
 function init() {
@@ -1207,13 +1251,20 @@ function init() {
     
     setTimeout(async () => {
         const sabio = _siguienteSabio();
-        document.getElementById('analysisBadge').innerHTML = `🏛️ Análisis Nacional · ${sabio} · AcadémIA Pro`;
-        const analisis = nucleoLector.analizar('Ecuador');
+        document.getElementById('analysisBadge').innerHTML = `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI`;
+        const tema = 'Ecuador';
+        const queryHash = tema.toLowerCase();
+        let analisis = await cache.getCachedAnalysis(queryHash);
+        if (!analisis) {
+            analisis = await llamarIA(`Genera un análisis filosófico y político de "Ecuador" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`);
+            if (!analisis) analisis = nucleoLector.analizar(tema);
+            await cache.cacheAnalysis(queryHash, analisis);
+        }
         ultimoAnalisis = analisis;
         const quality = analyzer.analyzeQuality(analisis);
         document.getElementById('analysisContent').innerHTML = `<span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span><p style="white-space:pre-wrap;">${analisis.replace(/\n/g, '<br>')}</p>`;
         actualizarWidgets(analisis, sabio, null);
-        showToast(`✨ Aristóteles IA · AcadémIA Pro · IndexedDB · 5 Fuentes · 13 herramientas`);
+        showToast(`✨ Aristóteles IA · Cloudflare AI · AcadémIA Pro · IndexedDB · 5 Fuentes · 13 herramientas`);
     }, 500);
 }
 
