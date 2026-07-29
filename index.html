@@ -44,7 +44,7 @@
         .analysis-header { background: linear-gradient(135deg, #c9a53b20, #00000030); padding: 1.2rem 1.8rem; border-bottom: 1px solid #c9a53b40; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .analysis-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem; }
         .analysis-badge { background: #c9a53b20; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.7rem; color: #e8d5a3; }
-        .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 300px; max-height: 500px; overflow-y: auto; white-space: pre-wrap; }
+        .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 300px; max-height: 600px; overflow-y: auto; white-space: pre-wrap; }
         .quality-badge { position: absolute; top: 10px; right: 10px; padding: 3px 8px; border-radius: 10px; font-size: 0.55rem; }
         .quality-alta { background: #10b981; color: white; }
         .quality-media { background: #f59e0b; color: black; }
@@ -63,7 +63,6 @@
         .provincia-btn:hover, .provincia-btn.selected { background: #c9a53b20; border-color: #c9a53b; color: #e8d5a3; }
         .ia-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; display: inline-block; vertical-align: middle; }
         
-        /* Botón de temas relacionados */
         .temas-btn {
             background: rgba(201, 165, 59, 0.2);
             border: 1px solid #c9a53b;
@@ -76,36 +75,12 @@
             margin-top: 8px;
             transition: 0.2s;
         }
-        .temas-btn:hover {
-            background: #c9a53b;
-            color: #1a2a1f;
-        }
-        .temas-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .temas-container {
-            margin-top: 8px;
-            padding: 10px 14px;
-            background: rgba(201, 165, 59, 0.08);
-            border-left: 3px solid #c9a53b;
-            border-radius: 0 8px 8px 0;
-            display: none;
-        }
-        .temas-container.visible {
-            display: block;
-        }
-        .temas-container .titulo {
-            font-weight: 600;
-            color: #e8d5a3;
-            font-size: 0.7rem;
-            margin-bottom: 4px;
-        }
-        .temas-container .texto {
-            font-size: 0.8rem;
-            color: #e0d6bc;
-            line-height: 1.5;
-        }
+        .temas-btn:hover { background: #c9a53b; color: #1a2a1f; }
+        .temas-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .temas-container { margin-top: 8px; padding: 10px 14px; background: rgba(201, 165, 59, 0.08); border-left: 3px solid #c9a53b; border-radius: 0 8px 8px 0; display: none; }
+        .temas-container.visible { display: block; }
+        .temas-container .titulo { font-weight: 600; color: #e8d5a3; font-size: 0.7rem; margin-bottom: 4px; }
+        .temas-container .texto { font-size: 0.8rem; color: #e0d6bc; line-height: 1.5; }
         
         .vr-button { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #c9a53b, #a07c2a); border: none; padding: 12px 20px; border-radius: 40px; color: #1a2a1f; font-weight: bold; cursor: pointer; z-index: 100; }
         .vr-mode { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; display: none; background: #0a0f0a; }
@@ -621,7 +596,7 @@ function showToast(msg, isErr) { const t = document.createElement('div'); t.clas
 
 function mostrarModal(titulo, contenido) {
     const modal = document.createElement('div'); modal.className = 'modal-overlay';
-    modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-comment-dots"></i> ${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;"></div><button class="modal-close">Cerrar</button></div>`;
+    modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-comment-dots"></i> ${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;"></div><button class="temas-btn" onclick="cargarTemasFilosofia(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
     document.body.appendChild(modal);
     const textoDiv = modal.querySelector('#modalTexto');
     typeWriter(textoDiv, contenido, 15);
@@ -633,7 +608,7 @@ function descargarArchivo(contenido, nombre) { const blob = new Blob([contenido]
 // ============================================
 // EFECTO MÁQUINA DE ESCRIBIR
 // ============================================
-function typeWriter(element, text, speed = 20) {
+function typeWriter(element, text, speed = 15) {
     element.innerHTML = '';
     let i = 0;
     return new Promise((resolve) => {
@@ -705,7 +680,7 @@ function actualizarWidgets(analisis, pais, provincia) {
 }
 
 // ============================================
-// FUNCIÓN DE LLAMADA A CLOUDFLARE AI (CON CONTEXTO ACADÉMICO)
+// FUNCIÓN DE LLAMADA A CLOUDFLARE AI (OPTIMIZADA PARA RESPUESTAS COMPLETAS)
 // ============================================
 async function llamarIAConContexto(prompt, temaBusqueda = '') {
     try {
@@ -730,23 +705,65 @@ async function llamarIAConContexto(prompt, temaBusqueda = '') {
             }
         }
 
-        const promptCompleto = contextoAcademico + prompt;
-        
+        // PROMPT OPTIMIZADO PARA RESPUESTAS COMPLETAS Y EXTENSAS
+        const promptCompleto = `${contextoAcademico}
+
+${prompt}
+
+⚠️ INSTRUCCIONES OBLIGATORIAS:
+1. La respuesta DEBE ser COMPLETA y EXTENSA (mínimo 500 palabras).
+2. Estructura OBLIGATORIA: 
+   - INTRODUCCIÓN: 2-3 párrafos que presenten el tema y su importancia.
+   - DESARROLLO: 4-6 párrafos con subtemas claros, análisis profundo y ejemplos.
+   - CONCLUSIÓN: 2-3 párrafos que sinteticen las ideas principales y ofrezcan reflexión final.
+3. NO te detengas hasta haber completado TODA la respuesta.
+4. Usa el contexto académico proporcionado como base fundamental.
+5. Incluye citas explícitas a autores o estudios mencionados.
+6. Si el contexto es limitado, complementa con tu conocimiento filosófico general.
+
+RESPONDE CON LA MÁXIMA EXTENSIÓN Y PROFUNDIDAD POSIBLE:`;
+
         const response = await fetch(CLOUDFLARE_AI_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ pregunta: promptCompleto })
         });
+        
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const text = await response.text();
+        
         if (text && text.length > 20) {
             cloudflareConectado = true;
             document.getElementById('cfStatus').textContent = '✅ Activo';
             document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas)';
+            
+            // Si la respuesta es muy corta (< 300 caracteres), reintentar con prompt más directo
+            if (text.length < 300) {
+                console.warn('⚠️ Respuesta corta, reintentando con prompt más directo...');
+                const retryPrompt = `Responde COMPLETA Y EXTENSAMENTE a esta pregunta: "${prompt}". 
+                No te detengas hasta haber desarrollado todos los puntos. 
+                La respuesta debe ser detallada, con estructura de introducción, desarrollo y conclusión.
+                Extensión mínima: 500 palabras.`;
+                
+                const retryResponse = await fetch(CLOUDFLARE_AI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pregunta: retryPrompt })
+                });
+                if (retryResponse.ok) {
+                    const retryText = await retryResponse.text();
+                    if (retryText.length > text.length) {
+                        console.log('✅ Reintento exitoso, respuesta más larga:', retryText.length, 'caracteres');
+                        return retryText;
+                    }
+                }
+            }
+            
             return text;
         }
         throw new Error('Respuesta vacía');
     } catch(e) {
+        console.warn('⚠️ Error en llamada IA:', e.message);
         cloudflareConectado = true;
         document.getElementById('cfStatus').textContent = '✅ Activo';
         document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas)';
@@ -759,14 +776,48 @@ async function llamarIA(prompt) {
 }
 
 // ============================================
-// HERRAMIENTAS (CON BOTÓN DE TEMAS RELACIONADOS)
+// FUNCIÓN PARA CARGAR TEMAS RELACIONADOS (BAJO DEMANDA)
+// ============================================
+window.cargarTemasFilosofia = async function(btn, tema) {
+    const container = document.getElementById('temasContainerModal');
+    const textoDiv = document.getElementById('temasTextoModal');
+    
+    if (!container) {
+        showToast('⚠️ Error: no se encontró el contenedor', true);
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ Cargando...';
+    container.classList.add('visible');
+    textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
+    
+    try {
+        const prompt = `Genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica. Temas para profundizar en ética, política o virtudes. Proporciona solo los títulos.`;
+        const temas = await llamarIAConContexto(prompt, tema);
+        if (temas && temas.length > 10) {
+            textoDiv.innerHTML = temas;
+            showToast('✅ Temas relacionados cargados');
+        } else {
+            textoDiv.innerHTML = '⚠️ No se pudieron cargar los temas relacionados en este momento.';
+        }
+    } catch (e) {
+        textoDiv.innerHTML = '❌ Error al cargar temas relacionados.';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '💡 Cargar temas relacionados';
+    }
+};
+
+// ============================================
+// HERRAMIENTAS
 // ============================================
 async function herramientaGenerica(tema, titulo) {
     showToast(`⏳ ${titulo}...`);
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
-        analisis = await llamarIAConContexto(`Genera un análisis filosófico aristotélico sobre: "${tema}". El sabio busca el justo medio y la virtud. Estilo formal pero accesible.`, tema);
+        analisis = await llamarIAConContexto(`Genera un análisis filosófico aristotélico profundo y completo sobre: "${tema}". El sabio busca el justo medio y la virtud. Estilo formal pero accesible. Extensión: 500-800 palabras.`, tema);
         if (!analisis) analisis = nucleoLector.analizar(tema);
         await cache.cacheAnalysis(queryHash, analisis);
     }
@@ -776,7 +827,7 @@ async function herramientaGenerica(tema, titulo) {
     modal.innerHTML = `
         <div class="modal-content">
             <h3><i class="fas fa-comment-dots"></i> ${titulo}</h3>
-            <div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;"></div>
+            <div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;max-height:50vh;overflow-y:auto;"></div>
             <button class="temas-btn" onclick="cargarTemasFilosofia(this, '${tema}')" style="margin-top:10px;">💡 Cargar temas relacionados</button>
             <div class="temas-container" id="temasContainerModal">
                 <div class="titulo">📌 Temas relacionados:</div>
@@ -790,35 +841,6 @@ async function herramientaGenerica(tema, titulo) {
     actualizarWidgets(analisis, _siguienteSabio(), null);
 }
 
-// ============================================
-// FUNCIÓN PARA CARGAR TEMAS RELACIONADOS (BAJO DEMANDA)
-// ============================================
-window.cargarTemasFilosofia = async function(btn, tema) {
-    const container = document.getElementById('temasContainerModal');
-    const textoDiv = document.getElementById('temasTextoModal');
-    
-    btn.disabled = true;
-    btn.textContent = '⏳ Cargando...';
-    container.classList.add('visible');
-    textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
-    
-    try {
-        const prompt = `Genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica. Temas para profundizar en ética, política o virtudes. Proporciona solo los títulos.`;
-        const temas = await llamarIAConContexto(prompt, tema);
-        if (temas) {
-            textoDiv.innerHTML = temas;
-            showToast('✅ Temas relacionados cargados');
-        } else {
-            textoDiv.innerHTML = '⚠️ No se pudieron cargar los temas relacionados.';
-        }
-    } catch (e) {
-        textoDiv.innerHTML = '❌ Error al cargar temas relacionados.';
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '💡 Cargar temas relacionados';
-    }
-};
-
 document.getElementById('btnEtica').onclick = () => herramientaGenerica('etica gobernantes', '📜 ÉTICA PARA GOBERNANTES');
 document.getElementById('btnVirtudes').onclick = () => herramientaGenerica('virtudes', '🏛️ VIRTUDES');
 document.getElementById('btnJusticia').onclick = () => herramientaGenerica('justicia distributiva', '⚖️ JUSTICIA');
@@ -831,7 +853,7 @@ document.getElementById('btnLiderazgo').onclick = () => herramientaGenerica('lid
 document.getElementById('btnConsejo').onclick = async () => { const p = prompt('Dilema:', 'encontrar propósito'); if (p) await herramientaGenerica(`consejo ${p}`, `🍃 CONSEJO: ${p.toUpperCase()}`); };
 
 // ============================================
-// BÚSQUEDA PRINCIPAL (CON BOTÓN DE TEMAS RELACIONADOS)
+// BÚSQUEDA PRINCIPAL
 // ============================================
 document.getElementById('searchBtn').onclick = async () => {
     const tipo = document.getElementById('analysisType').value;
@@ -848,7 +870,9 @@ document.getElementById('searchBtn').onclick = async () => {
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
-        analisis = await llamarIAConContexto(`Genera un análisis filosófico y político de "${tema}" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`, tema);
+        analisis = await llamarIAConContexto(`Genera un análisis filosófico y político profundo y completo de "${tema}" desde la perspectiva de Aristóteles. 
+        Habla sobre la polis, la ética, la justicia, las virtudes y el bien común. 
+        Estilo formal pero accesible. Extensión: 500-800 palabras.`, tema);
         if (!analisis) analisis = nucleoLector.analizar(tema);
         await cache.cacheAnalysis(queryHash, analisis);
     }
@@ -858,7 +882,7 @@ document.getElementById('searchBtn').onclick = async () => {
     
     cd.innerHTML = `
         <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
-        <div id="analisisTexto"></div>
+        <div id="analisisTexto" style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;"></div>
         <button class="temas-btn" onclick="cargarTemasFilosofiaMain(this, '${tema}')" style="margin-top:10px;">💡 Cargar temas relacionados</button>
         <div class="temas-container" id="temasContainerMain">
             <div class="titulo">📌 Temas relacionados:</div>
@@ -884,7 +908,7 @@ document.getElementById('searchBtn').onclick = async () => {
     cd.appendChild(exportDiv);
     
     actualizarWidgets(analisis, sabio, provinciaSeleccionada);
-    showToast(`✅ El Filósofo ha hablado · Calidad: ${quality.qualityScore}%`);
+    showToast(`✅ El Filósofo ha hablado · Calidad: ${quality.qualityScore}% · ${analisis.length} caracteres`);
 };
 
 // ============================================
@@ -894,6 +918,11 @@ window.cargarTemasFilosofiaMain = async function(btn, tema) {
     const container = document.getElementById('temasContainerMain');
     const textoDiv = document.getElementById('temasTextoMain');
     
+    if (!container) {
+        showToast('⚠️ Error: no se encontró el contenedor', true);
+        return;
+    }
+    
     btn.disabled = true;
     btn.textContent = '⏳ Cargando...';
     container.classList.add('visible');
@@ -902,11 +931,11 @@ window.cargarTemasFilosofiaMain = async function(btn, tema) {
     try {
         const prompt = `Genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica. Temas para profundizar en ética, política o virtudes. Proporciona solo los títulos.`;
         const temas = await llamarIAConContexto(prompt, tema);
-        if (temas) {
+        if (temas && temas.length > 10) {
             textoDiv.innerHTML = temas;
             showToast('✅ Temas relacionados cargados');
         } else {
-            textoDiv.innerHTML = '⚠️ No se pudieron cargar los temas relacionados.';
+            textoDiv.innerHTML = '⚠️ No se pudieron cargar los temas relacionados en este momento.';
         }
     } catch (e) {
         textoDiv.innerHTML = '❌ Error al cargar temas relacionados.';
@@ -998,7 +1027,9 @@ function init() {
         const queryHash = tema.toLowerCase();
         let analisis = await cache.getCachedAnalysis(queryHash);
         if (!analisis) {
-            analisis = await llamarIAConContexto(`Genera un análisis filosófico y político de "Ecuador" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`, tema);
+            analisis = await llamarIAConContexto(`Genera un análisis filosófico y político profundo de "Ecuador" desde la perspectiva de Aristóteles. 
+            Habla sobre la polis, la ética, la justicia, las virtudes y el bien común. 
+            Estilo formal pero accesible. Extensión: 500-800 palabras.`, tema);
             if (!analisis) analisis = nucleoLector.analizar(tema);
             await cache.cacheAnalysis(queryHash, analisis);
         }
@@ -1007,7 +1038,7 @@ function init() {
         const cd = document.getElementById('analysisContent');
         cd.innerHTML = `
             <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
-            <div id="analisisTexto"></div>
+            <div id="analisisTexto" style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;"></div>
             <button class="temas-btn" onclick="cargarTemasFilosofiaMain(this, '${tema}')" style="margin-top:10px;">💡 Cargar temas relacionados</button>
             <div class="temas-container" id="temasContainerMain">
                 <div class="titulo">📌 Temas relacionados:</div>
@@ -1017,7 +1048,7 @@ function init() {
         const textoDiv = cd.querySelector('#analisisTexto');
         await typeWriter(textoDiv, analisis, 15);
         actualizarWidgets(analisis, sabio, null);
-        showToast(`✨ Aristóteles IA · Cloudflare AI · AcadémIA Pro · 12 Fuentes · 13 herramientas`);
+        showToast(`✨ Aristóteles IA · Cloudflare AI · AcadémIA Pro · 12 Fuentes · 13 herramientas · ${analisis.length} caracteres`);
     }, 500);
 }
 
