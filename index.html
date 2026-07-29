@@ -1073,8 +1073,27 @@ async function herramientaGenerica(tema, titulo) {
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
-        // Intentar con Cloudflare AI primero
-        analisis = await llamarIA(`Genera un análisis filosófico aristotélico sobre: "${tema}". El sabio busca el justo medio y la virtud.`);
+        // === FASE 2 y 3 en herramientas ===
+        const resultados12 = await fuentesGratuitas.buscarTodasLasFuentes(tema);
+        let contextoAcademico = "";
+        if (resultados12.resumen.total_resultados > 0) {
+            contextoAcademico = `\n\nContexto académico sobre el tema:\n`;
+            contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
+            const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+            fuentesPrioritarias.forEach(key => {
+                const f = resultados12.fuentes[key];
+                if (f && f.exito && f.count > 0) {
+                    contextoAcademico += `[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                    f.data.slice(0, 2).forEach(r => {
+                        contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                        contextoAcademico += `  Resumen: ${(r.abstract || r.descripcion || r.snippet || 'Sin resumen disponible.').substring(0, 200)}...\n`;
+                    });
+                }
+            });
+        }
+
+        const promptConContexto = `${contextoAcademico}\n\nGenera un análisis filosófico aristotélico sobre: "${tema}". El sabio busca el justo medio y la virtud.`;
+        analisis = await llamarIA(promptConContexto);
         if (!analisis) analisis = nucleoLector.analizar(tema);
         await cache.cacheAnalysis(queryHash, analisis);
     }
@@ -1142,8 +1161,27 @@ document.getElementById('searchBtn').onclick = async () => {
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
-        // Intentar con Cloudflare AI primero
-        analisis = await llamarIA(`Genera un análisis filosófico y político de "${tema}" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`);
+        // === FASE 2 y 3 en la búsqueda principal ===
+        const resultados12 = await fuentesGratuitas.buscarTodasLasFuentes(tema + ' philosophy politics ethics');
+        let contextoAcademico = "";
+        if (resultados12.resumen.total_resultados > 0) {
+            contextoAcademico = `\n\nContexto académico sobre ${tema}:\n`;
+            contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
+            const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+            fuentesPrioritarias.forEach(key => {
+                const f = resultados12.fuentes[key];
+                if (f && f.exito && f.count > 0) {
+                    contextoAcademico += `[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                    f.data.slice(0, 2).forEach(r => {
+                        contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                        contextoAcademico += `  Resumen: ${(r.abstract || r.descripcion || r.snippet || 'Sin resumen disponible.').substring(0, 200)}...\n`;
+                    });
+                }
+            });
+        }
+
+        const promptConContexto = `${contextoAcademico}\n\nGenera un análisis filosófico y político de "${tema}" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`;
+        analisis = await llamarIA(promptConContexto);
         if (!analisis) analisis = nucleoLector.analizar(tema);
         await cache.cacheAnalysis(queryHash, analisis);
     }
@@ -1256,7 +1294,26 @@ function init() {
         const queryHash = tema.toLowerCase();
         let analisis = await cache.getCachedAnalysis(queryHash);
         if (!analisis) {
-            analisis = await llamarIA(`Genera un análisis filosófico y político de "Ecuador" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`);
+            const resultados12 = await fuentesGratuitas.buscarTodasLasFuentes(tema + ' philosophy politics ethics');
+            let contextoAcademico = "";
+            if (resultados12.resumen.total_resultados > 0) {
+                contextoAcademico = `\n\nContexto académico sobre ${tema}:\n`;
+                contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
+                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+                fuentesPrioritarias.forEach(key => {
+                    const f = resultados12.fuentes[key];
+                    if (f && f.exito && f.count > 0) {
+                        contextoAcademico += `[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                        f.data.slice(0, 2).forEach(r => {
+                            contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                            contextoAcademico += `  Resumen: ${(r.abstract || r.descripcion || r.snippet || 'Sin resumen disponible.').substring(0, 200)}...\n`;
+                        });
+                    }
+                });
+            }
+
+            const promptConContexto = `${contextoAcademico}\n\nGenera un análisis filosófico y político de "Ecuador" desde la perspectiva de Aristóteles. Habla sobre la polis, la ética, la justicia y las virtudes. Estilo formal pero accesible.`;
+            analisis = await llamarIA(promptConContexto);
             if (!analisis) analisis = nucleoLector.analizar(tema);
             await cache.cacheAnalysis(queryHash, analisis);
         }
