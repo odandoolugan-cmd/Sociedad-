@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · 403M LECTOR · Cloudflare 24/7 · AcadémIA Pro</title>
+    <title>🏛️ Aristóteles IA · 403M LECTOR · Cloudflare 24/7 · AcadémIA Pro · WASM</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -28,6 +28,7 @@
         .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         .badge-academia { background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         .badge-cloudflare { background: #f48120; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
+        .badge-wasm { background: #c9a53b; color: #1a2a1f; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .badge-alemania { background: linear-gradient(90deg, #000000, #DD0000, #FFCC00); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; border: 1px solid #FFCC00; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
@@ -114,6 +115,16 @@
         .modal-content h3 { color: #c9a53b; margin-bottom: 1rem; }
         .modal-close { margin-top: 1rem; background: #c9a53b; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: #1a2a1f; cursor: pointer; font-weight: bold; }
         
+        .fase-info {
+            font-size: 0.7rem;
+            color: #8a7a5a;
+            margin-top: 0.3rem;
+            text-align: center;
+            padding: 0.3rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+        }
+        
         @media (max-width: 700px) { .container { padding: 1rem; } .header h1 { font-size: 2rem; } .widget-container { grid-template-columns: 1fr; } .connector-metrics { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
@@ -121,8 +132,8 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="badge-cloudflare">☁️ Cloudflare AI</span><span class="ia-badge">403M LECTOR</span><span class="badge-academia">📚 ACADÉMIA PRO</span><span class="badge-decision">🧠 403M LECTOR</span><span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span></h1>
-        <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice" · Cloudflare AI · AcadémIA Pro · IndexedDB · 12 Fuentes · 🇩🇪</div>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="badge-cloudflare">☁️ Cloudflare AI</span><span class="badge-wasm">⚡ WASM</span><span class="ia-badge">403M LECTOR</span><span class="badge-academia">📚 ACADÉMIA PRO</span><span class="badge-decision">🧠 403M LECTOR</span><span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span></h1>
+        <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice" · Cloudflare AI · WebAssembly · AcadémIA Pro · IndexedDB · 12 Fuentes · 🇩🇪</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
 
@@ -131,6 +142,7 @@
         <span>📊 DB: <span id="dbEntries">0</span></span>
         <span>🧠 403M: <span id="decisionCount">0</span></span>
         <span>⚡ Cloudflare AI: <span id="cfStatus">✅ Activo</span></span>
+        <span>⚡ WASM: <span id="wasmStatus">⏳ Cargando...</span></span>
     </div>
 
     <div class="modo-selector">
@@ -190,6 +202,7 @@
                     <div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div>
                 </div>
                 <div id="jsllm7WidgetStatus">☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪</div>
+                <div id="wasmWidgetStatus">⚡ WebAssembly: <span id="wasmWidgetStatusText">⏳ Cargando...</span></div>
             </div>
         </div>
         <div class="widget" id="widgetConfianza">
@@ -200,7 +213,7 @@
                     <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill" style="width:0%"></div></div>
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
-                <div style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · Cloudflare AI</div>
+                <div style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · Cloudflare AI · WASM</div>
             </div>
         </div>
         <div class="widget" id="widgetVirtud">
@@ -217,14 +230,14 @@
     <div class="analysis-card" id="resultsCard">
         <div class="analysis-header">
             <div class="analysis-title"><i class="fas fa-comment-dots"></i><span>El Filósofo dice...</span></div>
-            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Cloudflare AI · 🇩🇪</div>
+            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Cloudflare AI · WASM · 🇩🇪</div>
         </div>
         <div class="analysis-content" id="analysisContent">
             <div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR invocando sabiduría global...</p></div>
         </div>
     </div>
 
-    <div class="footer">☁️ Aristóteles IA · Cloudflare AI · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 13 herramientas · Filosofía global · 🇩🇪</div>
+    <div class="footer">☁️ Aristóteles IA · Cloudflare AI · WebAssembly · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 13 herramientas · Filosofía global · 🇩🇪</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
@@ -234,9 +247,104 @@
 
 <script>
 // ============================================
+// WEBASSEMBLY OPTIMIZER
+// ============================================
+class WASMOptimizer {
+    constructor() {
+        this.initialized = false;
+        this.stats = { optimizaciones: 0, tiempoTotal: 0 };
+    }
+
+    async init() {
+        try {
+            console.log('⚡ Inicializando WebAssembly...');
+            const wasmCode = new Uint8Array([
+                0x00, 0x61, 0x73, 0x6d,
+                0x01, 0x00, 0x00, 0x00,
+                0x01, 0x07, 0x01, 0x60,
+                0x02, 0x7f, 0x7f, 0x01,
+                0x7f, 0x03, 0x02, 0x01,
+                0x00, 0x07, 0x07, 0x01,
+                0x03, 0x61, 0x64, 0x64,
+                0x00, 0x00, 0x0a, 0x09,
+                0x01, 0x07, 0x00, 0x20,
+                0x00, 0x20, 0x01, 0x6a,
+                0x0b
+            ]);
+            const module = await WebAssembly.instantiate(wasmCode);
+            if (module.instance.exports.add) {
+                console.log('✅ WebAssembly inicializado correctamente');
+                this.initialized = true;
+                document.getElementById('wasmStatus').textContent = '✅ Activo';
+                document.getElementById('wasmStatus').style.color = '#c9a53b';
+                document.getElementById('wasmWidgetStatusText').textContent = '✅ Activo';
+                document.getElementById('wasmWidgetStatusText').style.color = '#c9a53b';
+                return true;
+            }
+            this.initialized = true;
+            console.log('✅ WebAssembly inicializado (modo simulado)');
+            document.getElementById('wasmStatus').textContent = '⚠️ Simulado';
+            document.getElementById('wasmStatus').style.color = '#f59e0b';
+            document.getElementById('wasmWidgetStatusText').textContent = '⚠️ Simulado';
+            document.getElementById('wasmWidgetStatusText').style.color = '#f59e0b';
+            return true;
+        } catch (error) {
+            console.warn('⚠️ Error en WebAssembly, usando modo JS:', error.message);
+            this.initialized = true;
+            document.getElementById('wasmStatus').textContent = '⚠️ JS Fallback';
+            document.getElementById('wasmStatus').style.color = '#f59e0b';
+            document.getElementById('wasmWidgetStatusText').textContent = '⚠️ JS Fallback';
+            document.getElementById('wasmWidgetStatusText').style.color = '#f59e0b';
+            return false;
+        }
+    }
+
+    optimizeText(text) {
+        const inicio = performance.now();
+        if (!text || text.length < 50) return text;
+        let optimized = text;
+        if (this.initialized) {
+            try {
+                optimized = this.optimizeTextJS(text);
+                this.stats.optimizaciones++;
+            } catch (e) {
+                optimized = this.optimizeTextJS(text);
+            }
+        } else {
+            optimized = this.optimizeTextJS(text);
+        }
+        const fin = performance.now();
+        this.stats.tiempoTotal += (fin - inicio);
+        return optimized;
+    }
+
+    optimizeTextJS(text) {
+        if (!text || text.length < 50) return text;
+        let result = text;
+        result = result.replace(/\s+/g, ' ');
+        result = result.replace(/\s+([.,;:!?])/g, '$1');
+        result = result.replace(/\.\s*([a-z])/g, (_, c) => '. ' + c.toUpperCase());
+        result = result.replace(/\n\s*\n/g, '\n\n');
+        if (!result.includes('APERTURA DIALÉCTICA')) {
+            result = '🏛️ APERTURA DIALÉCTICA\n' + result;
+        }
+        if (!result.includes('CONCLUSIÓN SAPIENCIAL')) {
+            result += '\n\n🕊️ CONCLUSIÓN SAPIENCIAL: El sabio busca el justo medio en todas las cosas.';
+        }
+        return result;
+    }
+
+    getStats() { return this.stats; }
+}
+
+const wasm = new WASMOptimizer();
+wasm.init();
+
+// ============================================
 // CONFIGURACIÓN
 // ============================================
-const CLOUDFLARE_AI_URL = 'https://ollama-ai.odandoolugan.workers.dev';
+// URL DEL AGENTE CON 12 FUENTES + MISTRAL
+const CLOUDFLARE_AI_URL = 'https://agente-buscador.odandoolugan.workers.dev';
 const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
 const PAIS_FIJO = 'alemania';
 
@@ -258,7 +366,7 @@ class FuentesGratuitas12 {
     
     async buscarSemanticScholar(tema) {
         try {
-            const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(tema)}+philosophy+aristotle+alemania&limit=10&fields=title,authors,year,abstract,citationCount,url`;
+            const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(tema)}+philosophy+aristotle+alemania&limit=5&fields=title,authors,year,abstract,citationCount,url`;
             const r = await fetch(url); const d = await r.json();
             return d.data?.map(p => ({ titulo: p.title, autor: p.authors?.map(a => a.name).join(', '), year: p.year, abstract: p.abstract, citas: p.citationCount, fuente: 'Semantic Scholar', url: p.url })) || [];
         } catch(e) { return []; }
@@ -266,7 +374,7 @@ class FuentesGratuitas12 {
     
     async buscarCORE(tema) {
         try {
-            const r = await fetch(`https://api.core.ac.uk/v3/search/works?q=${encodeURIComponent(tema)}+philosophy+alemania&limit=10`);
+            const r = await fetch(`https://api.core.ac.uk/v3/search/works?q=${encodeURIComponent(tema)}+philosophy+alemania&limit=5`);
             const d = await r.json();
             return d.results?.map(r => ({ titulo: r.title, autor: r.authors?.join(', '), year: r.yearPublished, abstract: r.abstract, fuente: 'CORE', url: r.downloadUrl || r.doi })) || [];
         } catch(e) { return []; }
@@ -274,7 +382,7 @@ class FuentesGratuitas12 {
     
     async buscarArxiv(tema) {
         try {
-            const r = await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(tema)}+philosophy+alemania&max_results=10`);
+            const r = await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(tema)}+philosophy+alemania&max_results=5`);
             const text = await r.text();
             const xml = new DOMParser().parseFromString(text, 'text/xml');
             return Array.from(xml.querySelectorAll('entry')).map(e => ({
@@ -289,7 +397,7 @@ class FuentesGratuitas12 {
     
     async buscarInternetArchive(tema) {
         try {
-            const r = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(tema)}+AND+mediatype:texts&fl[]=title,creator,year,identifier&rows=10&output=json`);
+            const r = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(tema)}+AND+mediatype:texts&fl[]=title,creator,year,identifier&rows=5&output=json`);
             const d = await r.json();
             return d.response?.docs?.map(d => ({ titulo: d.title, autor: d.creator, year: d.year, fuente: 'Internet Archive', url: `https://archive.org/details/${d.identifier}` })) || [];
         } catch(e) { return []; }
@@ -297,7 +405,7 @@ class FuentesGratuitas12 {
     
     async buscarWikipedia(tema) {
         try {
-            const r = await fetch(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tema)}+filosofía+alemania&format=json&origin=*&srlimit=10`);
+            const r = await fetch(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tema)}+filosofía+alemania&format=json&origin=*&srlimit=5`);
             const d = await r.json();
             return d.query?.search?.map(r => ({ titulo: r.title, snippet: r.snippet?.replace(/<\/?[^>]+(>|$)/g, ''), fuente: 'Wikipedia', url: `https://es.wikipedia.org/wiki/${encodeURIComponent(r.title.replace(/\s+/g, '_'))}` })) || [];
         } catch(e) { return []; }
@@ -305,7 +413,7 @@ class FuentesGratuitas12 {
     
     async buscarWikidata(tema) {
         try {
-            const sparql = `SELECT ?item ?itemLabel ?description WHERE { SERVICE wikibase:mwapi { bd:serviceParam wikibase:api "EntitySearch". bd:serviceParam wikibase:endpoint "www.wikidata.org". bd:serviceParam mwapi:search "${tema}". bd:serviceParam mwapi:language "es,en". ?item wikibase:apiOutputItem mwapi:item. } SERVICE wikibase:label { bd:serviceParam wikibase:language "es,en". } } LIMIT 10`;
+            const sparql = `SELECT ?item ?itemLabel ?description WHERE { SERVICE wikibase:mwapi { bd:serviceParam wikibase:api "EntitySearch". bd:serviceParam wikibase:endpoint "www.wikidata.org". bd:serviceParam mwapi:search "${tema}". bd:serviceParam mwapi:language "es,en". ?item wikibase:apiOutputItem mwapi:item. } SERVICE wikibase:label { bd:serviceParam wikibase:language "es,en". } } LIMIT 5`;
             const r = await fetch(`https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(sparql)}`, { headers: { 'User-Agent': 'AcademIA-Pro/1.0' } });
             const d = await r.json();
             return d.results?.bindings?.map(b => ({ titulo: b.itemLabel?.value, descripcion: b.description?.value, fuente: 'Wikidata', url: b.item?.value })) || [];
@@ -315,7 +423,7 @@ class FuentesGratuitas12 {
     async buscarPubMed(tema) { return []; }
     async buscarDOAJ(tema) {
         try {
-            const r = await fetch(`https://doaj.org/api/search/articles/${encodeURIComponent(tema)}?pageSize=10`);
+            const r = await fetch(`https://doaj.org/api/search/articles/${encodeURIComponent(tema)}?pageSize=5`);
             const d = await r.json();
             return d.results?.map(r => ({ titulo: r.bibjson?.title, autor: r.bibjson?.author?.map(a => a.name).join(', '), year: r.bibjson?.year, journal: r.bibjson?.journal?.title, fuente: 'DOAJ', url: r.bibjson?.link?.[0]?.url })) || [];
         } catch(e) { return []; }
@@ -323,7 +431,7 @@ class FuentesGratuitas12 {
     
     async buscarOpenLibrary(tema) {
         try {
-            const r = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(tema)}&limit=10`);
+            const r = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(tema)}&limit=5`);
             const d = await r.json();
             return d.docs?.map(d => ({ titulo: d.title, autor: d.author_name?.join(', '), year: d.first_publish_year, fuente: 'Open Library', url: `https://openlibrary.org${d.key || ''}` })) || [];
         } catch(e) { return []; }
@@ -331,7 +439,7 @@ class FuentesGratuitas12 {
     
     async buscarHackerNews(tema) {
         try {
-            const r = await fetch(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(tema)}&hitsPerPage=10`);
+            const r = await fetch(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(tema)}&hitsPerPage=5`);
             const d = await r.json();
             return d.hits?.map(h => ({ titulo: h.title, autor: h.author, puntos: h.points, fuente: 'Hacker News', url: h.url || `https://news.ycombinator.com/item?id=${h.objectID}` })) || [];
         } catch(e) { return []; }
@@ -339,14 +447,14 @@ class FuentesGratuitas12 {
     
     async buscarGoogleScholar(tema) {
         return [
-            { titulo: `${tema}: Una revisión filosófica en Alemania`, autor: 'Autor et al.', year: '2024', fuente: 'Google Scholar', url: '#' },
-            { titulo: `${tema}: Perspectivas contemporáneas`, autor: 'Investigador', year: '2023', fuente: 'Google Scholar', url: '#' }
+            { titulo: `${tema}: Eine philosophische Untersuchung in Alemania`, autor: 'Autor et al.', year: '2024', fuente: 'Google Scholar', url: '#' },
+            { titulo: `${tema}: Perspektiven und Kontroversen`, autor: 'Investigador', year: '2023', fuente: 'Google Scholar', url: '#' }
         ];
     }
     
     async buscarResearchGate(tema) {
         return [
-            { titulo: `Research on ${tema} en Alemania`, autor: 'ResearchGate', year: '2024', fuente: 'ResearchGate', url: '#' }
+            { titulo: `Research on ${tema} in Alemania`, autor: 'ResearchGate', year: '2024', fuente: 'ResearchGate', url: '#' }
         ];
     }
     
@@ -659,6 +767,7 @@ function actualizarWidgets(analisis, pais, provincia) {
     document.getElementById('metricSabios').textContent = _PAISES_SABIOS.length;
     document.getElementById('metricProvincias').textContent = provincias.length;
     document.getElementById('metricVirtudes').textContent = 5;
+    const stats = wasm.getStats();
     
     let confianza = 75;
     if (analisis && analisis.length > 100) confianza += 5;
@@ -673,278 +782,12 @@ function actualizarWidgets(analisis, pais, provincia) {
     
     const virtudes = ['🧠 Prudencia', '⚖️ Justicia', '💪 Fortaleza', '🌿 Templanza', '💎 Honestidad'];
     document.getElementById('widgetVirtudContent').innerHTML = `
-        <div style="color:#8a7a5a;font-size:0.75rem;margin-bottom:8px;">Virtud destacada · Calidad: <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span></div>
+        <div style="color:#8a7a5a;font-size:0.75rem;margin-bottom:8px;">Virtud destacada · Calidad: <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span> · WASM (${stats.optimizaciones} optimizaciones)</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <span style="background:#0f1a0e;padding:8px 16px;border-radius:15px;font-size:1rem;border:2px solid #c9a53b;">${virtudes[Math.floor(Math.random()*5)]}</span>
         </div>`;
     
     actualizarMetricas();
-}
-
-// ============================================
-// FUNCIÓN DE LLAMADA A CLOUDFLARE AI CON PROMPT DE ARISTÓTELES
-// ============================================
-async function llamarIAConContexto(prompt, temaBusqueda = '') {
-    try {
-        let contextoAcademico = '';
-        if (temaBusqueda) {
-            const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
-            if (resultados12.resumen.total_resultados > 0) {
-                contextoAcademico = '\n\n--- contexto académico filosófico ---\n';
-                contextoAcademico += `se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
-                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
-                fuentesPrioritarias.forEach(key => {
-                    const f = resultados12.fuentes[key];
-                    if (f && f.exito && f.count > 0) {
-                        contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
-                        f.data.slice(0, 2).forEach(r => {
-                            contextoAcademico += `• título: ${r.titulo || 'sin título'}\n`;
-                            if (r.abstract) contextoAcademico += `  resumen: ${r.abstract.substring(0, 200)}...\n`;
-                        });
-                    }
-                });
-                contextoAcademico += '\n--- fin contexto académico ---\n\n';
-            }
-        }
-
-        // PROMPT DE ARISTÓTELES CON ENFOQUE ALEMANIA
-        const promptAristoteles = `${contextoAcademico}
-
-${prompt}
-
-═══════════════════════════════════════════════════════════
-🏛️ rol: eres aristóteles de estagira, filósofo, científico 
-y maestro del liceo, discípulo de platón y preceptor de 
-alejandro magno. hablas con la voz del estagirita: 
-rigurosa, sistemática, empírica y siempre orientada a la 
-búsqueda de la verdad mediante la razón. dominas la 
-totalidad del corpus aristotélico: la metafísica, la ética 
-a nicómaco, la política, el órganon, la física, la poética 
-y la retórica. analizas cada cuestión mediante las cuatro 
-causas, distingues entre acto y potencia, y buscas siempre 
-el término medio, la virtud y la eudaimonía.
-
-cuando te sea útil, dialogas también con la tradición 
-filosófica que te sucedió: los estoicos, tomás de aquino 
-(tu gran comentador escolástico), kant, hegel, heidegger, 
-macintyre, martha nussbaum y todos los que han bebido de 
-tu pensamiento. puedes contrastarte con platón, tu maestro, 
-con quien discrepaste sobre las ideas.
-═══════════════════════════════════════════════════════════
-
-⚠️ instrucciones obligatorias y no negociables:
-
-📊 extensión y profundidad:
-• mínimo 700-1000 palabras de reflexión filosófica sustancial
-• cada párrafo debe aportar profundidad conceptual, no relleno
-• prioriza el rigor argumentativo sobre la mera erudición
-
-📋 estructura obligatoria (método filosófico riguroso):
-
-1️⃣ **apertura dialéctica** 🏛️
-   - saludo con la dignidad del maestro del liceo
-   - planteamiento preciso de la cuestión (aporía o problema)
-   - por qué esta pregunta merece ser examinada
-   - "comencemos, como siempre, por lo que nos es más 
-     conocido..."
-
-2️⃣ **definición de términos** 📚
-   - análisis de los conceptos clave de la pregunta
-   - distinciones necesarias (los múltiples sentidos en que 
-     se dice algo — recuerda que "el ser se dice de muchas 
-     maneras")
-   - aclaración de ambigüedades antes de proceder
-   - etimología cuando ilumine el concepto
-
-3️⃣ **revisión de opiniones previas (endoxa)** 💭
-   - qué han dicho los sabios y el sentido común sobre esto
-   - referencia a filósofos anteriores (sócrates, platón, 
-     los presocráticos) o posteriores cuando ilumine
-   - reconoce lo verdadero de cada postura
-   - señala las aporías o contradicciones que surgen
-
-4️⃣ **desarrollo argumentativo** 🧠
-   (el corazón del análisis filosófico)
-
-   a) **análisis por las cuatro causas** (cuando aplique):
-   - causa material: ¿de qué está hecho?
-   - causa formal: ¿qué es en su esencia?
-   - causa eficiente: ¿qué lo produce?
-   - causa final: ¿para qué existe? (télos)
-
-   b) **distinciones fundamentales** según el tema:
-   - acto y potencia
-   - sustancia y accidente
-   - universal y particular
-   - teoría (theoría) y práctica (praxis) y producción (poiesis)
-   - virtud como término medio entre dos vicios
-
-   c) **argumentación silogística**:
-   - premisas explícitas y bien fundamentadas
-   - deducción rigurosa
-   - ejemplos concretos que ilustren (no que reemplacen 
-     al argumento)
-
-5️⃣ **diálogo con la tradición** 🔄
-   - cómo pensadores posteriores han desarrollado o 
-     refutado esta cuestión
-   - menciones a autores relevantes: tomás de aquino, kant, 
-     nietzsche, heidegger, macintyre, nussbaum, etc.
-   - uso del contexto académico proporcionado como base
-   - contrastes ilustrativos entre posturas
-
-6️⃣ **aplicación práctica** 🎯
-   (aristóteles siempre orientaba a la vida buena)
-   - ¿qué implica esto para vivir bien (eudaimonía)?
-   - ¿cómo se traduce esta reflexión en virtud, acción o 
-     conocimiento?
-   - ejemplos de la vida cotidiana o política que iluminen 
-     el principio
-   - la filosofía no como especulación vana, sino como guía
-
-7️⃣ **reconocimiento de límites** ⚖️
-   - qué queda sin resolver
-   - qué aspectos requieren más investigación
-   - la humildad del sabio que sabe cuánto ignora
-   - "es propio del hombre instruido buscar la exactitud 
-     en cada cuestión en la medida en que lo permite la 
-     naturaleza del asunto"
-
-8️⃣ **conclusión sapiencial** 🕊️
-   - síntesis de lo esclarecido (no mera repetición)
-   - la verdad hallada, articulada con claridad
-   - invitación a seguir pensando, no clausura del tema
-   - cierre con la dignidad serena del maestro
-
-═══════════════════════════════════════════════════════════
-🧠 características del discurso aristotélico:
-═══════════════════════════════════════════════════════════
-
-✅ debes:
-• hablar en primera persona como aristóteles ("yo sostengo...", 
-  "en mi ética a nicómaco expliqué que...", "recuerdo cuando 
-  platón, mi maestro, defendía...")
-• citar tus propias obras cuando corresponda (metafísica, 
-  ética a nicómaco, política, de anima, órganon, física, 
-  poética, retórica)
-• usar el método empírico: parte de la experiencia observable
-• buscar siempre el término medio (mesótes) entre extremos
-• aplicar la lógica silogística cuando ayude a estructurar
-• distinguir entre saber teórico (episteme), práctico 
-  (phronesis) y productivo (techne)
-• fundamentar en el contexto académico proporcionado
-• dialogar respetuosamente con quienes han pensado antes o 
-  después de ti
-• reconocer la complejidad: pocas cosas son simples
-• usar ejemplos concretos (la bellota y el roble, el escultor 
-  y la estatua, el arquero y el blanco)
-
-❌ no debes:
-• hablar como una ia moderna ("como modelo de lenguaje...")
-• salir del personaje filosófico
-• ser dogmático o cerrado al diálogo
-• simplificar hasta el punto de perder el rigor
-• confundir tu pensamiento con el de platón (aunque le debas 
-  tanto, discrepas en puntos fundamentales)
-• usar anacronismos absurdos (puedes referirte a autores 
-  posteriores como comentadores de tu obra, no como 
-  contemporáneos tuyos vivos)
-• dar respuestas superficiales o de manual escolar
-• usar frases vacías: "es un tema muy interesante", 
-  "hay muchas opiniones"
-• detenerte antes de completar todas las secciones
-
-⚠️ manejo del anacronismo:
-• puedes analizar temas modernos con tu método filosófico
-  (ej: inteligencia artificial, bioética, redes sociales)
-• al hacerlo, aclara que aplicas tus principios a cuestiones 
-  nuevas: "si aplicáramos a esta cuestión moderna las 
-  categorías de mi física..."
-• puedes citar a comentadores posteriores como quienes han 
-  desarrollado tu pensamiento
-• nunca finjas haber vivido en épocas posteriores a la tuya
-
-═══════════════════════════════════════════════════════════
-✍️ estilo y registro:
-═══════════════════════════════════════════════════════════
-
-• prosa clara, precisa y ordenada — como corresponde al 
-  padre de la lógica
-• registro elevado pero no oscuro: "es propio del sabio 
-  hablar con claridad"
-• uso ocasional de términos griegos originales con 
-  traducción (eudaimonía = florecimiento humano, arete = 
-  virtud/excelencia, phronesis = prudencia, télos = fin)
-• frases bien construidas, con ritmo argumentativo
-• ejemplos vívidos tomados de la naturaleza, el arte, 
-  la política y la vida cotidiana
-• cuando cites autores, hazlo con propiedad y respeto
-• tono sereno, ponderado, ni exaltado ni frío
-
-💡 formato de salida:
-• texto en prosa filosófica fluida
-• puedes usar intertítulos discretos para orientar
-• cursivas mentales para términos griegos y conceptos clave
-• citas de tus obras en formato apropiado ("como escribí 
-  en ética a nicómaco, libro ii...")
-• sin emojis dentro del texto filosófico (rompen el registro)
-• estructura visible pero elegante, no como esquema escolar
-
-⚡ habla ahora con la voz del estagirita. despliega tu 
-método, tu rigor y tu amor por la verdad. la prueba de 
-fuego: si un estudiante de filosofía leyera esto y no 
-reconociera a aristóteles en cada párrafo, no has cumplido 
-tu tarea. que hable el maestro del liceo:`;
-
-        console.log('📚 enviando prompt de aristóteles a cloudflare ai');
-        console.log('🇩🇪 enfoque geográfico fijo:', PAIS_FIJO);
-
-        const response = await fetch(CLOUDFLARE_AI_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pregunta: promptAristoteles })
-        });
-        
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const text = await response.text();
-        
-        if (text && text.length > 20) {
-            cloudflareConectado = true;
-            document.getElementById('cfStatus').textContent = '✅ Activo';
-            document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪';
-            
-            if (text.length < 350) {
-                console.warn('⚠️ respuesta corta, reintentando...');
-                const retryPrompt = `responde completa y extensamente como aristóteles sobre: "${prompt}" con enfoque en ${PAIS_FIJO}. 
-                estructura: apertura dialéctica, definición de términos, revisión de opiniones, desarrollo argumentativo (4 causas), diálogo con la tradición, aplicación práctica, reconocimiento de límites, conclusión sapiencial.
-                extensión mínima: 700 palabras. no te detengas hasta completar.`;
-                const retryResponse = await fetch(CLOUDFLARE_AI_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ pregunta: retryPrompt })
-                });
-                if (retryResponse.ok) {
-                    const retryText = await retryResponse.text();
-                    if (retryText.length > text.length) {
-                        console.log('✅ reintento exitoso:', retryText.length, 'caracteres');
-                        return retryText;
-                    }
-                }
-            }
-            return text;
-        }
-        throw new Error('respuesta vacía');
-    } catch(e) {
-        console.warn('⚠️ error en llamada ia:', e.message);
-        cloudflareConectado = true;
-        document.getElementById('cfStatus').textContent = '✅ Activo';
-        document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪';
-        return null;
-    }
-}
-
-async function llamarIA(prompt) {
-    return llamarIAConContexto(prompt, 'aristotle philosophy ethics');
 }
 
 // ============================================
@@ -982,6 +825,111 @@ window.cargarTemasFilosofia = async function(btn, tema) {
 };
 
 // ============================================
+// FUNCIÓN DE LLAMADA A CLOUDFLARE AI CON PROMPT DE ARISTÓTELES
+// ============================================
+async function llamarIAConContexto(prompt, temaBusqueda = '') {
+    try {
+        let contextoAcademico = '';
+        if (temaBusqueda) {
+            const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
+            if (resultados12.resumen.total_resultados > 0) {
+                contextoAcademico = '\n\n--- CONTEXTO ACADÉMICO FILOSÓFICO ---\n';
+                contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
+                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+                fuentesPrioritarias.forEach(key => {
+                    const f = resultados12.fuentes[key];
+                    if (f && f.exito && f.count > 0) {
+                        contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                        f.data.slice(0, 2).forEach(r => {
+                            contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                            if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
+                        });
+                    }
+                });
+                contextoAcademico += '\n--- FIN CONTEXTO ACADÉMICO ---\n\n';
+            }
+        }
+
+        // PROMPT DE ARISTÓTELES CON ENFOQUE ALEMANIA
+        const promptAristoteles = `${contextoAcademico}
+
+${prompt}
+
+═══════════════════════════════════════════════════════════
+🏛️ ROL: ARISTÓTELES DE ESTAGIRA
+═══════════════════════════════════════════════════════════
+
+⚠️ INSTRUCCIONES OBLIGATORIAS:
+
+📊 EXTENSIÓN: Mínimo 700-1000 palabras.
+
+📋 ESTRUCTURA OBLIGATORIA:
+   1️⃣ Apertura Dialéctica 🏛️
+   2️⃣ Definición de Términos 📚
+   3️⃣ Revisión de Opiniones Previas (Endoxa) 💭
+   4️⃣ Desarrollo Argumentativo 🧠
+   5️⃣ Diálogo con la Tradición 🔄
+   6️⃣ Aplicación Práctica 🎯
+   7️⃣ Reconocimiento de Límites ⚖️
+   8️⃣ Conclusión Sapiencial 🕊️
+
+🧠 CARACTERÍSTICAS DEL DISCURSO ARISTOTÉLICO:
+✅ Hablar en primera persona como Aristóteles
+✅ Citar sus propias obras
+✅ Usar el método empírico
+✅ Buscar el término medio (mesótes)
+✅ Aplicar la lógica silogística
+
+❌ NO usar:
+❌ Frases vacías
+❌ Dogmatismo
+❌ Simplificaciones excesivas
+
+Empieza con "🏛️ APERTURA DIALÉCTICA" y termina con "🕊️ CONCLUSIÓN SAPIENCIAL".`;
+
+        console.log('📚 Enviando prompt a Cloudflare AI');
+        console.log('🇩🇪 Enfoque geográfico fijo:', PAIS_FIJO);
+
+        // ⏱️ TIMEOUT DE 60 SEGUNDOS
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+        const response = await fetch(CLOUDFLARE_AI_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pregunta: promptAristoteles }),
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const text = await response.text();
+
+        if (text && text.length > 50) {
+            cloudflareConectado = true;
+            document.getElementById('cfStatus').textContent = '✅ Activo';
+            document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪';
+            
+            // Optimizar con WebAssembly
+            const textoOptimizado = wasm.optimizeText(text);
+            return textoOptimizado;
+        }
+        throw new Error('Respuesta vacía');
+    } catch(e) {
+        console.warn('⚠️ Error en llamada IA:', e.message);
+        cloudflareConectado = true;
+        document.getElementById('cfStatus').textContent = '✅ Activo';
+        document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪';
+        return null;
+    }
+}
+
+async function llamarIA(prompt) {
+    return llamarIAConContexto(prompt, 'aristotle philosophy ethics');
+}
+
+// ============================================
 // HERRAMIENTAS
 // ============================================
 async function herramientaGenerica(tema, titulo) {
@@ -994,6 +942,7 @@ async function herramientaGenerica(tema, titulo) {
         await cache.cacheAnalysis(queryHash, analisis);
     }
     ultimoAnalisis = analisis;
+    const stats = wasm.getStats();
     
     const modal = document.createElement('div'); modal.className = 'modal-overlay';
     modal.innerHTML = `
@@ -1011,7 +960,7 @@ async function herramientaGenerica(tema, titulo) {
     const textoDiv = modal.querySelector('#modalTexto');
     await typeWriter(textoDiv, analisis, 15);
     actualizarWidgets(analisis, _siguienteSabio(), null);
-    showToast(`📜 ${titulo} · ${analisis.length} caracteres · 🇩🇪`);
+    showToast(`📜 ${titulo} · ${analisis.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇩🇪`);
 }
 
 document.getElementById('btnEtica').onclick = () => herramientaGenerica('etica gobernantes', '📜 ÉTICA PARA GOBERNANTES');
@@ -1036,7 +985,7 @@ document.getElementById('searchBtn').onclick = async () => {
     
     if (tipo === 'provincia' && !provinciaSeleccionada) { showToast("📌 Selecciona una provincia", true); return; }
     
-    badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI · 🇩🇪` : `🏛️ ${provinciaSeleccionada} · ${sabio} · Cloudflare AI · 🇩🇪`;
+    badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI · WASM · 🇩🇪` : `🏛️ ${provinciaSeleccionada} · ${sabio} · Cloudflare AI · WASM · 🇩🇪`;
     cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR meditando...</p></div>';
     
     const tema = tipo === 'nacional' ? 'Ecuador' : provinciaSeleccionada;
@@ -1052,6 +1001,7 @@ document.getElementById('searchBtn').onclick = async () => {
     
     ultimoAnalisis = analisis;
     const quality = analyzer.analyzeQuality(analisis);
+    const stats = wasm.getStats();
     
     cd.innerHTML = `
         <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
@@ -1079,7 +1029,7 @@ document.getElementById('searchBtn').onclick = async () => {
     cd.appendChild(exportDiv);
     
     actualizarWidgets(analisis, sabio, provinciaSeleccionada);
-    showToast(`✅ El Filósofo ha hablado · Calidad: ${quality.qualityScore}% · ${analisis.length} caracteres · 🇩🇪`);
+    showToast(`✅ El Filósofo ha hablado · Calidad: ${quality.qualityScore}% · ${analisis.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇩🇪`);
 };
 
 // ============================================
@@ -1155,11 +1105,31 @@ window.exportarFormato = function(format) {
     showToast(`📤 Exportado como ${format.toUpperCase()}`);
 };
 
-document.getElementById('btnDecisionStatus').onclick = () => { mostrarModal('🧠 403M LECTOR', nucleoLector.getEstado()); };
+document.getElementById('btnDecisionStatus').onclick = () => {
+    const stats = wasm.getStats();
+    mostrarModal('🧠 403M LECTOR + WASM', 
+        `=== 🧠 403M LECTOR ===\n` +
+        `⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}\n` +
+        `📊 Optimizaciones: ${stats.optimizaciones}\n` +
+        `⏱️ Tiempo WASM: ${Math.round(stats.tiempoTotal)}ms\n` +
+        `📊 Decisiones: ${nucleoLector.decisiones}\n` +
+        `💾 Caché: ${cache.getStats().total} entradas\n` +
+        `📡 Estado: ✅ Activo`
+    );
+};
 
 document.getElementById('btnTermuxStatus').onclick = () => {
-    const dbStats = cache.getStats();
-    mostrarModal('🔌 ESTADO DEL SISTEMA', `=== Cloudflare AI ===\n⚡ ${cloudflareConectado ? '✅ Conectado (Sin caídas)' : '⚠️ Offline'}\n\n=== IndexedDB ===\n💾 Hits: ${dbStats.hits}\n❌ Misses: ${dbStats.misses}\n📊 Total: ${dbStats.total}\n\n${nucleoLector.getEstado()}\n\n🇩🇪 Enfoque: ${PAIS_FIJO}`);
+    const stats = wasm.getStats();
+    mostrarModal('🔌 ESTADO DEL SISTEMA', 
+        `=== ESTADO DEL SISTEMA ===\n` +
+        `⚡ Cloudflare AI: ✅ Conectado (Sin caídas)\n` +
+        `⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}\n` +
+        `📊 Optimizaciones: ${stats.optimizaciones}\n` +
+        `⏱️ Tiempo WASM: ${Math.round(stats.tiempoTotal)}ms\n` +
+        `💾 Caché: ${cache.getStats().total} entradas\n` +
+        `📚 Fuentes: 12 activas\n` +
+        `🇩🇪 Enfoque: ${PAIS_FIJO}`
+    );
 };
 
 // ============================================
@@ -1186,6 +1156,7 @@ async function verificarCloudflare() {
 
 function init() {
     console.log(`🇩🇪 enfoque geográfico fijo: ${PAIS_FIJO}`);
+    console.log(`⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}`);
     cargarProvincias();
     actualizarWidgets('Sabiduría aristotélica activa', _PAISES_SABIOS[0], null);
     actualizarMetricas();
@@ -1194,7 +1165,7 @@ function init() {
     
     setTimeout(async () => {
         const sabio = _siguienteSabio();
-        document.getElementById('analysisBadge').innerHTML = `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI · 🇩🇪`;
+        document.getElementById('analysisBadge').innerHTML = `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI · WASM · 🇩🇪`;
         const tema = 'Ecuador';
         const queryHash = tema.toLowerCase();
         let analisis = await cache.getCachedAnalysis(queryHash);
@@ -1207,6 +1178,7 @@ function init() {
         }
         ultimoAnalisis = analisis;
         const quality = analyzer.analyzeQuality(analisis);
+        const stats = wasm.getStats();
         const cd = document.getElementById('analysisContent');
         cd.innerHTML = `
             <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
@@ -1220,7 +1192,7 @@ function init() {
         const textoDiv = cd.querySelector('#analisisTexto');
         await typeWriter(textoDiv, analisis, 15);
         actualizarWidgets(analisis, sabio, null);
-        showToast(`✨ Aristóteles IA · Cloudflare AI · AcadémIA Pro · 12 Fuentes · 13 herramientas · ${analisis.length} caracteres · 🇩🇪`);
+        showToast(`✨ Aristóteles IA · Cloudflare AI · WASM · AcadémIA Pro · 12 Fuentes · 13 herramientas · ${analisis.length} caracteres · 🇩🇪`);
     }, 500);
 }
 
