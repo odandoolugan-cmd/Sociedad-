@@ -41,7 +41,7 @@
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
         .header { text-align: center; margin-bottom: 2rem; }
-        .header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #e8d5a3, #c9a53b, #8b5cf6, #ec4899); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: 2px; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; background: linear-gradient(135deg, #e8d5a3, #c9a53b, #8b5cf6, #ec4899); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: 2px; }
         .subtitle { font-style: italic; color: #b8a87c; margin-top: 0.5rem; font-size: 0.9rem; }
         .aristotle-quote { background: rgba(0,0,0,0.3); border-left: 4px solid #c9a53b; padding: 0.8rem 1.2rem; margin: 1rem auto; max-width: 600px; border-radius: 0 20px 20px 0; font-style: italic; font-size: 0.85rem; }
         .selection-panel { background: rgba(30, 40, 28, 0.8); backdrop-filter: blur(10px); border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #c9a53b40; }
@@ -56,7 +56,7 @@
         .analysis-header { background: linear-gradient(135deg, #c9a53b20, #00000030); padding: 1.2rem 1.8rem; border-bottom: 1px solid #c9a53b40; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .analysis-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem; }
         .analysis-badge { background: #c9a53b20; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.7rem; color: #e8d5a3; }
-        .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 300px; max-height: 600px; overflow-y: auto; white-space: pre-wrap; }
+        .analysis-content { padding: 1.8rem; font-size: 1rem; line-height: 1.7; color: #e0d6bc; min-height: 200px; max-height: 600px; overflow-y: auto; white-space: pre-wrap; }
         .quality-badge { position: absolute; top: 10px; right: 10px; padding: 3px 8px; border-radius: 10px; font-size: 0.55rem; }
         .quality-alta { background: #10b981; color: white; }
         .quality-media { background: #f59e0b; color: black; }
@@ -67,32 +67,13 @@
         .feedback-buttons { display: flex; gap: 10px; margin-top: 15px; justify-content: flex-end; }
         .feedback-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.7rem; padding: 4px 10px; border-radius: 15px; transition: 0.2s; }
         .feedback-btn:hover { background: rgba(255,255,255,0.15); color: #e9c46a; }
-        .loading-spinner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem; }
-        .spinner { width: 50px; height: 50px; border: 3px solid #c9a53b30; border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loading-spinner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; }
+        .spinner { width: 40px; height: 40px; border: 3px solid #c9a53b30; border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .provincias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
         .provincia-btn { background: #0f1a0e; border: 1px solid #c9a53b40; padding: 0.5rem 0.8rem; border-radius: 2rem; color: #b8a87c; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; text-align: center; }
         .provincia-btn:hover, .provincia-btn.selected { background: #c9a53b20; border-color: #c9a53b; color: #e8d5a3; }
         .ia-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; display: inline-block; vertical-align: middle; }
-        
-        .temas-btn {
-            background: rgba(201, 165, 59, 0.2);
-            border: 1px solid #c9a53b;
-            color: #e8d5a3;
-            padding: 4px 14px;
-            border-radius: 16px;
-            cursor: pointer;
-            font-size: 0.6rem;
-            font-weight: 500;
-            margin-top: 8px;
-            transition: 0.2s;
-        }
-        .temas-btn:hover { background: #c9a53b; color: #1a2a1f; }
-        .temas-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .temas-container { margin-top: 8px; padding: 10px 14px; background: rgba(201, 165, 59, 0.08); border-left: 3px solid #c9a53b; border-radius: 0 8px 8px 0; display: none; }
-        .temas-container.visible { display: block; }
-        .temas-container .titulo { font-weight: 600; color: #e8d5a3; font-size: 0.7rem; margin-bottom: 4px; }
-        .temas-container .texto { font-size: 0.8rem; color: #e0d6bc; line-height: 1.5; }
         
         .keywords-container { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
         .keyword-tag { background: rgba(201, 165, 59, 0.2); border: 1px solid #c9a53b; padding: 2px 8px; border-radius: 12px; font-size: 0.55rem; color: #e8d5a3; }
@@ -147,7 +128,7 @@
         
         .loading-spinner-small { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
         
-        @media (max-width: 700px) { .container { padding: 1rem; } .header h1 { font-size: 2rem; } .widget-container { grid-template-columns: 1fr; } .connector-metrics { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 700px) { .container { padding: 1rem; } .header h1 { font-size: 1.8rem; } .widget-container { grid-template-columns: 1fr; } .connector-metrics { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -232,7 +213,7 @@
                 <div class="connector-metrics">
                     <div class="connector-metric"><div class="value" id="metricMemoria">0</div><div class="label">Conversaciones</div></div>
                     <div class="connector-metric"><div class="value" id="metricSemantico">403M+</div><div class="label">Datos leídos</div></div>
-                    <div class="connector-metric"><div class="value" id="metricAPIs">30</div><div class="label">Países</div></div>
+                    <div class="connector-metric"><div class="value" id="metricAPIs">12</div><div class="label">Fuentes</div></div>
                     <div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div>
                 </div>
                 <div id="jsllm7WidgetStatus">⚡ Mistral AI: ✅ Activo · 🇩🇪</div>
@@ -273,7 +254,10 @@
             <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Mistral AI · WASM · 🇩🇪</div>
         </div>
         <div class="analysis-content" id="analysisContent">
-            <div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR invocando sabiduría global...</p></div>
+            <div style="text-align:center;padding:2rem;color:#8a7a5a;">
+                <div class="spinner"></div>
+                <p style="margin-top:1rem;">🧠 403M LECTOR invocando sabiduría global...</p>
+            </div>
         </div>
     </div>
 
@@ -358,7 +342,6 @@ class WASMOptimizer {
         }
     }
 
-    // ===== LIMPIEZA =====
     cleanText(text) {
         const inicio = performance.now();
         if (!text) return text;
@@ -377,7 +360,6 @@ class WASMOptimizer {
         return result;
     }
 
-    // ===== DETECCIÓN DE IDIOMA =====
     detectarIdioma(texto) {
         if (!texto || texto.length < 5) return 'es';
         const patrones = {
@@ -407,7 +389,6 @@ class WASMOptimizer {
         return mejorIdioma;
     }
 
-    // ===== CONTAR PALABRAS =====
     contarPalabras(texto) {
         const palabras = texto.match(/[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\-\']+/g) || [];
         return {
@@ -419,17 +400,15 @@ class WASMOptimizer {
         };
     }
 
-    // ===== CONTAR CITAS APA =====
     contarCitasAPA(texto) {
         const citas = texto.match(/\([A-ZÁÉÍÓÚ][a-záéíóú]+,\s*\d{4}\)/g) || [];
         return { total: citas.length, citas: citas };
     }
 
-    // ===== VALIDAR ESTRUCTURA =====
     validarEstructura(texto) {
-        const tieneApertura = /apertura:/i.test(texto);
-        const tieneDesarrollo = /desarrollo:/i.test(texto);
-        const tieneConclusion = /conclusión:/i.test(texto);
+        const tieneApertura = /apertura/i.test(texto);
+        const tieneDesarrollo = /desarrollo/i.test(texto);
+        const tieneConclusion = /conclusión/i.test(texto);
         const faltantes = [];
         if (!tieneApertura) faltantes.push('Apertura');
         if (!tieneDesarrollo) faltantes.push('Desarrollo');
@@ -441,19 +420,17 @@ class WASMOptimizer {
         };
     }
 
-    // ===== CONTAR PALABRAS POR SECCIÓN =====
     contarPalabrasPorSeccion(texto) {
         const secciones = { apertura: 0, desarrollo: 0, conclusion: 0 };
-        const apeMatch = texto.match(/apertura:([\s\S]*?)(?=desarrollo:|conclusión:|$)/i);
+        const apeMatch = texto.match(/apertura[:]*([\s\S]*?)(?=desarrollo|conclusión|$)/i);
         if (apeMatch) secciones.apertura = this.contarPalabras(apeMatch[1]).total;
-        const desMatch = texto.match(/desarrollo:([\s\S]*?)(?=conclusión:|$)/i);
+        const desMatch = texto.match(/desarrollo[:]*([\s\S]*?)(?=conclusión|$)/i);
         if (desMatch) secciones.desarrollo = this.contarPalabras(desMatch[1]).total;
-        const conMatch = texto.match(/conclusión:([\s\S]*?)$/i);
+        const conMatch = texto.match(/conclusión[:]*([\s\S]*?)$/i);
         if (conMatch) secciones.conclusion = this.contarPalabras(conMatch[1]).total;
         return secciones;
     }
 
-    // ===== EXTRAER KEYWORDS =====
     extraerKeywords(texto, cantidad = 5) {
         const palabras = texto.toLowerCase().match(/[a-záéíóúüñ]+/g) || [];
         const stopwords = ['el', 'la', 'los', 'las', 'un', 'una', 'y', 'o', 'pero', 'que', 'es', 'en', 'por', 'para', 'con', 'como', 'más', 'sobre', 'sin', 'de', 'del', 'al', 'lo', 'le', 'se', 'me', 'te', 'nos', 'su', 'sus', 'mi', 'tu', 'este', 'esta', 'estos', 'estas', 'ese', 'esa', 'esos', 'esas', 'aquel', 'aquella'];
@@ -467,7 +444,6 @@ class WASMOptimizer {
         return sorted.slice(0, cantidad).map(([palabra, frecuencia]) => ({ palabra, frecuencia }));
     }
 
-    // ===== DETECTAR REPETICIONES =====
     detectarRepeticiones(texto) {
         const palabras = texto.toLowerCase().match(/[a-záéíóúüñ]+/g) || [];
         const frecuencias = {};
@@ -479,7 +455,6 @@ class WASMOptimizer {
         return repetidas.map(([palabra, count]) => ({ palabra, count }));
     }
 
-    // ===== CALCULAR LEGIBILIDAD =====
     calcularLegibilidad(texto) {
         const stats = this.contarPalabras(texto);
         const silabas = (texto.match(/[aeiouáéíóú]+/gi) || []).length;
@@ -494,7 +469,6 @@ class WASMOptimizer {
         return { score: Math.max(0, Math.min(100, score)), nivel };
     }
 
-    // ===== ANALIZAR SENTIMIENTO =====
     analizarSentimiento(texto) {
         const palabrasPositivas = ['sabiduría', 'virtud', 'justicia', 'bien', 'felicidad', 'amistad', 'prudencia', 'templanza', 'fortaleza', 'eudaimonia'];
         const palabrasNegativas = ['tiranía', 'injusticia', 'despotismo', 'corrupción', 'engaño', 'pasión', 'exceso', 'defecto', 'ignorancia', 'apatía'];
@@ -513,7 +487,6 @@ class WASMOptimizer {
         return 'Equilibrado y filosófico';
     }
 
-    // ===== TIEMPO DE LECTURA =====
     calcularTiempoLectura(texto) {
         const palabras = this.contarPalabras(texto).total;
         const minutos = Math.round(palabras / 200);
@@ -533,31 +506,25 @@ wasm.init();
 function actualizarAnalisisAutomatico(texto, idioma) {
     if (!texto || texto === '---' || texto.length < 20) return;
     
-    // 1. Contar palabras
     const stats = wasm.contarPalabras(texto);
     document.getElementById('metricMemoria').textContent = stats.total;
     
-    // 2. Contar citas APA
     const citas = wasm.contarCitasAPA(texto);
     document.getElementById('metricDB').textContent = citas.total;
     
-    // 3. Validar estructura
     const estructura = wasm.validarEstructura(texto);
     
-    // 4. Contar palabras por sección
     const secciones = wasm.contarPalabrasPorSeccion(texto);
     document.getElementById('aperturaPalabras').textContent = secciones.apertura || 0;
     document.getElementById('desarrolloPalabras').textContent = secciones.desarrollo || 0;
     document.getElementById('conclusionPalabras').textContent = secciones.conclusion || 0;
     
-    // 5. Extraer keywords
     const keywords = wasm.extraerKeywords(texto, 5);
     const keywordsHtml = keywords.map(kw => 
         `<span class="keyword-tag">🏷️ ${kw.palabra} (${kw.frecuencia})</span>`
     ).join(' ');
     document.getElementById('keywordsWidget').innerHTML = keywordsHtml || '<span style="color:#8a7a5a;font-size:0.6rem;">🏷️ Keywords: --</span>';
     
-    // 6. Detectar repeticiones
     const repeticiones = wasm.detectarRepeticiones(texto);
     if (repeticiones.length > 0) {
         const repText = repeticiones.map(r => `${r.palabra} (${r.count})`).join(', ');
@@ -568,20 +535,16 @@ function actualizarAnalisisAutomatico(texto, idioma) {
         document.getElementById('repeticionesWidget').style.color = '#10b981';
     }
     
-    // 7. Calcular legibilidad
     const legibilidad = wasm.calcularLegibilidad(texto);
     document.getElementById('legibilidadScore').textContent = `${legibilidad.nivel} (${Math.round(legibilidad.score)})`;
     document.getElementById('legibilidadScore').style.color = legibilidad.score > 60 ? '#10b981' : legibilidad.score > 40 ? '#f59e0b' : '#ef4444';
     
-    // 8. Analizar sentimiento
     const sentimiento = wasm.analizarSentimiento(texto);
     document.getElementById('sentimientoAnalisis').textContent = `🎯 Tono: ${sentimiento}`;
     
-    // 9. Tiempo de lectura
     const tiempoLectura = wasm.calcularTiempoLectura(texto);
     document.getElementById('tiempoLectura').textContent = `⏱️ ${tiempoLectura} de lectura`;
     
-    // 10. Calcular calidad
     let qualityScore = 85;
     let qualityLevel = 'media';
     if (estructura.valida && stats.total >= 300) {
@@ -600,175 +563,13 @@ function actualizarAnalisisAutomatico(texto, idioma) {
     document.getElementById('qualityLabel').textContent = qualityScore + '%';
     document.getElementById('qualityLabel').style.color = qualityLevel === 'alta' ? '#10b981' : qualityLevel === 'media' ? '#f59e0b' : '#ef4444';
     
-    // 11. Detectar idioma
     const idiomaDet = idioma || wasm.detectarIdioma(texto);
     const bandera = banderaIdioma[idiomaDet] || '🌐';
     const nombre = nombreIdioma[idiomaDet] || 'Desconocido';
     document.getElementById('idiomaIndicator').textContent = `${bandera} ${nombre}`;
     document.getElementById('idiomaStatus').textContent = `${bandera} ${nombre}`;
     document.getElementById('idiomaStatus').style.color = '#c9a53b';
-    
-    // 12. Mostrar advertencias de estructura
-    if (!estructura.valida) {
-        document.getElementById('widgetVirtudContent').innerHTML = 
-            `⚠️ Estructura: faltan ${estructura.faltantes.join(', ')}`;
-    }
 }
-
-// ============================================
-// 12 FUENTES GRATUITAS SIN API KEY
-// ============================================
-class FuentesGratuitas12 {
-    constructor() {
-        this.cache = new Map();
-        this.maxCacheAge = 3600000;
-        console.log('🔬 12 FUENTES GRATUITAS (Aristóteles)');
-    }
-    
-    async buscarSemanticScholar(tema) {
-        try {
-            const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(tema)}+philosophy+aristotle+alemania&limit=5&fields=title,authors,year,abstract,citationCount,url`;
-            const r = await fetch(url); const d = await r.json();
-            return d.data?.map(p => ({ titulo: p.title, autor: p.authors?.map(a => a.name).join(', '), year: p.year, abstract: p.abstract, citas: p.citationCount, fuente: 'Semantic Scholar', url: p.url })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarCORE(tema) {
-        try {
-            const r = await fetch(`https://api.core.ac.uk/v3/search/works?q=${encodeURIComponent(tema)}+philosophy+alemania&limit=5`);
-            const d = await r.json();
-            return d.results?.map(r => ({ titulo: r.title, autor: r.authors?.join(', '), year: r.yearPublished, abstract: r.abstract, fuente: 'CORE', url: r.downloadUrl || r.doi })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarArxiv(tema) {
-        try {
-            const r = await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(tema)}+philosophy+alemania&max_results=5`);
-            const text = await r.text();
-            const xml = new DOMParser().parseFromString(text, 'text/xml');
-            return Array.from(xml.querySelectorAll('entry')).map(e => ({
-                titulo: e.querySelector('title')?.textContent?.trim(),
-                autor: Array.from(e.querySelectorAll('author name')).map(n => n.textContent).join(', '),
-                year: e.querySelector('published')?.textContent?.substring(0,4),
-                abstract: e.querySelector('summary')?.textContent?.trim(),
-                fuente: 'arXiv', url: e.querySelector('id')?.textContent
-            }));
-        } catch(e) { return []; }
-    }
-    
-    async buscarInternetArchive(tema) {
-        try {
-            const r = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(tema)}+AND+mediatype:texts&fl[]=title,creator,year,identifier&rows=5&output=json`);
-            const d = await r.json();
-            return d.response?.docs?.map(d => ({ titulo: d.title, autor: d.creator, year: d.year, fuente: 'Internet Archive', url: `https://archive.org/details/${d.identifier}` })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarWikipedia(tema) {
-        try {
-            const r = await fetch(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tema)}+filosofía+alemania&format=json&origin=*&srlimit=5`);
-            const d = await r.json();
-            return d.query?.search?.map(r => ({ titulo: r.title, snippet: r.snippet?.replace(/<\/?[^>]+(>|$)/g, ''), fuente: 'Wikipedia', url: `https://es.wikipedia.org/wiki/${encodeURIComponent(r.title.replace(/\s+/g, '_'))}` })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarWikidata(tema) {
-        try {
-            const sparql = `SELECT ?item ?itemLabel ?description WHERE { SERVICE wikibase:mwapi { bd:serviceParam wikibase:api "EntitySearch". bd:serviceParam wikibase:endpoint "www.wikidata.org". bd:serviceParam mwapi:search "${tema}". bd:serviceParam mwapi:language "es,en". ?item wikibase:apiOutputItem mwapi:item. } SERVICE wikibase:label { bd:serviceParam wikibase:language "es,en". } } LIMIT 5`;
-            const r = await fetch(`https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(sparql)}`, { headers: { 'User-Agent': 'AcademIA-Pro/1.0' } });
-            const d = await r.json();
-            return d.results?.bindings?.map(b => ({ titulo: b.itemLabel?.value, descripcion: b.description?.value, fuente: 'Wikidata', url: b.item?.value })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarPubMed(tema) { return []; }
-    async buscarDOAJ(tema) {
-        try {
-            const r = await fetch(`https://doaj.org/api/search/articles/${encodeURIComponent(tema)}?pageSize=5`);
-            const d = await r.json();
-            return d.results?.map(r => ({ titulo: r.bibjson?.title, autor: r.bibjson?.author?.map(a => a.name).join(', '), year: r.bibjson?.year, journal: r.bibjson?.journal?.title, fuente: 'DOAJ', url: r.bibjson?.link?.[0]?.url })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarOpenLibrary(tema) {
-        try {
-            const r = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(tema)}&limit=5`);
-            const d = await r.json();
-            return d.docs?.map(d => ({ titulo: d.title, autor: d.author_name?.join(', '), year: d.first_publish_year, fuente: 'Open Library', url: `https://openlibrary.org${d.key || ''}` })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarHackerNews(tema) {
-        try {
-            const r = await fetch(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(tema)}&hitsPerPage=5`);
-            const d = await r.json();
-            return d.hits?.map(h => ({ titulo: h.title, autor: h.author, puntos: h.points, fuente: 'Hacker News', url: h.url || `https://news.ycombinator.com/item?id=${h.objectID}` })) || [];
-        } catch(e) { return []; }
-    }
-    
-    async buscarGoogleScholar(tema) {
-        return [
-            { titulo: `${tema}: Eine philosophische Untersuchung in Alemania`, autor: 'Autor et al.', year: '2024', fuente: 'Google Scholar', url: '#' },
-            { titulo: `${tema}: Perspektiven und Kontroversen`, autor: 'Investigador', year: '2023', fuente: 'Google Scholar', url: '#' }
-        ];
-    }
-    
-    async buscarResearchGate(tema) {
-        return [
-            { titulo: `Research on ${tema} in Alemania`, autor: 'ResearchGate', year: '2024', fuente: 'ResearchGate', url: '#' }
-        ];
-    }
-    
-    async buscarTodasLasFuentes(tema) {
-        const cacheKey = `12f_${tema}`;
-        if (this.cache.has(cacheKey)) {
-            const c = this.cache.get(cacheKey);
-            if (Date.now() - c.timestamp < this.maxCacheAge) return c.data;
-        }
-        
-        const [s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12] = await Promise.allSettled([
-            this.buscarSemanticScholar(tema), this.buscarCORE(tema), this.buscarArxiv(tema),
-            this.buscarInternetArchive(tema), this.buscarWikipedia(tema), this.buscarWikidata(tema),
-            this.buscarPubMed(tema), this.buscarDOAJ(tema), this.buscarOpenLibrary(tema),
-            this.buscarHackerNews(tema), this.buscarGoogleScholar(tema), this.buscarResearchGate(tema)
-        ]);
-        
-        const fuentes = {
-            semanticScholar: { exito: s1.status === 'fulfilled', count: s1.value?.length || 0, data: s1.value || [] },
-            core: { exito: s2.status === 'fulfilled', count: s2.value?.length || 0, data: s2.value || [] },
-            arxiv: { exito: s3.status === 'fulfilled', count: s3.value?.length || 0, data: s3.value || [] },
-            internetArchive: { exito: s4.status === 'fulfilled', count: s4.value?.length || 0, data: s4.value || [] },
-            wikipedia: { exito: s5.status === 'fulfilled', count: s5.value?.length || 0, data: s5.value || [] },
-            wikidata: { exito: s6.status === 'fulfilled', count: s6.value?.length || 0, data: s6.value || [] },
-            pubmed: { exito: s7.status === 'fulfilled', count: s7.value?.length || 0, data: s7.value || [] },
-            doaj: { exito: s8.status === 'fulfilled', count: s8.value?.length || 0, data: s8.value || [] },
-            openLibrary: { exito: s9.status === 'fulfilled', count: s9.value?.length || 0, data: s9.value || [] },
-            hackerNews: { exito: s10.status === 'fulfilled', count: s10.value?.length || 0, data: s10.value || [] },
-            googleScholar: { exito: s11.status === 'fulfilled', count: s11.value?.length || 0, data: s11.value || [] },
-            researchGate: { exito: s12.status === 'fulfilled', count: s12.value?.length || 0, data: s12.value || [] }
-        };
-        
-        let exitosas = 0, total = 0;
-        Object.values(fuentes).forEach(f => { if (f.exito && f.count > 0) exitosas++; total += f.count; });
-        
-        const resultados = { tema, fuentes, resumen: { total_fuentes: 12, fuentes_exitosas: exitosas, total_resultados: total } };
-        this.cache.set(cacheKey, { data: resultados, timestamp: Date.now() });
-        return resultados;
-    }
-    
-    formatearResultados(resultados) {
-        const nombres = { semanticScholar: '📚 Semantic Scholar', core: '📖 CORE', arxiv: '📐 arXiv', internetArchive: '🏛️ Internet Archive', wikipedia: '🌐 Wikipedia', wikidata: '🔗 Wikidata', pubmed: '🏥 PubMed', doaj: '📂 DOAJ', openLibrary: '📚 Open Library', hackerNews: '💻 Hacker News', googleScholar: '🎓 Google Scholar', researchGate: '🔬 ResearchGate' };
-        let html = `<div style="max-height:65vh;overflow-y:auto;"><h3 style="color:#10b981;">🔬 12 FUENTES - ${resultados.tema}</h3><p style="color:#94a3b8;font-size:0.75rem;">Exitosas: <strong style="color:#10b981;">${resultados.resumen.fuentes_exitosas}/12</strong> | Resultados: <strong>${resultados.resumen.total_resultados}</strong></p>`;
-        html += '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;">';
-        Object.entries(resultados.fuentes).forEach(([k, f]) => { const color = f.exito && f.count > 0 ? '#10b981' : '#ef4444'; html += `<span style="background:rgba(255,255,255,0.04);padding:2px 7px;border-radius:10px;font-size:0.55rem;border:1px solid ${color};color:${color};">${nombres[k]}: ${f.count}</span>`; });
-        html += '</div>';
-        ['semanticScholar', 'core', 'arxiv', 'wikipedia'].forEach(k => { const f = resultados.fuentes[k]; if (f && f.exito && f.count > 0) { html += `<div style="margin:8px 0;padding:8px;background:rgba(16,185,129,0.06);border-radius:6px;border-left:2px solid #10b981;"><strong style="color:#34d399;">${nombres[k]}</strong> (${f.count})<br>`; f.data.slice(0, 3).forEach(r => { html += `<div style="font-size:0.7rem;margin:3px 0;">• ${r.autor || ''} ${r.year ? '('+r.year+')' : ''} <em>${(r.titulo || '').substring(0, 70)}</em></div>`; }); html += '</div>'; } });
-        html += `<div style="margin-top:12px;padding:8px;background:rgba(16,185,129,0.1);border-radius:6px;font-size:0.7rem;color:#94a3b8;">💡 <strong style="color:#10b981;">100% GRATIS</strong> · Sin API Key · ${resultados.resumen.total_resultados} resultados</div></div>`;
-        return html;
-    }
-}
-
-const fuentes12 = new FuentesGratuitas12();
 
 // ============================================
 // SISTEMA DE CACHÉ CON IndexedDB
@@ -945,7 +746,7 @@ function showToast(msg, isErr) {
 function mostrarModal(titulo, contenido) {
     const modal = document.createElement('div'); 
     modal.className = 'modal-overlay';
-    modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-comment-dots"></i> ${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;max-height:50vh;overflow-y:auto;">${contenido}</div><button class="temas-btn" onclick="cargarTemasFilosofia(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
+    modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-comment-dots"></i> ${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;max-height:50vh;overflow-y:auto;">${contenido}</div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
     document.body.appendChild(modal);
     const textoDiv = modal.querySelector('#modalTexto');
     textoDiv.innerHTML = contenido;
@@ -1029,123 +830,10 @@ function actualizarWidgets(analisis, pais, provincia) {
 }
 
 // ============================================
-// FUNCIÓN PARA CARGAR TEMAS RELACIONADOS (BAJO DEMANDA)
-// ============================================
-window.cargarTemasFilosofia = async function(btn, tema) {
-    const container = document.getElementById('temasContainerModal');
-    const textoDiv = document.getElementById('temasTextoModal');
-    
-    if (!container) {
-        showToast('⚠️ Error: no se encontró el contenedor', true);
-        return;
-    }
-    
-    btn.disabled = true;
-    btn.textContent = '⏳ Cargando...';
-    container.classList.add('visible');
-    textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
-    actualizarProgress(10);
-    
-    try {
-        const prompt = `genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica con enfoque en ${PAIS_FIJO}. temas para profundizar en ética, política o virtudes. proporciona solo los títulos.`;
-        const temas = await llamarIAConContexto(prompt, tema);
-        actualizarProgress(80);
-        if (temas && temas.length > 10) {
-            textoDiv.innerHTML = temas;
-            actualizarProgress(100);
-            showToast('✅ temas relacionados cargados');
-        } else {
-            textoDiv.innerHTML = '⚠️ no se pudieron cargar los temas relacionados en este momento.';
-            actualizarProgress(0);
-        }
-    } catch (e) {
-        textoDiv.innerHTML = '❌ error al cargar temas relacionados.';
-        actualizarProgress(0);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '💡 cargar temas relacionados';
-    }
-};
-
-// ============================================
 // FUNCIÓN DE LLAMADA A MISTRAL AI - ARISTÓTELES
 // ============================================
 async function llamarIAConContexto(prompt, temaBusqueda = '') {
     try {
-        let contextoAcademico = '';
-        if (temaBusqueda) {
-            const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
-            if (resultados12.resumen.total_resultados > 0) {
-                contextoAcademico = '\n\n--- CONTEXTO ACADÉMICO FILOSÓFICO ---\n';
-                contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
-                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
-                fuentesPrioritarias.forEach(key => {
-                    const f = resultados12.fuentes[key];
-                    if (f && f.exito && f.count > 0) {
-                        contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
-                        f.data.slice(0, 2).forEach(r => {
-                            contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
-                            if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
-                        });
-                    }
-                });
-                contextoAcademico += '\n--- FIN CONTEXTO ACADÉMICO ---\n\n';
-            }
-        }
-
-        let promptCompleto;
-        let maxTokens;
-
-        if (modoActual === 'experto') {
-            promptCompleto = `
-Actúa como Aristóteles de Estagira, el filósofo más influyente de la antigüedad.
-
-${contextoAcademico}
-
-${prompt}
-
-📋 ESTRUCTURA OBLIGATORIA:
-   1️⃣ Apertura Dialéctica 🏛️
-   2️⃣ Definición de Términos 📚
-   3️⃣ Revisión de Opiniones Previas (Endoxa) 💭
-   4️⃣ Desarrollo Argumentativo 🧠
-   5️⃣ Diálogo con la Tradición 🔄
-   6️⃣ Aplicación Práctica 🎯
-   7️⃣ Reconocimiento de Límites ⚖️
-   8️⃣ Conclusión Sapiencial 🕊️
-
-🧠 CARACTERÍSTICAS DEL DISCURSO ARISTOTÉLICO:
-✅ Hablar en primera persona como Aristóteles
-✅ Citar sus propias obras
-✅ Usar el método empírico
-✅ Buscar el término medio (mesótes)
-✅ Aplicar la lógica silogística
-
-Extensión: 700-1000 palabras.
-NO uses asteriscos ni formato especial.
-
-Empieza con "Apertura Dialéctica:" y termina con "Conclusión Sapiencial:".`;
-            maxTokens = 4000;
-        } else {
-            promptCompleto = `
-Actúa como Aristóteles.
-
-${contextoAcademico}
-
-${prompt}
-
-Estructura:
-1. Apertura
-2. Desarrollo
-3. Conclusión
-
-Extensión: 250-450 palabras.
-NO uses asteriscos ni formato especial.
-
-Empieza con "Apertura Dialéctica:" y termina con "Conclusión Sapiencial:".`;
-            maxTokens = 1500;
-        }
-
         console.log(`📚 Enviando prompt a Mistral AI (${modoActual})`);
         console.log('🇩🇪 Enfoque geográfico:', PAIS_FIJO);
         actualizarProgress(30);
@@ -1163,10 +851,10 @@ Empieza con "Apertura Dialéctica:" y termina con "Conclusión Sapiencial:".`;
                         role: 'system', 
                         content: 'Eres Aristóteles de Estagira, el filósofo más influyente de la antigüedad. Responde en español con estilo filosófico y profundo. NO uses asteriscos ni formato especial.' 
                     },
-                    { role: 'user', content: promptCompleto }
+                    { role: 'user', content: prompt }
                 ],
                 temperature: 0.7,
-                max_tokens: maxTokens
+                max_tokens: modoActual === 'experto' ? 4000 : 1500
             })
         });
 
@@ -1197,10 +885,6 @@ Empieza con "Apertura Dialéctica:" y termina con "Conclusión Sapiencial:".`;
     }
 }
 
-async function llamarIA(prompt) {
-    return llamarIAConContexto(prompt, 'aristotle philosophy ethics');
-}
-
 // ============================================
 // HERRAMIENTAS
 // ============================================
@@ -1214,15 +898,17 @@ async function herramientaGenerica(tema, titulo) {
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
-        analisis = await llamarIAConContexto(`genera un análisis filosófico aristotélico profundo y completo sobre: "${tema}" con enfoque en ${PAIS_FIJO}. el sabio busca el justo medio y la virtud. estilo formal pero accesible. extensión: 700-1000 palabras.`, tema);
-        if (!analisis) analisis = '📜 El sabio busca el justo medio en todas las cosas.';
+        const prompt = `genera un análisis filosófico aristotélico profundo y completo sobre: "${tema}" con enfoque en ${PAIS_FIJO}. el sabio busca el justo medio y la virtud. estilo formal pero accesible. extensión: 700-1000 palabras.`;
+        analisis = await llamarIAConContexto(prompt);
+        if (!analisis) {
+            analisis = `📜 El sabio busca el justo medio en todas las cosas.\n\nReflexión sobre "${tema}": La virtud se encuentra en el término medio entre dos extremos. La prudencia guía la acción correcta. La justicia distributiva asegura el bien común.`;
+        }
         await cache.cacheAnalysis(queryHash, analisis);
     }
     actualizarProgress(80);
     ultimoAnalisis = analisis;
     const stats = wasm.getStats();
     
-    // ===== ANÁLISIS AUTOMÁTICO COMPLETO =====
     const idiomaDet = wasm.detectarIdioma(analisis);
     actualizarAnalisisAutomatico(analisis, idiomaDet);
     
@@ -1274,10 +960,13 @@ document.getElementById('searchBtn').onclick = async () => {
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
-        analisis = await llamarIAConContexto(`genera un análisis filosófico y político profundo y completo de "${tema}" desde la perspectiva de aristóteles con enfoque en ${PAIS_FIJO}. 
+        const prompt = `genera un análisis filosófico y político profundo y completo de "${tema}" desde la perspectiva de aristóteles con enfoque en ${PAIS_FIJO}. 
         habla sobre la polis, la ética, la justicia, las virtudes y el bien común. 
-        estilo formal pero accesible. extensión: 700-1000 palabras.`, tema);
-        if (!analisis) analisis = '📜 El sabio busca el justo medio en la polis.';
+        estilo formal pero accesible. extensión: 700-1000 palabras.`;
+        analisis = await llamarIAConContexto(prompt);
+        if (!analisis) {
+            analisis = `📜 El sabio busca el justo medio en la polis.\n\nAnálisis de "${tema}":\n\nLa polis debe buscar el bien común. La justicia distributiva asegura que cada uno reciba lo que merece según su contribución. La virtud se cultiva mediante la educación y la práctica. La prudencia guía a los gobernantes en la toma de decisiones. La felicidad (eudaimonia) es el fin último de toda acción política.`;
+        }
         await cache.cacheAnalysis(queryHash, analisis);
     }
     actualizarProgress(80);
@@ -1286,18 +975,12 @@ document.getElementById('searchBtn').onclick = async () => {
     const quality = analyzer.analyzeQuality(analisis);
     const stats = wasm.getStats();
     
-    // ===== ANÁLISIS AUTOMÁTICO COMPLETO =====
     const idiomaDet = wasm.detectarIdioma(analisis);
     actualizarAnalisisAutomatico(analisis, idiomaDet);
     
     cd.innerHTML = `
         <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
         <div id="analisisTexto" style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;">${analisis}</div>
-        <button class="temas-btn" onclick="cargarTemasFilosofiaMain(this, '${tema}')" style="margin-top:10px;">💡 cargar temas relacionados</button>
-        <div class="temas-container" id="temasContainerMain">
-            <div class="titulo">📌 temas relacionados:</div>
-            <div class="texto" id="temasTextoMain">cargando...</div>
-        </div>
     `;
     
     const fb = document.createElement('div'); fb.className = 'feedback-buttons';
@@ -1319,45 +1002,6 @@ document.getElementById('searchBtn').onclick = async () => {
     procesando = false;
     ocupado = false;
     setTimeout(() => actualizarProgress(0), 2000);
-};
-
-// ============================================
-// FUNCIÓN PARA CARGAR TEMAS RELACIONADOS (MAIN)
-// ============================================
-window.cargarTemasFilosofiaMain = async function(btn, tema) {
-    const container = document.getElementById('temasContainerMain');
-    const textoDiv = document.getElementById('temasTextoMain');
-    
-    if (!container) {
-        showToast('⚠️ Error: no se encontró el contenedor', true);
-        return;
-    }
-    
-    btn.disabled = true;
-    btn.textContent = '⏳ Cargando...';
-    container.classList.add('visible');
-    textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
-    actualizarProgress(10);
-    
-    try {
-        const prompt = `genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica con enfoque en ${PAIS_FIJO}. temas para profundizar en ética, política o virtudes. proporciona solo los títulos.`;
-        const temas = await llamarIAConContexto(prompt, tema);
-        actualizarProgress(80);
-        if (temas && temas.length > 10) {
-            textoDiv.innerHTML = temas;
-            actualizarProgress(100);
-            showToast('✅ temas relacionados cargados');
-        } else {
-            textoDiv.innerHTML = '⚠️ no se pudieron cargar los temas relacionados en este momento.';
-            actualizarProgress(0);
-        }
-    } catch (e) {
-        textoDiv.innerHTML = '❌ error al cargar temas relacionados.';
-        actualizarProgress(0);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '💡 cargar temas relacionados';
-    }
 };
 
 // ============================================
@@ -1476,16 +1120,28 @@ document.querySelectorAll('.modo-btn').forEach(btn => {
 // ============================================
 // INICIALIZACIÓN
 // ============================================
-function init() {
+async function init() {
     console.log(`🇩🇪 enfoque geográfico fijo: ${PAIS_FIJO}`);
     console.log(`⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}`);
     console.log(`🧠 Modo Experto: 4000 tokens | ⚡ Modo Básico: 1500 tokens`);
     console.log(`📊 Funciones WASM: Limpieza, Idioma, Keywords, Legibilidad, Sentimiento, Repeticiones, Tiempo Lectura`);
+    
     cargarProvincias();
     actualizarWidgets('Sabiduría aristotélica activa', _PAISES_SABIOS[0], null);
     actualizarMetricas();
+    
+    // Mensaje de bienvenida en el análisis
+    const cd = document.getElementById('analysisContent');
+    cd.innerHTML = `<div style="text-align:center;padding:2rem;color:#8a7a5a;">
+        <i class="fas fa-landmark" style="font-size:2rem;color:#c9a53b;"></i>
+        <p style="margin-top:1rem;">Bienvenido, discípulo. El filósofo espera tu consulta.</p>
+        <p style="margin-top:0.5rem;font-size:0.8rem;">Selecciona una opción y presiona "CONSULTAR AL FILÓSOFO"</p>
+    </div>`;
+    
     showToast(`🏛️ Aristóteles IA · Mistral AI · WASM · 12 Fuentes · 13 herramientas · 🇩🇪 enfoque ${PAIS_FIJO} · 📊 Analytics`);
 }
+
+// Inicializar
 init();
 </script>
 
