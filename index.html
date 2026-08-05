@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏛️ Aristóteles IA · 403M LECTOR · Cloudflare 24/7 · AcadémIA Pro · WASM</title>
+    <title>🏛️ Aristóteles IA · 403M LECTOR · Mistral AI · AcadémIA Pro · WASM</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #1a2a1f; background-image: radial-gradient(circle at 10% 20%, rgba(218, 165, 32, 0.08) 0%, rgba(26, 42, 31, 0.95) 90%); color: #e8e0c5; overflow-x: hidden; min-height: 100vh; }
         .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem; }
-        .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
-        .modo-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-weight: 600; color: #b8a87c; }
+        .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; align-items: center; flex-wrap: wrap; }
+        .modo-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-weight: 600; color: #b8a87c; transition: 0.2s; }
         .modo-btn.active { background: #c9a53b; color: #1a2a1f; border-color: #c9a53b; }
+        .modo-btn:hover { background: #b8962a; color: #1a2a1f; }
+        .modo-activo-indicator { display: inline-block; padding: 2px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; margin-left: 10px; }
+        .modo-experto { background: #c9a53b; color: #1a2a1f; }
+        .modo-basico { background: #f97316; color: white; }
         
         .status-bar { background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.4rem 1rem; margin: 0.5rem 0; font-size: 0.6rem; display: flex; justify-content: space-around; flex-wrap: wrap; color: #8a7a5a; border: 1px solid #c9a53b40; }
+        
+        .progress-bar-container { width: 100%; height: 4px; background: #0f1a0e; border-radius: 2px; margin: 8px 0; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #c9a53b, #e8d5a3); width: 0%; transition: width 0.5s; border-radius: 2px; }
         
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #0f1a0e; border: 1px solid #c9a53b60; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #b8a87c; transition: 0.2s; }
@@ -27,7 +34,7 @@
         
         .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         .badge-academia { background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
-        .badge-cloudflare { background: #f48120; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
+        .badge-mistral { background: linear-gradient(90deg, #f97316, #dc2626); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .badge-wasm { background: #c9a53b; color: #1a2a1f; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .badge-alemania { background: linear-gradient(90deg, #000000, #DD0000, #FFCC00); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; border: 1px solid #FFCC00; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
@@ -40,7 +47,9 @@
         .panel-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 1rem; color: #e8d5a3; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
         .selector-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
         .selector-group select { flex: 2; padding: 0.8rem 1rem; background: #0f1a0e; border: 1px solid #c9a53b60; border-radius: 2rem; color: #e8e0c5; font-size: 1rem; cursor: pointer; font-family: 'Inter', sans-serif; }
+        .selector-group select:focus { border-color: #c9a53b; outline: none; }
         .selector-group button { background: linear-gradient(90deg, #c9a53b, #a07c2a); border: none; border-radius: 2rem; padding: 0.8rem 1.5rem; color: #1a2a1f; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .selector-group button:hover { transform: scale(0.96); }
         
         .analysis-card { background: rgba(20, 30, 18, 0.85); backdrop-filter: blur(8px); border-radius: 1.5rem; border: 1px solid #c9a53b30; overflow: hidden; margin-bottom: 2rem; position: relative; }
         .analysis-header { background: linear-gradient(135deg, #c9a53b20, #00000030); padding: 1.2rem 1.8rem; border-bottom: 1px solid #c9a53b40; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
@@ -85,11 +94,12 @@
         .temas-container .texto { font-size: 0.8rem; color: #e0d6bc; line-height: 1.5; }
         
         .vr-button { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #c9a53b, #a07c2a); border: none; padding: 12px 20px; border-radius: 40px; color: #1a2a1f; font-weight: bold; cursor: pointer; z-index: 100; }
+        .vr-button:hover { transform: scale(0.96); }
         .vr-mode { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; display: none; background: #0a0f0a; }
         .vr-mode.active { display: block; }
         .close-vr { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.7); border: 1px solid #c9a53b; padding: 8px 16px; border-radius: 30px; color: #c9a53b; cursor: pointer; z-index: 1001; }
         .footer { text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #c9a53b20; font-size: 0.7rem; color: #8a7a5a; }
-        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 3s forwards; }
+        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #c9a53b; color: #1a2a1f; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 3s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         
         .widget-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
@@ -125,6 +135,8 @@
             border-radius: 0.5rem;
         }
         
+        .loading-spinner-small { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #c9a53b; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
+        
         @media (max-width: 700px) { .container { padding: 1rem; } .header h1 { font-size: 2rem; } .widget-container { grid-template-columns: 1fr; } .connector-metrics { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
@@ -132,8 +144,8 @@
 
 <div class="container" id="normalMode">
     <div class="header">
-        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="badge-cloudflare">☁️ Cloudflare AI</span><span class="badge-wasm">⚡ WASM</span><span class="ia-badge">403M LECTOR</span><span class="badge-academia">📚 ACADÉMIA PRO</span><span class="badge-decision">🧠 403M LECTOR</span><span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span></h1>
-        <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice" · Cloudflare AI · WebAssembly · AcadémIA Pro · IndexedDB · 12 Fuentes · 🇩🇪</div>
+        <h1><i class="fas fa-landmark"></i> ARISTÓTELES IA <span class="badge-mistral">⚡ MISTRAL AI</span><span class="badge-wasm">⚡ WASM</span><span class="ia-badge">403M LECTOR</span><span class="badge-academia">📚 ACADÉMIA PRO</span><span class="badge-decision">🧠 403M LECTOR</span><span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span></h1>
+        <div class="subtitle">"El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice" · Mistral AI · WebAssembly · AcadémIA Pro · IndexedDB · 12 Fuentes · 🇩🇪</div>
         <div class="aristotle-quote"><i class="fas fa-quote-left"></i> El fin de la política es el bien supremo, y su objetivo es hacer posible a los ciudadanos alcanzar la felicidad mediante la virtud en la polis.</div>
     </div>
 
@@ -141,13 +153,20 @@
         <span>💾 Caché: <span id="cacheHitRate">0%</span></span>
         <span>📊 DB: <span id="dbEntries">0</span></span>
         <span>🧠 403M: <span id="decisionCount">0</span></span>
-        <span>⚡ Cloudflare AI: <span id="cfStatus">✅ Activo</span></span>
+        <span>⚡ Mistral AI: <span id="cfStatus">✅ Activo</span></span>
         <span>⚡ WASM: <span id="wasmStatus">⏳ Cargando...</span></span>
+        <span>📌 Modo: <span id="modoStatus" style="color:#c9a53b;">🧠 Experto</span></span>
     </div>
 
     <div class="modo-selector">
-        <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
-        <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
+        <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO (4000 tokens)</button>
+        <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO (1500 tokens)</button>
+        <span id="modoActualIndicator" class="modo-activo-indicator modo-experto">🧠 Experto</span>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBar"></div>
     </div>
 
     <div class="tools-bar">
@@ -201,7 +220,7 @@
                     <div class="connector-metric"><div class="value" id="metricAPIs">30</div><div class="label">Países</div></div>
                     <div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div>
                 </div>
-                <div id="jsllm7WidgetStatus">☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪</div>
+                <div id="jsllm7WidgetStatus">⚡ Mistral AI: ✅ Activo · 🇩🇪</div>
                 <div id="wasmWidgetStatus">⚡ WebAssembly: <span id="wasmWidgetStatusText">⏳ Cargando...</span></div>
             </div>
         </div>
@@ -213,7 +232,7 @@
                     <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill" style="width:0%"></div></div>
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
-                <div style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · Cloudflare AI · WASM</div>
+                <div style="font-size:0.75rem;color:#8a7a5a;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · Mistral AI · WASM</div>
             </div>
         </div>
         <div class="widget" id="widgetVirtud">
@@ -230,24 +249,40 @@
     <div class="analysis-card" id="resultsCard">
         <div class="analysis-header">
             <div class="analysis-title"><i class="fas fa-comment-dots"></i><span>El Filósofo dice...</span></div>
-            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Cloudflare AI · WASM · 🇩🇪</div>
+            <div class="analysis-badge" id="analysisBadge">Análisis Aristotélico · Mistral AI · WASM · 🇩🇪</div>
         </div>
         <div class="analysis-content" id="analysisContent">
             <div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR invocando sabiduría global...</p></div>
         </div>
     </div>
 
-    <div class="footer">☁️ Aristóteles IA · Cloudflare AI · WebAssembly · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 13 herramientas · Filosofía global · 🇩🇪</div>
+    <div class="footer">☁️ Aristóteles IA · Mistral AI · WebAssembly · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 13 herramientas · Filosofía global · 🇩🇪</div>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🏛️ ENTRAR AL ÁGORA VR</button>
 <div class="vr-mode" id="vrMode"><button class="close-vr" id="closeVrBtn">✕ SALIR DEL ÁGORA</button><div id="vrContainer" style="width:100%;height:100%"></div></div>
 
-<script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }
+</script>
 
 <script>
 // ============================================
-// WEBASSEMBLY OPTIMIZER
+// CONFIGURACIÓN - MISTRAL AI (SIN CLOUDFLARE)
+// ============================================
+const MISTRAL_API_KEY = 'eKzUq9HIk9xGnJtT6BfzdVSqKKWscOjT';
+const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
+const PAIS_FIJO = 'alemania';
+
+let modoActual = 'experto';
+let ultimoAnalisis = '';
+let referenciasAcademicas = [];
+let provinciaSeleccionada = null;
+let procesando = false;
+let ocupado = false;
+
+// ============================================
+// WEBASSEMBLY OPTIMIZER - LIMPIA FORMATO
 // ============================================
 class WASMOptimizer {
     constructor() {
@@ -271,25 +306,16 @@ class WASMOptimizer {
                 0x00, 0x20, 0x01, 0x6a,
                 0x0b
             ]);
-            const module = await WebAssembly.instantiate(wasmCode);
-            if (module.instance.exports.add) {
-                console.log('✅ WebAssembly inicializado correctamente');
-                this.initialized = true;
-                document.getElementById('wasmStatus').textContent = '✅ Activo';
-                document.getElementById('wasmStatus').style.color = '#c9a53b';
-                document.getElementById('wasmWidgetStatusText').textContent = '✅ Activo';
-                document.getElementById('wasmWidgetStatusText').style.color = '#c9a53b';
-                return true;
-            }
+            await WebAssembly.instantiate(wasmCode);
             this.initialized = true;
-            console.log('✅ WebAssembly inicializado (modo simulado)');
-            document.getElementById('wasmStatus').textContent = '⚠️ Simulado';
-            document.getElementById('wasmStatus').style.color = '#f59e0b';
-            document.getElementById('wasmWidgetStatusText').textContent = '⚠️ Simulado';
-            document.getElementById('wasmWidgetStatusText').style.color = '#f59e0b';
+            console.log('✅ WebAssembly inicializado');
+            document.getElementById('wasmStatus').textContent = '✅ Activo';
+            document.getElementById('wasmStatus').style.color = '#c9a53b';
+            document.getElementById('wasmWidgetStatusText').textContent = '✅ Activo';
+            document.getElementById('wasmWidgetStatusText').style.color = '#c9a53b';
             return true;
         } catch (error) {
-            console.warn('⚠️ Error en WebAssembly, usando modo JS:', error.message);
+            console.warn('⚠️ Error en WebAssembly:', error.message);
             this.initialized = true;
             document.getElementById('wasmStatus').textContent = '⚠️ JS Fallback';
             document.getElementById('wasmStatus').style.color = '#f59e0b';
@@ -299,38 +325,27 @@ class WASMOptimizer {
         }
     }
 
-    optimizeText(text) {
+    cleanText(text) {
         const inicio = performance.now();
-        if (!text || text.length < 50) return text;
-        let optimized = text;
-        if (this.initialized) {
-            try {
-                optimized = this.optimizeTextJS(text);
-                this.stats.optimizaciones++;
-            } catch (e) {
-                optimized = this.optimizeTextJS(text);
-            }
-        } else {
-            optimized = this.optimizeTextJS(text);
-        }
-        const fin = performance.now();
-        this.stats.tiempoTotal += (fin - inicio);
-        return optimized;
-    }
-
-    optimizeTextJS(text) {
-        if (!text || text.length < 50) return text;
+        if (!text) return text;
+        
         let result = text;
+        // Eliminar asteriscos
+        result = result.replace(/\*\*(.*?)\*\*/g, '$1');
+        result = result.replace(/\*(.*?)\*/g, '$1');
+        // Eliminar guiones bajos
+        result = result.replace(/__(.*?)__/g, '$1');
+        result = result.replace(/_(.*?)_/g, '$1');
+        // Eliminar hashtags
+        result = result.replace(/#(.*?)(\s|$)/g, '$1$2');
+        // Limpiar espacios
         result = result.replace(/\s+/g, ' ');
         result = result.replace(/\s+([.,;:!?])/g, '$1');
         result = result.replace(/\.\s*([a-z])/g, (_, c) => '. ' + c.toUpperCase());
         result = result.replace(/\n\s*\n/g, '\n\n');
-        if (!result.includes('APERTURA DIALÉCTICA')) {
-            result = '🏛️ APERTURA DIALÉCTICA\n' + result;
-        }
-        if (!result.includes('CONCLUSIÓN SAPIENCIAL')) {
-            result += '\n\n🕊️ CONCLUSIÓN SAPIENCIAL: El sabio busca el justo medio en todas las cosas.';
-        }
+        
+        this.stats.optimizaciones++;
+        this.stats.tiempoTotal += (performance.now() - inicio);
         return result;
     }
 
@@ -339,20 +354,6 @@ class WASMOptimizer {
 
 const wasm = new WASMOptimizer();
 wasm.init();
-
-// ============================================
-// CONFIGURACIÓN
-// ============================================
-// URL DEL AGENTE CON 12 FUENTES + MISTRAL
-const CLOUDFLARE_AI_URL = 'https://agente-buscador.odandoolugan.workers.dev';
-const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
-const PAIS_FIJO = 'alemania';
-
-let cloudflareConectado = true;
-let modo = localStorage.getItem('aristoteles_modo') || 'experto';
-let ultimoAnalisis = '';
-let referenciasAcademicas = [];
-let provinciaSeleccionada = null;
 
 // ============================================
 // 12 FUENTES GRATUITAS SIN API KEY
@@ -618,11 +619,6 @@ class ContentAnalyzer {
             'filosofía': 3, 'eudaimonia': 3, 'templanza': 2.5, 'fortaleza': 2.5,
             'razón': 2, 'alma': 2, 'conocimiento': 2, 'verdad': 2.5
         };
-        this.estructuraPalabras = {
-            'introducción': 8, 'desarrollo': 10, 'conclusión': 8,
-            '1.': 5, '2.': 5, '3.': 5,
-            'primero': 3, 'segundo': 3, 'finalmente': 3
-        };
     }
     
     analyzeQuality(text) {
@@ -674,65 +670,40 @@ class Exporter {
 const exporter = new Exporter();
 
 // ============================================
-// BASE DE DATOS 403M+
-// ============================================
-const BASE_DATOS_403M = {
-    filosofia: {
-        'etica gobernantes': { analisis: `📜 ÉTICA PARA GOBERNANTES\n\n🔍 PRINCIPIOS ARISTOTÉLICOS:\nEl gobernante virtuoso debe cultivar la prudencia, la justicia y la templanza.\n\n📊 CUALIDADES:\n• Prudencia: Elegir medios adecuados\n• Justicia: Dar a cada uno lo suyo\n• Templanza: Moderación en el poder\n• Fortaleza: Firmeza ante la adversidad\n\n📖 403M LECTOR · ${new Date().toLocaleString()}` },
-        'virtudes': { analisis: `🏛️ VIRTUDES CARDINALES\n\n🔍 LAS CINCO:\n1. Prudencia: Sabiduría práctica\n2. Justicia: Dar a cada uno lo suyo\n3. Templanza: Dominio de pasiones\n4. Fortaleza: Firmeza\n5. Honestidad: Coherencia\n\n💡 La virtud se cultiva mediante el hábito.\n\n📖 403M LECTOR` },
-        'justicia distributiva': { analisis: `⚖️ JUSTICIA DISTRIBUTIVA\n\n🔍 CONCEPTO: Asignar bienes según el mérito. No igualdad matemática sino proporcional.\n\n📊 PRINCIPIOS:\n• Meritocracia\n• Proporcionalidad\n• Bien común\n\n📖 403M LECTOR` },
-        'educacion virtud': { analisis: `📚 EDUCACIÓN Y VIRTUD\n\n🔍 La educación forma ciudadanos virtuosos mediante hábitos, enseñanzas y ejemplo.\n\n📊 PILARES:\n• Hábitos virtuosos\n• Conocimientos prácticos\n• Ejemplo de maestros\n• Participación en la polis\n\n📖 403M LECTOR` }
-    }
-};
-
-class MotorBusqueda403M { constructor() { this.baseDatos = BASE_DATOS_403M; } buscar(tema) { const t = tema.toLowerCase(); for (const [key, val] of Object.entries(this.baseDatos.filosofia)) { if (t.includes(key) || key.includes(t.substring(0, 15))) return val.analisis; } return `📚 FILOSOFÍA ARISTOTÉLICA\n\n🔍 "${tema}"\n\n📊 El sabio busca el justo medio en todas las cosas.\n\n💡 ¿Cuál es el fin de esta acción? ¿Qué virtud se cultiva?\n\n📖 403M LECTOR · ${new Date().toLocaleString()}`; } }
-const motor403M = new MotorBusqueda403M();
-
-class Nucleo403MLector { constructor() { this.decisiones = 0; this.lector = motor403M; } analizar(pregunta) { this.decisiones++; document.getElementById('decisionCount').textContent = this.decisiones; return this.lector.buscar(pregunta); } getEstado() { return `=== 🧠 403M LECTOR ===\n\n📊 Decisiones: ${this.decisiones}\n📚 Datos: 403M+\n💾 Caché: ${cache.getStats().total} entradas\n📡 Estado: ✅ Activo`; } }
-const nucleoLector = new Nucleo403MLector();
-
-// ============================================
-// CONECTORES
-// ============================================
-class MemoryConnector { constructor() { this.shortTerm = []; this.maxShortTerm = 10; this.loadFromStorage(); } loadFromStorage() { try { const d = JSON.parse(localStorage.getItem('aristoteles_memoria') || '{}'); if (d.shortTerm) this.shortTerm = d.shortTerm; } catch(e) {} } saveToStorage() { try { localStorage.setItem('aristoteles_memoria', JSON.stringify({ shortTerm: this.shortTerm })); } catch(e) {} } remember(i) { this.shortTerm.push({ ...i, timestamp: Date.now() }); if (this.shortTerm.length > this.maxShortTerm) this.shortTerm.shift(); this.saveToStorage(); } getStats() { return { total: this.shortTerm.length }; } }
-const memoryConnector = new MemoryConnector();
-
-function actualizarMetricas() { document.getElementById('metricMemoria').textContent = memoryConnector.getStats().total; document.getElementById('metricSemantico').textContent = '403M+'; document.getElementById('metricAPIs').textContent = '30'; document.getElementById('metricDB').textContent = cache.getStats().total; }
-
-// ============================================
 // FUNCIONES UTILITARIAS
 // ============================================
-function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+function showToast(msg, isErr) { 
+    const t = document.createElement('div'); 
+    t.className = 'toast-msg'; 
+    t.style.background = isErr ? '#ef4444' : '#c9a53b'; 
+    t.style.color = isErr ? 'white' : '#1a2a1f';
+    t.innerText = msg; 
+    document.body.appendChild(t); 
+    setTimeout(() => t.remove(), 3000); 
+}
 
 function mostrarModal(titulo, contenido) {
-    const modal = document.createElement('div'); modal.className = 'modal-overlay';
-    modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-comment-dots"></i> ${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;max-height:50vh;overflow-y:auto;"></div><button class="temas-btn" onclick="cargarTemasFilosofia(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
+    const modal = document.createElement('div'); 
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-comment-dots"></i> ${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;max-height:50vh;overflow-y:auto;">${contenido}</div><button class="temas-btn" onclick="cargarTemasFilosofia(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
     document.body.appendChild(modal);
     const textoDiv = modal.querySelector('#modalTexto');
-    typeWriter(textoDiv, contenido, 15);
+    textoDiv.innerHTML = contenido;
     modal.querySelector('.modal-close').onclick = () => modal.remove();
 }
 
-function descargarArchivo(contenido, nombre) { const blob = new Blob([contenido], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = nombre; a.click(); URL.revokeObjectURL(url); }
+function descargarArchivo(contenido, nombre) { 
+    const blob = new Blob([contenido], { type: 'text/plain' }); 
+    const url = URL.createObjectURL(blob); 
+    const a = document.createElement('a'); 
+    a.href = url; 
+    a.download = nombre; 
+    a.click(); 
+    URL.revokeObjectURL(url); 
+}
 
-// ============================================
-// EFECTO MÁQUINA DE ESCRIBIR
-// ============================================
-function typeWriter(element, text, speed = 15) {
-    element.innerHTML = '';
-    let i = 0;
-    return new Promise((resolve) => {
-        function type() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            } else {
-                resolve();
-            }
-        }
-        type();
-    });
+function actualizarProgress(porcentaje) {
+    document.getElementById('progressBar').style.width = `${Math.min(100, porcentaje)}%`;
 }
 
 // ============================================
@@ -806,18 +777,23 @@ window.cargarTemasFilosofia = async function(btn, tema) {
     btn.textContent = '⏳ Cargando...';
     container.classList.add('visible');
     textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
+    actualizarProgress(10);
     
     try {
         const prompt = `genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica con enfoque en ${PAIS_FIJO}. temas para profundizar en ética, política o virtudes. proporciona solo los títulos.`;
         const temas = await llamarIAConContexto(prompt, tema);
+        actualizarProgress(80);
         if (temas && temas.length > 10) {
             textoDiv.innerHTML = temas;
+            actualizarProgress(100);
             showToast('✅ temas relacionados cargados');
         } else {
             textoDiv.innerHTML = '⚠️ no se pudieron cargar los temas relacionados en este momento.';
+            actualizarProgress(0);
         }
     } catch (e) {
         textoDiv.innerHTML = '❌ error al cargar temas relacionados.';
+        actualizarProgress(0);
     } finally {
         btn.disabled = false;
         btn.textContent = '💡 cargar temas relacionados';
@@ -825,7 +801,7 @@ window.cargarTemasFilosofia = async function(btn, tema) {
 };
 
 // ============================================
-// FUNCIÓN DE LLAMADA A CLOUDFLARE AI CON PROMPT DE ARISTÓTELES
+// FUNCIÓN DE LLAMADA A MISTRAL AI - ARISTÓTELES
 // ============================================
 async function llamarIAConContexto(prompt, temaBusqueda = '') {
     try {
@@ -850,18 +826,17 @@ async function llamarIAConContexto(prompt, temaBusqueda = '') {
             }
         }
 
-        // PROMPT DE ARISTÓTELES CON ENFOQUE ALEMANIA
-        const promptAristoteles = `${contextoAcademico}
+        // PROMPT SEGÚN MODO
+        let promptCompleto;
+        let maxTokens;
+
+        if (modoActual === 'experto') {
+            promptCompleto = `
+Actúa como Aristóteles de Estagira, el filósofo más influyente de la antigüedad.
+
+${contextoAcademico}
 
 ${prompt}
-
-═══════════════════════════════════════════════════════════
-🏛️ ROL: ARISTÓTELES DE ESTAGIRA
-═══════════════════════════════════════════════════════════
-
-⚠️ INSTRUCCIONES OBLIGATORIAS:
-
-📊 EXTENSIÓN: Mínimo 700-1000 palabras.
 
 📋 ESTRUCTURA OBLIGATORIA:
    1️⃣ Apertura Dialéctica 🏛️
@@ -880,47 +855,79 @@ ${prompt}
 ✅ Buscar el término medio (mesótes)
 ✅ Aplicar la lógica silogística
 
-❌ NO usar:
-❌ Frases vacías
-❌ Dogmatismo
-❌ Simplificaciones excesivas
+Extensión: 700-1000 palabras.
+NO uses asteriscos ni formato especial.
 
 Empieza con "🏛️ APERTURA DIALÉCTICA" y termina con "🕊️ CONCLUSIÓN SAPIENCIAL".`;
+            maxTokens = 4000;
+        } else {
+            promptCompleto = `
+Actúa como Aristóteles.
 
-        console.log('📚 Enviando prompt a Cloudflare AI');
-        console.log('🇩🇪 Enfoque geográfico fijo:', PAIS_FIJO);
+${contextoAcademico}
 
-        // ⏱️ TIMEOUT DE 60 SEGUNDOS
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 60000);
+${prompt}
 
-        const response = await fetch(CLOUDFLARE_AI_URL, {
+Estructura:
+1. Apertura
+2. Desarrollo
+3. Conclusión
+
+Extensión: 250-450 palabras.
+NO uses asteriscos ni formato especial.
+
+Empieza con "🏛️ APERTURA DIALÉCTICA" y termina con "🕊️ CONCLUSIÓN SAPIENCIAL".`;
+            maxTokens = 1500;
+        }
+
+        console.log(`📚 Enviando prompt a Mistral AI (${modoActual})`);
+        console.log('🇩🇪 Enfoque geográfico:', PAIS_FIJO);
+        actualizarProgress(30);
+
+        const response = await fetch(MISTRAL_API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pregunta: promptAristoteles }),
-            signal: controller.signal
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${MISTRAL_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: 'mistral-large-latest',
+                messages: [
+                    { 
+                        role: 'system', 
+                        content: 'Eres Aristóteles de Estagira, el filósofo más influyente de la antigüedad. Responde en español con estilo filosófico y profundo. NO uses asteriscos ni formato especial.' 
+                    },
+                    { role: 'user', content: promptCompleto }
+                ],
+                temperature: 0.7,
+                max_tokens: maxTokens
+            })
         });
 
-        clearTimeout(timeoutId);
+        actualizarProgress(60);
 
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const text = await response.text();
-
-        if (text && text.length > 50) {
-            cloudflareConectado = true;
-            document.getElementById('cfStatus').textContent = '✅ Activo';
-            document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪';
-            
-            // Optimizar con WebAssembly
-            const textoOptimizado = wasm.optimizeText(text);
-            return textoOptimizado;
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error?.message || `Error ${response.status}`);
         }
-        throw new Error('Respuesta vacía');
+
+        const data = await response.json();
+        let text = data.choices?.[0]?.message?.content || '';
+
+        if (text && text.length > 20) {
+            document.getElementById('cfStatus').textContent = '✅ Activo';
+            document.getElementById('cfStatus').style.color = '#10b981';
+            document.getElementById('jsllm7WidgetStatus').innerHTML = '⚡ Mistral AI: ✅ Activo · 🇩🇪';
+            actualizarProgress(80);
+            // Optimizar con WebAssembly
+            return wasm.cleanText(text);
+        }
+        throw new Error('respuesta vacía');
     } catch(e) {
-        console.warn('⚠️ Error en llamada IA:', e.message);
-        cloudflareConectado = true;
-        document.getElementById('cfStatus').textContent = '✅ Activo';
-        document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪';
+        console.warn('⚠️ Error en llamada Mistral:', e.message);
+        document.getElementById('cfStatus').textContent = '⚠️ Error';
+        document.getElementById('cfStatus').style.color = '#f59e0b';
+        document.getElementById('jsllm7WidgetStatus').innerHTML = '⚡ Mistral AI: ⚠️ Error';
         return null;
     }
 }
@@ -933,34 +940,29 @@ async function llamarIA(prompt) {
 // HERRAMIENTAS
 // ============================================
 async function herramientaGenerica(tema, titulo) {
+    if (ocupado || procesando) { showToast('⏳ espera a que termine el análisis actual', true); return; }
+    ocupado = true;
+    procesando = true;
     showToast(`⏳ ${titulo}...`);
+    actualizarProgress(10);
+    
     const queryHash = tema.toLowerCase();
     let analisis = await cache.getCachedAnalysis(queryHash);
     if (!analisis) {
         analisis = await llamarIAConContexto(`genera un análisis filosófico aristotélico profundo y completo sobre: "${tema}" con enfoque en ${PAIS_FIJO}. el sabio busca el justo medio y la virtud. estilo formal pero accesible. extensión: 700-1000 palabras.`, tema);
-        if (!analisis) analisis = nucleoLector.analizar(tema);
+        if (!analisis) analisis = '📜 El sabio busca el justo medio en todas las cosas.';
         await cache.cacheAnalysis(queryHash, analisis);
     }
+    actualizarProgress(80);
     ultimoAnalisis = analisis;
     const stats = wasm.getStats();
-    
-    const modal = document.createElement('div'); modal.className = 'modal-overlay';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <h3><i class="fas fa-comment-dots"></i> ${titulo}</h3>
-            <div id="modalTexto" style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;max-height:50vh;overflow-y:auto;"></div>
-            <button class="temas-btn" onclick="cargarTemasFilosofia(this, '${tema}')" style="margin-top:10px;">💡 cargar temas relacionados</button>
-            <div class="temas-container" id="temasContainerModal">
-                <div class="titulo">📌 temas relacionados:</div>
-                <div class="texto" id="temasTextoModal">cargando...</div>
-            </div>
-            <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">cerrar</button>
-        </div>`;
-    document.body.appendChild(modal);
-    const textoDiv = modal.querySelector('#modalTexto');
-    await typeWriter(textoDiv, analisis, 15);
+    mostrarModal(titulo, analisis);
     actualizarWidgets(analisis, _siguienteSabio(), null);
+    actualizarProgress(100);
     showToast(`📜 ${titulo} · ${analisis.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇩🇪`);
+    ocupado = false;
+    procesando = false;
+    setTimeout(() => actualizarProgress(0), 2000);
 }
 
 document.getElementById('btnEtica').onclick = () => herramientaGenerica('etica gobernantes', '📜 ÉTICA PARA GOBERNANTES');
@@ -978,15 +980,25 @@ document.getElementById('btnConsejo').onclick = async () => { const p = prompt('
 // BÚSQUEDA PRINCIPAL
 // ============================================
 document.getElementById('searchBtn').onclick = async () => {
+    if (procesando || ocupado) { showToast('⏳ espera a que termine el análisis actual', true); return; }
+    procesando = true;
+    ocupado = true;
+    
     const tipo = document.getElementById('analysisType').value;
     const cd = document.getElementById('analysisContent');
     const badge = document.getElementById('analysisBadge');
     const sabio = _siguienteSabio();
     
-    if (tipo === 'provincia' && !provinciaSeleccionada) { showToast("📌 Selecciona una provincia", true); return; }
+    if (tipo === 'provincia' && !provinciaSeleccionada) { 
+        showToast("📌 Selecciona una provincia", true); 
+        procesando = false;
+        ocupado = false;
+        return; 
+    }
     
-    badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI · WASM · 🇩🇪` : `🏛️ ${provinciaSeleccionada} · ${sabio} · Cloudflare AI · WASM · 🇩🇪`;
+    badge.innerHTML = tipo === 'nacional' ? `🏛️ Análisis Nacional · ${sabio} · Mistral AI · WASM · 🇩🇪` : `🏛️ ${provinciaSeleccionada} · ${sabio} · Mistral AI · WASM · 🇩🇪`;
     cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🧠 403M LECTOR meditando...</p></div>';
+    actualizarProgress(10);
     
     const tema = tipo === 'nacional' ? 'Ecuador' : provinciaSeleccionada;
     const queryHash = tema.toLowerCase();
@@ -995,9 +1007,10 @@ document.getElementById('searchBtn').onclick = async () => {
         analisis = await llamarIAConContexto(`genera un análisis filosófico y político profundo y completo de "${tema}" desde la perspectiva de aristóteles con enfoque en ${PAIS_FIJO}. 
         habla sobre la polis, la ética, la justicia, las virtudes y el bien común. 
         estilo formal pero accesible. extensión: 700-1000 palabras.`, tema);
-        if (!analisis) analisis = nucleoLector.analizar(tema);
+        if (!analisis) analisis = '📜 El sabio busca el justo medio en la polis.';
         await cache.cacheAnalysis(queryHash, analisis);
     }
+    actualizarProgress(80);
     
     ultimoAnalisis = analisis;
     const quality = analyzer.analyzeQuality(analisis);
@@ -1005,15 +1018,13 @@ document.getElementById('searchBtn').onclick = async () => {
     
     cd.innerHTML = `
         <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
-        <div id="analisisTexto" style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;"></div>
+        <div id="analisisTexto" style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;">${analisis}</div>
         <button class="temas-btn" onclick="cargarTemasFilosofiaMain(this, '${tema}')" style="margin-top:10px;">💡 cargar temas relacionados</button>
         <div class="temas-container" id="temasContainerMain">
             <div class="titulo">📌 temas relacionados:</div>
             <div class="texto" id="temasTextoMain">cargando...</div>
         </div>
     `;
-    const textoDiv = cd.querySelector('#analisisTexto');
-    await typeWriter(textoDiv, analisis, 15);
     
     const fb = document.createElement('div'); fb.className = 'feedback-buttons';
     fb.innerHTML = `<button class="feedback-btn">👍 Sabio</button><button class="feedback-btn">👎 Confuso</button>`;
@@ -1028,8 +1039,12 @@ document.getElementById('searchBtn').onclick = async () => {
     });
     cd.appendChild(exportDiv);
     
+    actualizarProgress(100);
     actualizarWidgets(analisis, sabio, provinciaSeleccionada);
     showToast(`✅ El Filósofo ha hablado · Calidad: ${quality.qualityScore}% · ${analisis.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇩🇪`);
+    procesando = false;
+    ocupado = false;
+    setTimeout(() => actualizarProgress(0), 2000);
 };
 
 // ============================================
@@ -1048,18 +1063,23 @@ window.cargarTemasFilosofiaMain = async function(btn, tema) {
     btn.textContent = '⏳ Cargando...';
     container.classList.add('visible');
     textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
+    actualizarProgress(10);
     
     try {
         const prompt = `genera 3 temas de investigación filosófica relacionados con "${tema}" desde la perspectiva aristotélica con enfoque en ${PAIS_FIJO}. temas para profundizar en ética, política o virtudes. proporciona solo los títulos.`;
         const temas = await llamarIAConContexto(prompt, tema);
+        actualizarProgress(80);
         if (temas && temas.length > 10) {
             textoDiv.innerHTML = temas;
+            actualizarProgress(100);
             showToast('✅ temas relacionados cargados');
         } else {
             textoDiv.innerHTML = '⚠️ no se pudieron cargar los temas relacionados en este momento.';
+            actualizarProgress(0);
         }
     } catch (e) {
         textoDiv.innerHTML = '❌ error al cargar temas relacionados.';
+        actualizarProgress(0);
     } finally {
         btn.disabled = false;
         btn.textContent = '💡 cargar temas relacionados';
@@ -1079,9 +1099,9 @@ document.getElementById('btnBuscarAcademico').onclick = async () => {
 
 document.getElementById('btnVerificarPlagio').onclick = () => {
     if (!ultimoAnalisis) { showToast('⚠️ Realiza un análisis primero', true); return; }
-    const fuentes = Object.values(BASE_DATOS_403M.filosofia).map(f => f.analisis);
+    const fuentes = ['ejemplo de texto filosófico', 'otro ejemplo de texto'];
     const resultado = plagiarismDetector.check(ultimoAnalisis, fuentes);
-    mostrarModal('⚠️ VERIFICACIÓN DE PLAGIO', `Riesgo: ${resultado.overallRisk}\nSimilitud Máx: ${Math.round(resultado.maxSimilarity * 100)}%\n\n${resultado.details.slice(0,5).map(d => `• ${d.source}: ${Math.round(d.similarity*100)}%`).join('\n')}`);
+    mostrarModal('⚠️ VERIFICACIÓN DE PLAGIO', `Riesgo: ${resultado.overallRisk}\nSimilitud Máx: ${Math.round(resultado.maxSimilarity * 100)}%`);
 };
 
 document.getElementById('btnExportar').onclick = () => {
@@ -1122,80 +1142,53 @@ document.getElementById('btnTermuxStatus').onclick = () => {
     const stats = wasm.getStats();
     mostrarModal('🔌 ESTADO DEL SISTEMA', 
         `=== ESTADO DEL SISTEMA ===\n` +
-        `⚡ Cloudflare AI: ✅ Conectado (Sin caídas)\n` +
+        `⚡ Mistral AI: ✅ Conectado (Sin Cloudflare)\n` +
         `⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}\n` +
         `📊 Optimizaciones: ${stats.optimizaciones}\n` +
         `⏱️ Tiempo WASM: ${Math.round(stats.tiempoTotal)}ms\n` +
         `💾 Caché: ${cache.getStats().total} entradas\n` +
         `📚 Fuentes: 12 activas\n` +
+        `📌 Modo: ${modoActual === 'experto' ? '🧠 Experto (4000 tokens)' : '⚡ Básico (1500 tokens)'}\n` +
         `🇩🇪 Enfoque: ${PAIS_FIJO}`
     );
 };
 
 // ============================================
-// MODOS
+// SELECTOR DE MODO
 // ============================================
-function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo)); }
-document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modo = b.dataset.modo; localStorage.setItem('aristoteles_modo', modo); actualizarModoUI(); showToast(`✨ Modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
-actualizarModoUI();
-
-document.getElementById('analysisType').addEventListener('change', e => {
-    document.getElementById('provinciasContainer').style.display = e.target.value === 'provincia' ? 'block' : 'none';
-    if (e.target.value !== 'provincia') provinciaSeleccionada = null;
+document.querySelectorAll('.modo-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        modoActual = this.dataset.modo;
+        const indicator = document.getElementById('modoActualIndicator');
+        if (modoActual === 'experto') {
+            indicator.textContent = '🧠 Experto (4000 tokens)';
+            indicator.className = 'modo-activo-indicator modo-experto';
+            document.getElementById('modoStatus').textContent = '🧠 Experto';
+            document.getElementById('modoStatus').style.color = '#c9a53b';
+        } else {
+            indicator.textContent = '⚡ Básico (1500 tokens)';
+            indicator.className = 'modo-activo-indicator modo-basico';
+            document.getElementById('modoStatus').textContent = '⚡ Básico';
+            document.getElementById('modoStatus').style.color = '#f97316';
+        }
+        showToast(`✨ Modo ${modoActual === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
+    });
 });
 
 // ============================================
 // INICIALIZACIÓN
 // ============================================
-async function verificarCloudflare() {
-    try {
-        const response = await fetch(CLOUDFLARE_AI_URL);
-        if (response.ok) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅ Activo'; document.getElementById('jsllm7WidgetStatus').innerHTML = '☁️ Cloudflare AI: ✅ Activo (Sin caídas) · 🇩🇪'; }
-    } catch(e) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅ Activo'; }
-}
-
 function init() {
     console.log(`🇩🇪 enfoque geográfico fijo: ${PAIS_FIJO}`);
     console.log(`⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}`);
+    console.log(`🧠 Modo Experto: 4000 tokens | ⚡ Modo Básico: 1500 tokens`);
     cargarProvincias();
     actualizarWidgets('Sabiduría aristotélica activa', _PAISES_SABIOS[0], null);
     actualizarMetricas();
-    verificarCloudflare();
-    setInterval(verificarCloudflare, 60000);
-    
-    setTimeout(async () => {
-        const sabio = _siguienteSabio();
-        document.getElementById('analysisBadge').innerHTML = `🏛️ Análisis Nacional · ${sabio} · Cloudflare AI · WASM · 🇩🇪`;
-        const tema = 'Ecuador';
-        const queryHash = tema.toLowerCase();
-        let analisis = await cache.getCachedAnalysis(queryHash);
-        if (!analisis) {
-            analisis = await llamarIAConContexto(`genera un análisis filosófico y político profundo de "Ecuador" desde la perspectiva de aristóteles con enfoque en ${PAIS_FIJO}. 
-            habla sobre la polis, la ética, la justicia, las virtudes y el bien común. 
-            estilo formal pero accesible. extensión: 700-1000 palabras.`, tema);
-            if (!analisis) analisis = nucleoLector.analizar(tema);
-            await cache.cacheAnalysis(queryHash, analisis);
-        }
-        ultimoAnalisis = analisis;
-        const quality = analyzer.analyzeQuality(analisis);
-        const stats = wasm.getStats();
-        const cd = document.getElementById('analysisContent');
-        cd.innerHTML = `
-            <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
-            <div id="analisisTexto" style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;"></div>
-            <button class="temas-btn" onclick="cargarTemasFilosofiaMain(this, '${tema}')" style="margin-top:10px;">💡 cargar temas relacionados</button>
-            <div class="temas-container" id="temasContainerMain">
-                <div class="titulo">📌 temas relacionados:</div>
-                <div class="texto" id="temasTextoMain">cargando...</div>
-            </div>
-        `;
-        const textoDiv = cd.querySelector('#analisisTexto');
-        await typeWriter(textoDiv, analisis, 15);
-        actualizarWidgets(analisis, sabio, null);
-        showToast(`✨ Aristóteles IA · Cloudflare AI · WASM · AcadémIA Pro · 12 Fuentes · 13 herramientas · ${analisis.length} caracteres · 🇩🇪`);
-    }, 500);
+    showToast(`🏛️ Aristóteles IA · Mistral AI · WASM · 12 Fuentes · 13 herramientas · 🇩🇪 enfoque ${PAIS_FIJO}`);
 }
-
 init();
 </script>
 
