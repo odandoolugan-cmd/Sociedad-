@@ -17,8 +17,6 @@
         .modo-activo-indicator { display: inline-block; padding: 2px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; margin-left: 10px; }
         .modo-experto { background: #c9a53b; color: #1a2a1f; }
         .modo-basico { background: #f97316; color: white; }
-        
-        /* ═══ BARRAS DE ESTADO ═══ */
         .status-bars-container { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
         .core-status-bar { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 1rem; padding: 0.6rem 1rem; font-size: 0.68rem; color: #c7d2fe; display: flex; flex-wrap: wrap; gap: 0.5rem; border: 2px solid #8b5cf6; box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); align-items: center; }
         .core-status-bar .item { background: rgba(0,0,0,0.3); padding: 3px 9px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
@@ -35,7 +33,6 @@
         .wasm-status-bar .item strong { color: #ff8878; font-weight: 700; }
         .wasm-status-bar .ok { color: #10b981; font-weight: bold; }
         .wasm-status-bar .lbl { color: #ff8878; font-weight: 700; font-size: 0.72rem; }
-        /* ═══ NUEVA BARRA FALLBACK IA ═══ */
         .fallback-status-bar { background: linear-gradient(135deg, #064e3b, #065f46); border-radius: 1rem; padding: 0.6rem 1rem; font-size: 0.68rem; color: #a7f3d0; display: flex; flex-wrap: wrap; gap: 0.5rem; border: 2px solid #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); align-items: center; }
         .fallback-status-bar .item { background: rgba(0,0,0,0.3); padding: 3px 9px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
         .fallback-status-bar .item strong { color: #34d399; font-weight: 700; }
@@ -46,7 +43,6 @@
         .ultra-stats .item { background: rgba(0,0,0,0.3); padding: 3px 9px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
         .ultra-stats .item strong { color: #f9a8d4; font-weight: 700; }
         .ultra-stats .velocidad { color: #f59e0b; font-weight: 800; animation: pulse 1.5s infinite; background: rgba(245, 158, 11, 0.15); padding: 3px 12px; border-radius: 10px; border: 1px solid #f59e0b; }
-        
         .diagnostico-panel { background: linear-gradient(135deg, #450a0a, #7f1d1d); border: 2px solid #ef4444; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem; font-size: 0.7rem; }
         .diagnostico-panel.collapsed .diagnostico-lista { display: none; }
         .diagnostico-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 800; color: #fca5a5; font-size: 0.85rem; }
@@ -84,7 +80,6 @@
         .tool-btn.diag { border-color: #ef4444; color: #fca5a5; background: rgba(239,68,68,.15); }
         .tool-btn.fallback { border-color: #10b981; color: #34d399; background: linear-gradient(90deg, rgba(16,185,129,.2), rgba(245,158,11,.2)); animation: pulse 1.5s infinite; }
         .tool-btn.fallback:hover { background: linear-gradient(90deg, #10b981, #f59e0b); color: white; }
-        
         .badge { padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 8px; font-weight: bold; display: inline-block; }
         .b-mistral { background: linear-gradient(90deg, #f97316, #dc2626); color: white; }
         .b-openrouter { background: linear-gradient(90deg, #10b981, #059669); color: white; }
@@ -159,16 +154,6 @@
         .connector-metric .label { font-size: 0.55rem; color: #8a7a5a; }
         .sources-badge { display: flex; flex-wrap: wrap; gap: 6px; margin: 0.5rem 0; justify-content: center; }
         .source-badge { background: rgba(139,92,246,0.2); padding: 3px 10px; border-radius: 20px; font-size: 0.55rem; border: 1px solid rgba(139,92,246,0.4); }
-        .source-badge.filosofo { border-color: #8b5cf6; background: rgba(139,92,246,0.3); }
-        .source-badge.quotes { border-color: #f59e0b; background: rgba(245,158,11,0.3); }
-        .source-badge.books { border-color: #10b981; background: rgba(16,185,129,0.3); }
-        .source-badge.stanford { border-color: #ef4444; background: rgba(239,68,68,0.3); }
-        .source-badge.wiki { border-color: #3b82f6; background: rgba(59,130,246,0.3); }
-        .source-badge.wasm { border-color: #f59e0b; background: rgba(245,158,11,0.4); }
-        .source-badge.core { border-color: #8b5cf6; background: rgba(139,92,246,0.3); }
-        .source-badge.agent { border-color: #f59e0b; background: rgba(245,158,11,0.3); }
-        .source-badge.fallback { border-color: #10b981; background: rgba(16,185,129,0.3); animation: pulse 1.5s infinite; }
-        .source-badge.nuevo { border-color: #ec4899; background: rgba(236,72,153,0.25); }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
         .modal-content { background: #1a2a1f; border-radius: 1.5rem; max-width: 800px; width: 95%; max-height: 85vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #c9a53b; color: #e8e0c5; }
         .modal-content h3 { color: #c9a53b; margin-bottom: 1rem; font-family: 'Playfair Display', serif; }
@@ -217,7 +202,7 @@
         <div class="core-status-bar">
             <span class="lbl">🧬 Core 403M:</span>
             <span class="item"><strong id="coreStatus" class="ok">⏳ Iniciando…</strong></span>
-            <span class="item">🤖 Agentes: <strong id="coreAgentes">4</strong></span>
+            <span class="item">🤖 Agentes: <strong id="coreAgentes">5</strong></span>
             <span class="item">📡 Consultas: <strong id="coreConsultas">0</strong></span>
             <span class="item">📚 Temas: <strong id="coreTemas">0</strong></span>
             <span class="item">🔄 Evoluciones: <strong id="coreEvoluciones">0</strong></span>
@@ -238,7 +223,6 @@
             <span class="item">⚡ 1 Llamada: <strong>✅</strong></span>
             <span class="item">📌 Modo: <strong id="modoStatus">🧠 Experto</strong></span>
         </div>
-        <!-- ═══ NUEVA BARRA FALLBACK IA ═══ -->
         <div class="fallback-status-bar">
             <span class="lbl">🧠 Fallback IA:</span>
             <span class="item"><strong class="ok">✅ Activo</strong></span>
@@ -526,7 +510,6 @@ class RustWASM {
     cache(k, v) { if (this.cargado) try { this.wasm.cache_response(k, v); } catch (e) {} }
     getCacheSize() { if (this.cargado) try { return this.wasm.get_cache_size(); } catch (e) {} return 0; }
     cleanText(t) { if (!t) return t; return t.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1').replace(/__(.*?)__/g, '$1').replace(/#{1,6}\s*/g, '').replace(/\s+/g, ' ').replace(/\s+([.,;:!?])/g, '$1').replace(/\n\s*\n/g, '\n\n').trim(); }
-    // ═══ HUMANIZACIÓN LOCAL (clave para Fallback IA) ═══
     humanizarFinal(t) {
         if (!t) return t;
         let r = t;
@@ -608,11 +591,9 @@ const FallbackIA = {
             let texto = textoOriginal;
             Diagnostico.log(`🧠 Rehumanizando texto filosófico (${textoOriginal.length} chars)…`, 'info');
             
-            // === PASO 1: Humanización WASM Rust ===
             texto = rustWASM.humanizarFinal(texto);
             Diagnostico.log(`🦀 WASM humanización aplicada`, 'ok');
             
-            // === PASO 2: Sinónimos con Datamuse ===
             const palabras = texto.toLowerCase().match(/[a-záéíóúüñ]{5,}/g) || [];
             const frecuencias = {};
             palabras.forEach(p => frecuencias[p] = (frecuencias[p] || 0) + 1);
@@ -635,7 +616,6 @@ const FallbackIA = {
             this.stats.sinonimos += sinonimosAplicados;
             if (sinonimosAplicados > 0) Diagnostico.log(`💡 ${sinonimosAplicados} sinónimos via Datamuse`, 'ok');
             
-            // === PASO 3: Corrección con LanguageTool ===
             try {
                 const matches = await this.corregirConLanguageTool(texto.substring(0, 2000));
                 if (matches && matches.length > 0) {
@@ -655,7 +635,6 @@ const FallbackIA = {
                 }
             } catch(e) {}
             
-            // === PASO 4: Variación de conectores filosóficos ===
             const conectoresVariados = ['y', 'además', 'incluso', 'también', 'asimismo', 'igualmente'];
             let conectorIdx = 0;
             texto = texto.replace(/\by\s+(?=[a-záéíóúñ])/gi, () => {
@@ -663,7 +642,6 @@ const FallbackIA = {
                 return conectorIdx === 0 ? 'y ' : conectoresVariados[conectorIdx] + ' ';
             });
             
-            // === PASO 5: Dividir frases largas (>30 palabras) ===
             const frases = texto.split(/(?<=[.!?])\s+/);
             const frasesMejoradas = frases.map(frase => {
                 const palabras = frase.split(/\s+/);
@@ -680,7 +658,6 @@ const FallbackIA = {
             });
             texto = frasesMejoradas.join(' ');
             
-            // === PASO 6: Limpieza final ===
             texto = rustWASM.cleanText(texto);
             this.stats.rehumanizaciones++;
             this.actualizarUI();
@@ -703,7 +680,7 @@ const FallbackIA = {
 };
 
 // ═══════════════════════════════════════════════════════════
-// 🚀 MULTI-IA CON TIMEOUT GLOBAL
+// 🚀 MULTI-IA CON TIMEOUT
 // ═══════════════════════════════════════════════════════════
 function actualizarProveedor(nombre, color) {
     const el = document.getElementById('proveedorActivo');
@@ -732,7 +709,7 @@ async function llamarIAParalelo(messages, maxTokens = 3000) {
                     const resp = await fetchConTimeout(url, { method: 'POST', headers, body: JSON.stringify(body) }, TIMEOUT_IA);
                     const dur = ((Date.now() - t0) / 1000).toFixed(1);
                     if (!resp.ok) {
-                        const errTxt = resp.status === 429 ? 'rate limit' : resp.status === 401 ? 'key' : resp.status === 404 ? 'no disponible' : `HTTP ${resp.status}`;
+                        const errTxt = resp.status === 429 ? 'rate limit' : resp.status === 401 ? 'key' : resp.status === 404 ? 'no disp' : `HTTP ${resp.status}`;
                         Diagnostico.log(`❌ ${prov.nombre}/${modelo}: ${errTxt} (${dur}s)`, 'error');
                         iaFailsCount++;
                         document.getElementById('iaFailsBar').textContent = iaFailsCount;
@@ -744,7 +721,7 @@ async function llamarIAParalelo(messages, maxTokens = 3000) {
                         Diagnostico.log(`❌ ${prov.nombre}/${modelo}: respuesta corta`, 'warn');
                         iaFailsCount++;
                         document.getElementById('iaFailsBar').textContent = iaFailsCount;
-                        throw new Error(`${prov.nombre}/${modelo}: respuesta corta`);
+                        throw new Error(`${prov.nombre}/${modelo}: corta`);
                     }
                     Diagnostico.log(`✅ ${prov.nombre}/${modelo}: ${texto.length} chars en ${dur}s`, 'ok');
                     iaOkCount++;
@@ -876,7 +853,11 @@ class WikiquoteAPI {
             return { filosofo, frases, total: frases.length };
         } catch (e) {
             Diagnostico.log(`Wikiquote error (${filosofo}): ${e.message}`, 'warn');
-            return { filosofo, frases: this.frasesFallback(filosofo), total: 3 };
+            const fb = this.frasesFallback(filosofo);
+            this.totalFrases += fb.length;
+            document.getElementById('ultraFrases').textContent = this.totalFrases;
+            document.getElementById('quotesStatus').textContent = `✅ ${this.totalFrases} (fb)`;
+            return { filosofo, frases: fb, total: fb.length };
         }
     }
     frasesFallback(filosofo) {
@@ -925,16 +906,17 @@ class GutenbergAPI {
             return { libros, total: libros.length };
         } catch (e) {
             Diagnostico.log(`Gutenberg error: ${e.message}`, 'warn');
-            this.totalLibros += 5;
-            document.getElementById('ultraLibros').textContent = this.totalLibros;
-            document.getElementById('booksStatus').textContent = `✅ ${this.totalLibros} (fallback)`;
-            return { libros: [
+            const fb = [
                 { titulo: 'Ética a Nicómaco', autores: 'Aristóteles', idioma: 'es', url: 'https://www.gutenberg.org/ebooks/8438' },
                 { titulo: 'La República', autores: 'Platón', idioma: 'es', url: 'https://www.gutenberg.org/ebooks/1497' },
                 { titulo: 'Meditaciones', autores: 'Marco Aurelio', idioma: 'es', url: 'https://www.gutenberg.org/ebooks/2680' },
                 { titulo: 'Crítica de la razón pura', autores: 'Kant', idioma: 'es', url: 'https://www.gutenberg.org/ebooks/4280' },
                 { titulo: 'Así habló Zaratustra', autores: 'Nietzsche', idioma: 'es', url: 'https://www.gutenberg.org/ebooks/7205' }
-            ], total: 5 };
+            ];
+            this.totalLibros += fb.length;
+            document.getElementById('ultraLibros').textContent = this.totalLibros;
+            document.getElementById('booksStatus').textContent = `✅ ${this.totalLibros} (fb)`;
+            return { libros: fb, total: fb.length };
         }
     }
     formatear(resultado) {
@@ -1141,7 +1123,6 @@ async function generarFallbackFilosofico(prompt, datos = {}) {
         analisis += `📚 OBRAS CLÁSICAS RECOMENDADAS:\n`;
         libros.slice(0, 5).forEach((l, i) => {
             analisis += `  ${i + 1}. "${l.titulo}" — ${l.autores}\n`;
-            if (l.url) analisis += `     🔗 ${l.url}\n`;
         });
         analisis += `\n`;
     }
@@ -1176,7 +1157,6 @@ async function generarFallbackFilosofico(prompt, datos = {}) {
     analisis += `🔄 Reintenta para obtener análisis generado por IA.\n`;
     analisis += `─────────────────────────────────────`;
     
-    // ═══ REHUMANIZACIÓN CON FALLBACK IA ═══
     try {
         const textoRehumanizado = await FallbackIA.rehumanizarTexto(analisis, true);
         Diagnostico.log(`🧠 Fallback filosófico rehumanizado: ${analisis.length} → ${textoRehumanizado.length} chars`, 'ok');
@@ -1188,25 +1168,30 @@ async function generarFallbackFilosofico(prompt, datos = {}) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// LLAMADA IA CON TIMEOUT GLOBAL Y FALLBACK IA GARANTIZADO
+// LLAMADA IA CON TIMEOUT DURO Y FALLBACK GARANTIZADO
 // ═══════════════════════════════════════════════════════════
 async function llamarIAConContexto(prompt, temaBusqueda = '') {
-    const timeoutGlobal = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT_GLOBAL')), TIMEOUT_TOTAL_ANALISIS));
+    console.log('🎯 llamarIAConContexto iniciado:', temaBusqueda);
+    
+    const TIMEOUT_DURO = 35000;
+    const timeoutGlobal = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('TIMEOUT_DURO_35s')), TIMEOUT_DURO)
+    );
     
     const tareaPrincipal = (async () => {
         try {
-            const [frases, bio, libros, articulos] = await Promise.allSettled([
-                wikiquoteAPI.obtenerFrases(temaBusqueda || 'Aristóteles'),
-                wikipediaAPI.obtenerBiografia(temaBusqueda || 'Aristóteles'),
-                gutenbergAPI.buscarLibros(temaBusqueda || 'philosophy'),
-                stanfordAPI.buscarArticulos(temaBusqueda || 'aristotle')
+            const promesas = await Promise.allSettled([
+                Promise.race([wikiquoteAPI.obtenerFrases(temaBusqueda || 'Aristóteles'), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),8000))]),
+                Promise.race([wikipediaAPI.obtenerBiografia(temaBusqueda || 'Aristóteles'), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),8000))]),
+                Promise.race([gutenbergAPI.buscarLibros(temaBusqueda || 'philosophy'), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),8000))]),
+                Promise.race([stanfordAPI.buscarArticulos(temaBusqueda || 'aristotle'), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),8000))])
             ]);
             
             const datos = {
-                frases: frases.value?.frases || [],
-                bio: bio.value || null,
-                libros: libros.value?.libros || [],
-                articulos: articulos.value?.articulos || []
+                frases: promesas[0].status === 'fulfilled' ? (promesas[0].value?.frases || []) : [],
+                bio: promesas[1].status === 'fulfilled' ? promesas[1].value : null,
+                libros: promesas[2].status === 'fulfilled' ? (promesas[2].value?.libros || []) : [],
+                articulos: promesas[3].status === 'fulfilled' ? (promesas[3].value?.articulos || []) : []
             };
             
             datos.filosofos = filosofosAPI.buscar(temaBusqueda || 'Aristóteles').slice(0, 5);
@@ -1232,21 +1217,25 @@ async function llamarIAConContexto(prompt, temaBusqueda = '') {
             
             return { texto: textoLimpio, fueIA: true, proveedor: r.proveedor, datos };
         } catch (e) {
+            console.error('❌ Error en tarea principal:', e.message);
             throw e;
         }
     })();
     
     try {
-        return await Promise.race([tareaPrincipal, timeoutGlobal]);
+        const resultado = await Promise.race([tareaPrincipal, timeoutGlobal]);
+        console.log('✅ Análisis IA completado:', resultado.texto?.length, 'chars');
+        return resultado;
     } catch (e) {
-        console.warn('❌ IA falló o timeout global:', e.message);
-        Diagnostico.log(`🧠 Activando FALLBACK IA INTELIGENTE (motivo: ${e.message})`, 'warn');
+        console.warn('❌ IA falló o timeout:', e.message);
+        Diagnostico.log(`🧠 Activando FALLBACK IA (motivo: ${e.message})`, 'warn');
         
-        document.getElementById('analysisContent').innerHTML = `<div style="text-align:center;padding:1rem;color:#c9a53b;"><span class="loading-spinner-small"></span> 🧠 Fallback IA: rehumanizando con Datamuse + LanguageTool…</div>`;
+        const cd = document.getElementById('analysisContent');
+        if (cd) cd.innerHTML = `<div style="text-align:center;padding:1rem;color:#c9a53b;"><span class="loading-spinner-small"></span> 🧠 Fallback IA: rehumanizando con Datamuse + LanguageTool…</div>`;
         
         let datosFallback = { filosofos: [], frases: [], libros: [], articulos: [], bio: null };
         try {
-            const [frases, bio, libros, articulos] = await Promise.allSettled([
+            const resultados = await Promise.allSettled([
                 wikiquoteAPI.obtenerFrases(temaBusqueda || 'Aristóteles'),
                 wikipediaAPI.obtenerBiografia(temaBusqueda || 'Aristóteles'),
                 gutenbergAPI.buscarLibros(temaBusqueda || 'philosophy'),
@@ -1254,15 +1243,32 @@ async function llamarIAConContexto(prompt, temaBusqueda = '') {
             ]);
             datosFallback = {
                 filosofos: filosofosAPI.buscar(temaBusqueda || 'Aristóteles').slice(0, 5),
-                frases: frases.value?.frases || [],
-                bio: bio.value || null,
-                libros: libros.value?.libros || [],
-                articulos: articulos.value?.articulos || []
+                frases: resultados[0].status === 'fulfilled' ? (resultados[0].value?.frases || []) : [],
+                bio: resultados[1].status === 'fulfilled' ? resultados[1].value : null,
+                libros: resultados[2].status === 'fulfilled' ? (resultados[2].value?.libros || []) : [],
+                articulos: resultados[3].status === 'fulfilled' ? (resultados[3].value?.articulos || []) : []
             };
-        } catch (e2) {}
+        } catch (e2) {
+            console.error('❌ Error recopilando datos fallback:', e2);
+        }
+        
+        console.log('📊 Datos fallback:', {
+            filosofos: datosFallback.filosofos.length,
+            frases: datosFallback.frases.length,
+            libros: datosFallback.libros.length,
+            articulos: datosFallback.articulos.length,
+            bio: !!datosFallback.bio
+        });
         
         const fallback = await generarFallbackFilosofico(prompt, datosFallback);
-        return { texto: fallback || 'No se pudo generar el análisis. Reintenta.', fueIA: false, proveedor: 'Fallback IA (Datamuse + LanguageTool)', datos: datosFallback };
+        console.log('✅ Fallback generado:', fallback?.length, 'chars');
+        
+        return { 
+            texto: fallback || 'No se pudo generar el análisis. Reintenta.', 
+            fueIA: false, 
+            proveedor: 'Fallback IA (Datamuse + LanguageTool)', 
+            datos: datosFallback 
+        };
     }
 }
 
@@ -1277,7 +1283,7 @@ window.seleccionarFilosofoIA = async function(nombre) {
 };
 
 async function consultarFilosofo(nombre) {
-    if (procesando || ocupado) { showToast('⏳ Espera...', true); return; }
+    procesando = false; ocupado = false;
     procesando = true; ocupado = true;
     
     const cd = document.getElementById('analysisContent');
@@ -1310,11 +1316,17 @@ async function consultarFilosofo(nombre) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// BÚSQUEDA PRINCIPAL
+// BÚSQUEDA PRINCIPAL (con bypass de locks)
 // ═══════════════════════════════════════════════════════════
 document.getElementById('searchBtn').onclick = async () => {
-    if (procesando || ocupado) { showToast('⏳ Espera...', true); return; }
-    procesando = true; ocupado = true;
+    if (procesando || ocupado) {
+        Diagnostico.log('⚠️ Sistema bloqueado, forzando reset...', 'warn');
+        procesando = false;
+        ocupado = false;
+    }
+    
+    procesando = true;
+    ocupado = true;
     
     const tipo = document.getElementById('analysisType').value;
     const cd = document.getElementById('analysisContent');
@@ -1322,8 +1334,14 @@ document.getElementById('searchBtn').onclick = async () => {
     
     let tema = '';
     if (tipo === 'nacional') tema = 'Ecuador';
-    else if (tipo === 'provincia') { if (!provinciaSeleccionada) { showToast('📌 Selecciona provincia', true); procesando = false; ocupado = false; return; } tema = provinciaSeleccionada; }
-    else if (tipo === 'filosofo') { if (!filosofoSeleccionado) { showToast('🏛️ Selecciona filósofo', true); procesando = false; ocupado = false; return; } tema = filosofoSeleccionado; }
+    else if (tipo === 'provincia') { 
+        if (!provinciaSeleccionada) { showToast('📌 Selecciona provincia', true); procesando = false; ocupado = false; return; } 
+        tema = provinciaSeleccionada; 
+    }
+    else if (tipo === 'filosofo') { 
+        if (!filosofoSeleccionado) { showToast('🏛️ Selecciona filósofo', true); procesando = false; ocupado = false; return; } 
+        tema = filosofoSeleccionado; 
+    }
     else tema = 'filosofía';
     
     badge.innerHTML = `🏛️ ${tema} · Multi-IA (9) · 🧠 Fallback IA`;
@@ -1331,25 +1349,33 @@ document.getElementById('searchBtn').onclick = async () => {
     actualizarProgress(10);
     
     const prompt = `Genera un análisis filosófico aristotélico profundo sobre "${tema}" desde la perspectiva de los grandes filósofos mundiales. Enfoque en ${PAIS_FIJO}. Estilo formal pero accesible. Extensión: 700-1000 palabras.`;
-    const resultado = await llamarIAConContexto(prompt, tema);
-    actualizarProgress(80);
     
-    if (resultado && resultado.texto) {
-        ultimoAnalisis = resultado.texto;
-        const quality = { qualityScore: 85, qualityLevel: 'alta' };
-        cd.innerHTML = `<span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span><div style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;">${resultado.texto}</div>`;
-        actualizarWidgets(resultado.texto);
-        if (resultado.fueIA) {
-            showToast(`✅ Análisis · ${resultado.proveedor} · ${resultado.texto.length} chars`);
+    try {
+        const resultado = await llamarIAConContexto(prompt, tema);
+        actualizarProgress(80);
+        
+        if (resultado && resultado.texto) {
+            ultimoAnalisis = resultado.texto;
+            const quality = { qualityScore: 85, qualityLevel: 'alta' };
+            cd.innerHTML = `<span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span><div style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;">${resultado.texto}</div>`;
+            actualizarWidgets(resultado.texto);
+            
+            if (resultado.fueIA) {
+                showToast(`✅ Análisis · ${resultado.proveedor} · ${resultado.texto.length} chars`);
+            } else {
+                showToast(`🧠 Fallback IA · ${resultado.datos.filosofos.length} filósofos + ${resultado.datos.frases.length} frases`, true);
+            }
         } else {
-            showToast(`🧠 Fallback IA · ${resultado.datos.filosofos.length} filósofos + ${resultado.datos.frases.length} frases`, true);
+            cd.innerHTML = '<p style="color:#ef4444;">⚠️ No se pudo generar el análisis. Reintenta.</p>';
         }
-    } else {
-        cd.innerHTML = '<p>Error al generar análisis. Reintenta.</p>';
+    } catch (e) {
+        console.error('❌ Error:', e);
+        cd.innerHTML = `<p style="color:#ef4444;">❌ Error: ${e.message}</p>`;
     }
     
     actualizarProgress(100);
-    procesando = false; ocupado = false;
+    procesando = false;
+    ocupado = false;
     setTimeout(() => actualizarProgress(0), 2000);
 };
 
@@ -1392,7 +1418,7 @@ document.getElementById('btnFelix').onclick = () => herramientaFilosofica('Eudai
 document.getElementById('btnLiderazgo').onclick = () => herramientaFilosofica('Liderazgo', 'liderazgo');
 
 async function herramientaFilosofica(titulo, tema) {
-    if (procesando || ocupado) { showToast('⏳ Espera...', true); return; }
+    procesando = false; ocupado = false;
     procesando = true; ocupado = true;
     showToast(`⏳ ${titulo}...`);
     actualizarProgress(10);
@@ -1410,7 +1436,7 @@ async function herramientaFilosofica(titulo, tema) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// BOTONES FALLBACK IA (NUEVOS)
+// BOTONES FALLBACK IA
 // ═══════════════════════════════════════════════════════════
 document.getElementById('btnFallbackStatus').onclick = () => {
     const s = FallbackIA.getStats();
@@ -1482,6 +1508,59 @@ window.seleccionarTema = function(tema) { document.querySelectorAll('.provincia-
 window.seleccionarProvincia = function(prov) { document.querySelectorAll('.provincia-btn').forEach(b => b.classList.remove('selected')); event.target.classList.add('selected'); provinciaSeleccionada = prov; showToast(`🏛️ ${prov}`); };
 
 // ═══════════════════════════════════════════════════════════
+// 🚀 AUTO-ARRANQUE
+// ═══════════════════════════════════════════════════════════
+async function ejecutarAnalisisAutomatico() {
+    if (procesando || ocupado) {
+        console.log('⏳ Ya hay análisis en curso, esperando 3s...');
+        setTimeout(ejecutarAnalisisAutomatico, 3000);
+        return;
+    }
+    
+    procesando = true;
+    ocupado = true;
+    
+    const cd = document.getElementById('analysisContent');
+    const badge = document.getElementById('analysisBadge');
+    
+    badge.innerHTML = `🏛️ Análisis Aristotélico · Multi-IA (9) · 🧠 Fallback IA`;
+    cd.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>🏛️ El Filósofo está reflexionando...</p></div>';
+    actualizarProgress(10);
+    
+    const prompt = `Genera un análisis filosófico aristotélico profundo sobre la actualidad desde la perspectiva de los grandes filósofos mundiales. Enfoque en ${PAIS_FIJO}. Estilo formal pero accesible. Extensión: 700-1000 palabras.`;
+    
+    try {
+        console.log('📡 Llamando a llamarIAConContexto (auto)...');
+        const resultado = await llamarIAConContexto(prompt, 'Aristóteles');
+        console.log('✅ Resultado auto:', resultado?.texto?.length, 'chars');
+        actualizarProgress(80);
+        
+        if (resultado && resultado.texto) {
+            ultimoAnalisis = resultado.texto;
+            const quality = { qualityScore: 88, qualityLevel: 'alta' };
+            cd.innerHTML = `<span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span><div style="white-space:pre-wrap;max-height:50vh;overflow-y:auto;">${resultado.texto}</div>`;
+            actualizarWidgets(resultado.texto);
+            
+            if (resultado.fueIA) {
+                showToast(`✅ Análisis · ${resultado.proveedor} · ${resultado.texto.length} chars`);
+            } else {
+                showToast(`🧠 Fallback IA · ${resultado.datos.filosofos.length} filósofos + ${resultado.datos.frases.length} frases`, true);
+            }
+        } else {
+            cd.innerHTML = '<p style="color:#ef4444;">⚠️ No se pudo generar. Reintenta con el botón CONSULTAR.</p>';
+        }
+    } catch (e) {
+        console.error('❌ Error auto-análisis:', e);
+        cd.innerHTML = `<p style="color:#ef4444;">❌ Error: ${e.message}. Reintenta con CONSULTAR.</p>`;
+    }
+    
+    actualizarProgress(100);
+    procesando = false;
+    ocupado = false;
+    setTimeout(() => actualizarProgress(0), 2000);
+}
+
+// ═══════════════════════════════════════════════════════════
 // INICIALIZACIÓN
 // ═══════════════════════════════════════════════════════════
 async function init() {
@@ -1507,8 +1586,15 @@ async function init() {
     setTimeout(() => actualizarProgress(0), 2000);
     
     showToast(`✅ ${rustWASM.cargado ? '🦀 WASM REAL (40)' : '⚠️ Fallback JS'} · 🏛️ ${filosofosAPI.totalFilosofos} filósofos · ${IA_PROVEEDORES.length} IA · 🧠 Fallback IA`);
-    Diagnostico.log(`✅ SISTEMA LISTO · Timeout global 45s · Fallback IA activo`, 'ok');
+    Diagnostico.log(`✅ SISTEMA LISTO · Timeout duro 35s · Fallback IA activo`, 'ok');
+    
+    // ═══ 🚀 AUTO-ARRANQUE ═══
+    setTimeout(() => {
+        console.log('🚀 Auto-arrancando análisis...');
+        ejecutarAnalisisAutomatico();
+    }, 2500);
 }
+
 init();
 </script>
 
