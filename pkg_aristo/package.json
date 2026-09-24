@@ -1,0 +1,16 @@
+{
+  "name": "aristo_wasm",
+  "type": "module",
+  "description": "Módulo WASM de filosofía para Aristóteles IA",
+  "version": "0.1.0",
+  "files": [
+    "aristo_wasm_bg.wasm",
+    "aristo_wasm.js",
+    "aristo_wasm.d.ts"
+  ],
+  "main": "aristo_wasm.js",
+  "types": "aristo_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
