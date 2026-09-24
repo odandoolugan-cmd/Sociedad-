@@ -12,12 +12,11 @@
         window.aristoWasm = aristo;
         console.log('✅ pkg_aristo cargado:', aristo.aristo_version ? aristo.aristo_version() : '1.0');
 
-        // 2. Añadir botón "Temas filosóficos" al DOM
-        const toolbar = document.querySelector('.tools-bar') || document.querySelector('.toolbar') || document.querySelector('body');
+        // 2. Añadir botón "Temas filosóficos" FLOTANTE (siempre visible)
         const btn = document.createElement('button');
-        btn.className = 'tool-btn';
+        btn.className = 'tool-btn mejoras-btn';
         btn.textContent = '🏛️ Temas filosóficos';
-        btn.style.cssText = 'padding: 8px 12px; margin: 4px; border-radius: 6px; background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; border: none; font-weight: bold; box-shadow: 0 2px 8px rgba(139,92,246,0.4); cursor: pointer; font-size: 12px;';
+        btn.style.cssText = 'position: fixed; top: 80px; right: 10px; z-index: 99999; padding: 10px 16px; border-radius: 8px; background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; border: 2px solid #a78bfa; font-weight: bold; box-shadow: 0 4px 12px rgba(139,92,246,0.5); cursor: pointer; font-size: 13px;';
         btn.onclick = () => {
             const texto = prompt('Escribe un texto para analizar:') || '';
             if (!texto) return;
@@ -30,7 +29,7 @@
                 'Profundidad: ' + (profundidad * 100).toFixed(0) + '%'
             );
         };
-        toolbar.appendChild(btn);
+        document.body.appendChild(btn);
 
         // 3. Exponer funciones globalmente para debug
         window.mejoras = {
