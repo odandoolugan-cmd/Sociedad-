@@ -13,11 +13,11 @@
         console.log('✅ pkg_aristo cargado:', aristo.aristo_version ? aristo.aristo_version() : '1.0');
 
         // 2. Añadir botón "Temas filosóficos" al DOM
-        const toolbar = document.querySelector('.toolbar') || document.querySelector('body');
+        const toolbar = document.querySelector('.tools-bar') || document.querySelector('.toolbar') || document.querySelector('body');
         const btn = document.createElement('button');
         btn.className = 'tool-btn';
         btn.textContent = '🏛️ Temas filosóficos';
-        btn.style.cssText = 'padding: 8px 12px; margin: 4px; border-radius: 6px; background: #8b5cf6; color: white; border: none; cursor: pointer; font-size: 12px;';
+        btn.style.cssText = 'padding: 8px 12px; margin: 4px; border-radius: 6px; background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; border: none; font-weight: bold; box-shadow: 0 2px 8px rgba(139,92,246,0.4); cursor: pointer; font-size: 12px;';
         btn.onclick = () => {
             const texto = prompt('Escribe un texto para analizar:') || '';
             if (!texto) return;
